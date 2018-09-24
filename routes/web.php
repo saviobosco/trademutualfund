@@ -46,6 +46,10 @@ Route::middleware(['verified'])->group(function() {
     Route::get('/profile/update_settings', 'UserSettingsController@edit');
     Route::put('/profile/change_password', 'ChangePasswordController@update');
     Route::get('/profile/change_password', 'ChangePasswordController@edit');
+    Route::put('/profile/update_payment_info', 'PaymentDetailController@update');
+    Route::get('/profile/update_payment_info', 'PaymentDetailController@edit');
+
+    Route::get('/user_referral/index', 'ReferralsController@index');
 });
 
 

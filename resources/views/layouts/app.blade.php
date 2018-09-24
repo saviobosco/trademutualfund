@@ -14,18 +14,17 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    {{--<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">--}}
 
     <!-- Styles -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    {{--<link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">--}}
     <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style-responsive.css') }}" rel="stylesheet">
     {{--<link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
-    <link href="https://unpkg.com/nprogress@0.2.0/nprogress.css" rel="stylesheet" />
-    <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+    {{--<link href="https://unpkg.com/nprogress@0.2.0/nprogress.css" rel="stylesheet" />--}}
+    {{--<script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>--}}
 </head>
 <body>
     <div id="app">

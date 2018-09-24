@@ -45,12 +45,12 @@
      },
      methods:{
          async submitInvestmentRequest() {
-             let response = await this.$http.post('/investments/create', this.investment);
+             let response = await this.$http.post('/user_investments/create', this.investment);
              if (response.status === 200) {
-                 // notify user of successful investment
-                 alert('You investment was successful');
-             }
-             
+                Vue.swal('Success','Your investment was successfully!','success');
+                this.resetInvestment();
+                this.clearInvestmentRules();
+             } 
          },
          async getInvestmentRules() {
              let investmentPlanId = parseInt(event.target.value);

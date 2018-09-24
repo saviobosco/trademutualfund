@@ -11,31 +11,39 @@
                         <h4 class="panel-title"> Edit Profile </h4>
                     </div>
                     <div class="panel-body">
-                        {!! Form::model($user, ['url' => ['profile/edit'] ,'method' => 'PUT']) !!}
+                        {!! Form::model($paymentDetail, ['url' => ['/profile/update_payment_info'] ,'method' => 'PUT']) !!}
                         <div class="form-group row">
                             <div class="col-md-4 col-form-label text-md-right">
-                                {!! Form::label('name', 'Name') !!}
+                                {!! Form::label('account_name', 'Account Name') !!}
                             </div>
                             <div class="col-sm-6">
-                                {!! Form::text('name',null,['class' => 'form-control']) !!}
+                                {!! Form::text('account_name',null,['class' => 'form-control']) !!}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4 col-form-label text-md-right">
+                                {!! Form::label('account_number', 'Account Number') !!}
+                            </div>
+                            <div class="col-sm-6">
+                                {!! Form::text('account_number',null,['class' => 'form-control']) !!}
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-md-4 col-form-label text-md-right">
-                                {!! Form::label('phone_number', 'Phone Number') !!}
+                                {!! Form::label('bank_name', 'Bank Name') !!}
                             </div>
                             <div class="col-sm-6">
-                                {!! Form::text('phone_number',null,['class' => 'form-control']) !!}
+                                {!! Form::text('bank_name',null,['class' => 'form-control']) !!}
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-md-4 col-form-label text-md-right">
-                                {!! Form::label('country_id', 'Country') !!}
+                                {!! Form::label('bitcoin_wallet_address', 'Bitcoin Address ') !!}
                             </div>
                             <div class="col-sm-6">
-                                {!! Form::select('country_id', $countries, null, ['class' => 'form-control']) !!}
+                                {!! Form::text('bitcoin_wallet_address',null,['class' => 'form-control']) !!}
                             </div>
                         </div>
 

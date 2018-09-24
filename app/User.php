@@ -102,7 +102,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function usersReferred()
     {
-        return $this->referral_link()->with(['relationships.user'])->get()->toArray();
+        $referrals = $this->referral_link()->with(['relationships.user'])->get()->toArray();
+        return $referrals[0]['relationships'];
     }
 
     public function getInvestments()

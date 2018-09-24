@@ -5,9 +5,6 @@
         <!-- begin sidebar user -->
         <ul class="nav">
             <li class="nav-profile">
-                <div class="image">
-                    <a href="javascript:;"><img src="assets/img/user-13.jpg" alt="" /></a>
-                </div>
                 <div class="info">
                     {{ Auth::user()->name }}
                 </div>
@@ -75,6 +72,11 @@
             <li class="">
                 <a href="{{ url('user_transaction/index') }}">
                     <span> {{ __('My Transactions') }} </span>
+                </a>
+            </li>
+            <li class="">
+                <a href="{{ url('user_referral/index') }}">
+                    <span> {{ __('My Referrals') }} </span>
                 </a>
             </li>
             <!-- begin sidebar minify button -->

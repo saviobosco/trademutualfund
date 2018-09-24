@@ -18,7 +18,7 @@ class CreateUsersPaymentDetails extends Migration
             $table->integer('user_id')->index();
             $table->string('account_name')->nullable();
             $table->string('account_number')->nullable();
-            $table->integer('bank_id')->nullable();
+            $table->string('bank_name')->nullable();
             $table->string('bitcoin_wallet_address')->nullable();
             $table->timestamps();
         });

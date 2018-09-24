@@ -19,7 +19,7 @@ const instance = axios.create({
 
 // before a request is made start the nprogress
 instance.interceptors.request.use(config => {
-    NProgress.start();
+    //NProgress.start();
     return config;
   });
   
@@ -27,7 +27,7 @@ instance.interceptors.request.use(config => {
 // Error interceptor can be used for global error handling
 instance.interceptors.response.use(function (response) {
     // Do something with response data
-    NProgress.done();
+    //NProgress.done();
     return response;
 }, function (error) {
     if (error.response) {

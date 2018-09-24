@@ -8,13 +8,29 @@
                 <p> Phone : {{ transaction.make_payment_user.phone_number }} </p>
                 <p> Amount : {{ transaction.amount }} </p>
             </div>
-            <div class="row" v-if="transaction.photo_proofs.length > 0">
-                <div class="col-sm-3" v-for="photo in transaction.photo_proofs" :key="photo.id">
-                    <img class="img-thumbnail" :src="photo.photo_url" :alt="photo.photo_name">
+            <div class="m-b-20">
+                <div v-if="transaction.photo_proofs.length > 0" id="gallery" class="gallery clearfix">
+                    <div v-for="photo in transaction.photo_proofs" :key="photo.id" class="image pull-left">
+                        <div class="image-inner">
+                            <a target="_blank" :href="photo.photo_url" data-lightbox="gallery-group-1">
+                                <img class="img-thumbnail" :src="photo.photo_url" :alt="photo.photo_name" />
+                            </a>
+                            <p class="image-caption">
+                                #1382 - 3D Arch
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div>
+                <div v-if="transaction.transaction_reports.length > 0">
+                <div class="alert alert-danger">
+                    Image(s) has been report as fake POP!
+                </div>
+            </div>
+            </div>
             <button @click="confirmTransaction" class="btn btn-sm btn-primary"> Confirm payment  </button>
-            <button @click="reportFakePOP" class="btn btn-sm btn-danger"> Report Transaction</button>
+            <button :disabled="! canRemoveImage" @click="reportFakePOP" class="btn btn-sm btn-danger"> Report Transaction</button>
             <span class="" v-if="transaction.photo_proofs.length > 0">{{ transaction.photo_proofs.length  }} Image(s) Uploaded </span> | 
             <span class="" v-if="transaction.transaction_reports.length > 0">{{ transaction.transaction_reports.length  }} Report(s) </span>
 
@@ -28,34 +44,49 @@
                 <p> Phone : {{ transaction.get_payment_user.phone_number }} </p>
                 <p> Amount : {{ transaction.amount }} </p>
             </div>
-            <div class="row" v-if="transaction.photo_proofs.length > 0">
-                <div class="col-sm-3" v-for="photo in transaction.photo_proofs" :key="photo.id">
-                    <img class="img-thumbnail" :src="photo.photo_url" :alt="photo.photo_name">
-                    <button :disabled="! canRemoveImage" @click="removeImage(photo.id)" class="btn btn-sm btn-danger">remove</button>
+
+            <div class="m-b-20">
+                <div v-if="transaction.photo_proofs.length > 0" id="gallery" class="gallery clearfix">
+                    <div v-for="photo in transaction.photo_proofs" :key="photo.id" class="image pull-left">
+                        <div class="image-inner">
+                            <a target="_blank" :href="photo.photo_url" data-lightbox="gallery-group-1">
+                                <img class="img-thumbnail" :src="photo.photo_url" :alt="photo.photo_name" />
+                            </a>
+                            <p class="image-caption">
+                                #1382 - 3D Arch
+                            </p>
+                        </div>
+                        <button :disabled="! canRemoveImage" @click="removeImage(photo.id)" class="btn btn-sm btn-danger m-t-5">remove</button>
+                    </div>
                 </div>
             </div>
-            <button type="button" data-toggle="modal" @click="openModal" class="btn btn-sm btn-primary"> Upload Proof </button>
-            <!-- <button @click="reportFakePOP" class="btn btn-sm btn-danger"> Report Transaction</button> -->
-            <span class="" v-if="transaction.photo_proofs.length > 0">{{ transaction.photo_proofs.length  }} Images Uploaded </span> | 
-            <span class="" v-if="transaction.transaction_reports.length > 0">{{ transaction.transaction_reports.length  }} Report(s) </span>
+            <div v-if="transaction.transaction_reports.length > 0">
+                <div class="alert alert-danger">
+                    Image(s) has been report as fake POP!
+                </div>
+            </div>
+            <div>
+                <button :disabled="! canRemoveImage" type="button" data-toggle="modal" @click="openModal" class="btn btn-sm btn-primary"> Upload Proof </button>
+                <span class="" v-if="transaction.photo_proofs.length > 0">{{ transaction.photo_proofs.length  }} Images Uploaded </span> |
+                <span class="" v-if="transaction.transaction_reports.length > 0">{{ transaction.transaction_reports.length  }} Report(s) </span>
+            </div>
             <!-- Modal -->
-            <div class="modal fade" :id="modal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+            <div class="modal fade" :id="modal">
+                <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Upload proof - Trans:{{ transaction.id }}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Modal Dialog</h4>
                         </div>
-                        <div class="modal-body text-center">
+                        <div class="modal-body">
                             <img style="width: 100%;" v-bind:src="imagePreview" v-show="showPreview"/>
                             <label for="file">
                                 <input id="file" type="file" ref="file" accept="image/*" v-on:change="handleFileUpload()">
                             </label>
                         </div>
                         <div class="modal-footer">
-                            <button :disabled="!showPreview" @click="uploadImage" type="button" class="btn btn-primary"> Upload</button>
+                            <a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
+                            <button :disabled="!showPreview" @click="uploadImage" type="button" class="btn btn-sm btn-success"> Upload</button>
                         </div>
                     </div>
                 </div>
@@ -100,10 +131,23 @@ export default {
     },
     methods: {
         async confirmTransaction() {
-            let response = await this.$http.post(`/transactions/confirm/${this.id}`);
-            if (response.data.data === 'OK') {
-                this.transaction.status = 2;
-            }
+            let result = await this.$swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#388e3c',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Confirm Transaction!'
+                });
+                if (result.value) {
+                    let response = await this.$http.post(`/transactions/confirm/${this.id}`);
+                    if (response.data.data === 'OK') {
+                        this.$swal('Confirmed!','transaction has been confirmed.', 'success');
+                        this.transaction.status = 2;
+                    }
+                }
+
         },
         handleFileUpload(){
             /*
@@ -182,16 +226,27 @@ export default {
                 });
             })
         },
-        reportFakePOP() {
-            this.$http.post(`/transactions/report/${this.id}`,
-            {
-                type: 'fake_pop'
-            }
-            )
-            .then((response) => {
-                let transaction = response.data.data;
-                this.transaction.transaction_reports.push(transaction);
-            })
+        async reportFakePOP() {
+            let result = await this.$swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#388e3c',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Report Transaction!'
+                });
+                if (result.value) {
+                    let response = await this.$http.post(`/transactions/report/${this.id}`,
+                                        {
+                                            type: 'fake_pop'
+                                        });
+                    if (response.data.data === 'OK') {
+                        this.$swal('Reported!','transaction has been reported.', 'success');
+                        let transaction = response.data.data;
+                        this.transaction.transaction_reports.push(transaction);
+                    }
+                }
         },
         openModal()
         {

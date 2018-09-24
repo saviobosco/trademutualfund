@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Seeded the Investment Rules!');
         $this->call('InvestmentPlansSeeder');
         $this->command->info('Seeded the Investment Plans!');
+        $this->call('PermissionsSeeder');
+
         // $this->call(UsersTableSeeder::class);
     }
 }
