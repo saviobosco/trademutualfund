@@ -9,7 +9,6 @@
                     <div class="panel-heading">
 
                         <h4 class="panel-title"> Investments </h4>
-                        {!! Html::link("investments/new",'New Investment',['class' => 'pull-right'])  !!}
                     </div>
                     <div class="panel-body">
                         <table class="table">
@@ -32,9 +31,13 @@
                                     <td> {{ $investment->roi_amount }} </td>
                                     <td> {{ $investment->global_funds_amount }} </td>
                                     <td> {{ $investment->release_date }} </td>
-                                    <td> {{ $investment->status }} </td>
                                     <td>
-                                        {!! Html::link("#",'View Investment')  !!}
+                                        <span class="label label-success"> {{ $investment->status }} </span>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger">
+                                            Cancel
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
