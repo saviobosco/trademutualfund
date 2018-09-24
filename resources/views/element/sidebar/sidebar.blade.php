@@ -14,6 +14,7 @@
         <!-- begin sidebar nav -->
         <ul class="nav">
             <li class="nav-header">Navigation</li>
+            @role('admin')
             <li class="">
                 <a href="{{ url('/users/index') }}">
                     <i class="fa fa-users"></i>
@@ -62,7 +63,7 @@
                     <span> {{ __('Reports') }} </span>
                 </a>
             </li>
-
+            @endrole
             <li class="">
                 <a href="{{ url('user_investments/index') }}">
                     <i class=""></i>
