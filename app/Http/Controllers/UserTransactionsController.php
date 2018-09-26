@@ -15,7 +15,8 @@ class UserTransactionsController extends Controller
      */
     public function index()
     {
-
+        $transactions = UsersRepository::getUserActiveTransactions(auth()->user()->id);
+        dd($transactions);
     }
 
 

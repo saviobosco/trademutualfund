@@ -75,6 +75,7 @@ setTimeout(() => {
 },500);
 
 import VueSweetalert2 from 'vue-sweetalert2';
+import VueCountdown from '@xkeshi/vue-countdown';
 
 
 window.Vue = require('vue');
@@ -88,6 +89,7 @@ Vue.use(VueSweetalert2);
 
 import axios from './utils/http';
 Vue.use(require('vue-axios'), axios);
+Vue.component('countdown', VueCountdown);
 //Vue.component('upload-component', require('./components/UploadComponent.vue'));
 Vue.component('investment-component', require('./components/InvestmentComponent.vue'));
 Vue.component('transactions-component', require('./components/Transactions/TransactionsComponent.vue'));

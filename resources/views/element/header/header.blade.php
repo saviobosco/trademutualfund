@@ -19,7 +19,7 @@
     <ul class="navbar-nav navbar-right">
         <li>
             <a href="{{ url('/home') }}">
-                {{ __('Home') }}
+                {{ __('Dashboard') }}
             </a>
         </li>
         <li>

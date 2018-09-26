@@ -18,6 +18,7 @@ class CreatePhotoProof extends Migration
             $table->integer('transaction_id');
             $table->string('photo_name');
             $table->string('photo_url')->nullable();
+            $table->string('photo_url_part')->nullable();
             $table->timestamps();
         });
     }

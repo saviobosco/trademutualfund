@@ -19,16 +19,22 @@
                                     <p> Status: @{{ transaction.status }} </p>
                                     <p> Time Ends: @{{ transaction.time_elapse_after }} </p>
                                     <div>
-                                        <h5> Make Payment User</h5>
+                                        <h5> Provide Help User</h5>
                                         <p> Name : @{{ transaction.make_payment_user.name }} </p>
                                     </div>
                                     <div>
-                                        <h5> Get Payment User</h5>
+                                        <h5> Get help User</h5>
                                         <p> Name : @{{ transaction.get_payment_user.name }} </p>
                                     </div>
-                                    <div class="row" v-if="transaction.photo_proofs.length > 0">
-                                        <div class="col-sm-3" v-for="photo in transaction.photo_proofs" :key="photo.id">
-                                            <img class="img-thumbnail" :src="photo.photo_url" :alt="photo.photo_name">
+                                    <div class="m-b-20">
+                                        <div v-if="transaction.photo_proofs.length > 0" id="gallery" class="gallery clearfix">
+                                            <div v-for="photo in transaction.photo_proofs" :key="photo.id" class="image pull-left">
+                                                <div class="image-inner">
+                                                    <a target="_blank" :href="photo.photo_url" data-lightbox="gallery-group-1">
+                                                        <img class="img-thumbnail" :src="photo.photo_url" :alt="photo.photo_name" />
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row" v-if="transaction.transaction_reports.length > 0">
@@ -39,8 +45,8 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <button @click="confirmTransaction" class="btn btn-sm btn-primary"> Confirm Transaction  </button>
-                                <button @click="cancelTransaction" class="btn btn-sm btn-danger"> Cancel Transaction</button>
+                                <button :disabled="transaction.status === 2" @click="confirmTransaction" class="btn btn-sm btn-primary"> Confirm Transaction  </button>
+                                <button :disabled="transaction.status === 2" @click="cancelTransaction" class="btn btn-sm btn-danger"> Cancel Transaction</button>
                             </div>
                         </admin-transaction-component>
                     </div>

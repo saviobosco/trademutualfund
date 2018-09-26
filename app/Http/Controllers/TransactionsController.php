@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Transaction;
 use Illuminate\Http\Request;
 use App\Repository\UsersRepository;
+use Illuminate\Support\Facades\Storage;
+
 class TransactionsController extends Controller
 {
     public function __construct()
@@ -117,10 +119,19 @@ class TransactionsController extends Controller
             'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $image = $request->file('file');
+        $input = null;
+        $storage = null;
         $input['photo_name'] = time().'.'.$image->getClientOriginalExtension();
-        $input['photo_url'] = asset('storage/images') .'/'. $input['photo_name'];
+        $input['photo_url_part'] = 'storage/images';
         try {
-            $image->storeAs('public/images', $input['photo_name']);
+            $env = env('FILESYSTEM_DRIVER');
+            if ($env === 'local') {
+                $input['photo_url'] = asset($input['photo_url_part']) .'/'. $input['photo_name'];
+                $image->storeAs('public/images', $input['photo_name']);
+            } elseif ($env === 'cloud') {
+                $input['photo_url'] = env('AWS_URL').'/';
+                $input['photo_url'] .= Storage::disk('s3')->putFileAs('/'.$input['photo_url_part'], $image,$input['photo_name'], 'public');
+            }
         } catch ( \Exception $exception) {
             return response()->json([
                 'error' => $exception->getMessage()

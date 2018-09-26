@@ -53,7 +53,13 @@ class Transaction extends Model
     {
         $photo = PhotoProof::find($image_id);
         $photo->delete();
-        Storage::delete('public/images/'.$photo['photo_name']);
+        $storage = null;
+        $env = env('FILESYSTEM_DRIVER');
+        if ($env === 'local') {
+            Storage::delete('public/images/'.$photo['photo_name']);
+        } elseif ($env === 'cloud') {
+            Storage::disk()->delete($photo['photo_url_part'].$photo['photo_name']);
+        }
         return $photo;
     }
 
@@ -116,5 +122,15 @@ class Transaction extends Model
     public function isActive()
     {
         return (int)$this->status === static::ACTIVE;
+    }
+
+    public function getTimeElapseAfterAttribute($date)
+    {
+        return (new Carbon($date))->toAtomString();
+    }
+
+    protected function serializeDate(\DateTimeInterface $date)
+    {
+        return $date->format('c');
     }
 }

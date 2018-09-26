@@ -13,7 +13,7 @@
         <!-- end sidebar user -->
         <!-- begin sidebar nav -->
         <ul class="nav">
-            <li class="nav-header">Navigation</li>
+            <li class="nav-header">Dashboard</li>
             @role('admin')
             <li class="">
                 <a href="{{ url('/users/index') }}">
@@ -70,11 +70,11 @@
                     <span> {{ __('My Investments') }} </span>
                 </a>
             </li>
-            <li class="">
-                <a href="{{ url('user_transaction/index') }}">
-                    <span> {{ __('My Transactions') }} </span>
-                </a>
-            </li>
+            {{--<li class="">--}}
+                {{--<a href="{{ url('user_transaction/index') }}">--}}
+                    {{--<span> {{ __('My Transactions') }} </span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
             <li class="">
                 <a href="{{ url('user_referral/index') }}">
                     <span> {{ __('My Referrals') }} </span>

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\GlobalFund;
 use App\Repository\UsersRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -24,7 +27,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $transactions = UsersRepository::getUserActiveTransactions(auth()->user()->id);
-        return view('home')->with(compact('transactions'));
+        $loggedInUser = auth()->user();
+        $transactions = UsersRepository::getUserActiveTransactions($loggedInUser->id);
+        $investments = UsersRepository::getUserActiveInvestments($loggedInUser->id);
+        $supportTickets = UsersRepository::getUserSupportTickets($loggedInUser->id);
+        $cashAbleInvestments = UsersRepository::getUserCashAbleInvestments($loggedInUser->id);
+        $referralsCount = UsersRepository::getUserReferralCount($loggedInUser->id);
+        $globalFunds = Cache::remember('globalFundsTotal', (new Carbon())->addMinutes(10), function () {
+            return GlobalFund::query()->pluck('amount')->sum();
+        });
+        $referralBonus = UsersRepository::getUserReferralBonus($loggedInUser->id);
+        return view('home')->with(compact('transactions','investments','globalFunds','referralBonus','supportTickets','cashAbleInvestments', 'referralsCount'));
     }
 }

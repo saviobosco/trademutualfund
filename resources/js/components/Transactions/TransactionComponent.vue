@@ -2,8 +2,10 @@
     <div>
         <div v-if="logged_in_user === transaction.get_payment_user_id">
             <h5> You are to be paid by</h5>
+            <countdown :time="transaction_expires">
+                <template slot-scope="props">Time Remaining：{{ props.days }} days, {{ props.hours }} hours, {{ props.minutes }} minutes, {{ props.seconds }} seconds.</template>
+            </countdown>
             <div>
-                <p> Transaction Id: {{ transaction.id }} </p>
                 <p> Name : {{ transaction.make_payment_user.name }} </p>
                 <p> Phone : {{ transaction.make_payment_user.phone_number }} </p>
                 <p> Amount : {{ transaction.amount }} </p>
@@ -16,7 +18,7 @@
                                 <img class="img-thumbnail" :src="photo.photo_url" :alt="photo.photo_name" />
                             </a>
                             <p class="image-caption">
-                                #1382 - 3D Arch
+                                {{ photo.id }}
                             </p>
                         </div>
                     </div>
@@ -38,11 +40,18 @@
 
         <div v-if="logged_in_user === transaction.make_payment_user_id">
             <h5> You are to pay </h5>
+            <countdown :time="transaction_expires">
+                <template slot-scope="props">Time Remaining：{{ props.days }} days, {{ props.hours }} hours, {{ props.minutes }} minutes, {{ props.seconds }} seconds.</template>
+            </countdown>
             <div>
-                <p> Transaction Id: {{ transaction.id }} </p>
                 <p> Name : {{ transaction.get_payment_user.name }} </p>
                 <p> Phone : {{ transaction.get_payment_user.phone_number }} </p>
                 <p> Amount : {{ transaction.amount }} </p>
+                <h4> Payment Detail </h4>
+                <p> Account Name: {{ transaction.get_payment_user.user_payment_details.account_name }} </p>
+                <p> Account Number: {{ transaction.get_payment_user.user_payment_details.account_number }} </p>
+                <p> Account Name: {{ transaction.get_payment_user.user_payment_details.bank_name }} </p>
+                <p> Bitcoin Address: {{ transaction.get_payment_user.user_payment_details.account_name }} </p>
             </div>
 
             <div class="m-b-20">
@@ -53,7 +62,7 @@
                                 <img class="img-thumbnail" :src="photo.photo_url" :alt="photo.photo_name" />
                             </a>
                             <p class="image-caption">
-                                #1382 - 3D Arch
+                                {{ photo.id }}
                             </p>
                         </div>
                         <button :disabled="! canRemoveImage" @click="removeImage(photo.id)" class="btn btn-sm btn-danger m-t-5">remove</button>
@@ -122,12 +131,18 @@ export default {
             canRemoveImage: (this.transaction.transaction_reports.length) ? false : true
         };
     },
+    computed: {
+        transaction_expires() {
+            return (new Date(this.transaction.time_elapse_after)).getTime() - (new Date()).getTime();
+        }
+    },
     watch: {
         'transaction.transaction_reports'(value) {
             if (value.length > 0 && this.canRemoveImage === true) {
                 this.canRemoveImage = false
             }
         }
+
     },
     methods: {
         async confirmTransaction() {
