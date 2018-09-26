@@ -26,7 +26,9 @@ class PermissionsSeeder extends Seeder
             foreach($roles_array as $role) {
                 $role = Role::firstOrCreate(['name' => trim($role)]);
                 // create one user for each role
-                $this->createUser($role);
+                if ($role->name === 'admin') {
+                    $this->createUser($role);
+                }
             }
 
             $this->command->info('Roles ' . $input_roles . ' added successfully');
@@ -39,7 +41,13 @@ class PermissionsSeeder extends Seeder
 
     private function createUser($role)
     {
-        $user = factory(User::class)->create();
+        //$user = factory(User::class)->create();
+        $user = User::create([
+            'name' => 'Alexys Ernser',
+            'email' => 'admin@trademutualclub.com',
+            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+            'remember_token' => str_random(10),
+        ]);
         $user->assignRole($role->name);
 
         if( $role->name == 'admin' ) {
