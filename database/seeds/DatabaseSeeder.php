@@ -13,12 +13,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call('CountriesSeeder');
         $this->command->info('Seeded the countries!');
+        $this->call('PermissionsSeeder');
+        $this->command->info('Seeded the Permissions!');
         $this->call('InvestmentRulesSeeder');
         $this->command->info('Seeded the Investment Rules!');
         $this->call('InvestmentPlansSeeder');
         $this->command->info('Seeded the Investment Plans!');
-        $this->call('PermissionsSeeder');
-
         // $this->call(UsersTableSeeder::class);
     }
 }
