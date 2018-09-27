@@ -24,6 +24,7 @@ Route::middleware(['verified'])->group(function() {
     Route::post('/user_investments/create', 'UserInvestmentsController@store');
     Route::get('/user_investments/index', 'UserInvestmentsController@index');
     Route::put('/user_investments/cancel/{investment}', 'UserInvestmentsController@cancel');
+    Route::post('/user_investments/addTestimony/{investment}', 'UserInvestmentsController@addTestimony');
 
     // User Transactions
     Route::get('/transactions/active', 'UserTransactionsController@active');

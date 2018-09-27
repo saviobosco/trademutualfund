@@ -70,4 +70,17 @@ class Investment extends Model
     {
         return $this->status === static::MERGED;
     }
+
+    public function testimony()
+    {
+        return $this->hasOne(Testimony::class);
+    }
+
+    public function addTestimony($testimony)
+    {
+        return $this->testimony()->create([
+            'user_id' => $this->user_id,
+            'testimony' => $testimony
+        ]);
+    }
 }

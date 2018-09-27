@@ -19,6 +19,11 @@ class UserInvestmentsController extends Controller
     public function index()
     {
         $investments = auth()->user()->getInvestments();
+        if (request()->wantsJson()) {
+            return response()->json([
+                'data' => $investments
+            ]);
+        }
         return view('user_investments.index')->with(compact('investments'));
     }
 
@@ -74,6 +79,19 @@ class UserInvestmentsController extends Controller
             }
             Session::flash('message', 'You have successfully started a new investment!');
             return back();
+        }
+    }
+
+    public function addTestimony(Request $request, Investment $investment)
+    {
+        if ($investment->addTestimony($request->input('testimony'))) {
+            return response()->json([
+                'data' => 'OK'
+            ]);
+        } else {
+            return response()->json([
+                'data' => 'Error'
+            ]);
         }
     }
 }

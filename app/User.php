@@ -108,7 +108,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getInvestments()
     {
-        return $this->investments()->get()->all();
+        return $this->investments()->with(['testimony'])->get();
     }
 
     public function getReferralCredit($amount,$referred_user_id)
