@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Seeded the countries!');
         $this->call('PermissionsSeeder');
         $this->command->info('Seeded the Permissions!');
+        $this->call('BanksSeeder');
+        $this->command->info('Seeded the banks!');
         $this->call('InvestmentRulesSeeder');
         $this->command->info('Seeded the Investment Rules!');
         $this->call('InvestmentPlansSeeder');
