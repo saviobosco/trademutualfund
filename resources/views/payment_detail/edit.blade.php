@@ -34,16 +34,7 @@
                                 {!! Form::label('bank_name', 'Bank Name') !!}
                             </div>
                             <div class="col-sm-6">
-                                {!! Form::text('bank_name',null,['class' => 'form-control']) !!}
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-4 col-form-label text-md-right">
-                                {!! Form::label('bitcoin_wallet_address', 'Bitcoin Address ') !!}
-                            </div>
-                            <div class="col-sm-6">
-                                {!! Form::text('bitcoin_wallet_address',null,['class' => 'form-control']) !!}
+                                {!! Form::select('bank_id', $banks, null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
 

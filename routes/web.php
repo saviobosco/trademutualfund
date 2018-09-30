@@ -87,5 +87,11 @@ Route::middleware(['verified','role:admin'])->group(function() {
     Route::get('/investment_plans/index', 'InvestmentPlansController@index');
     Route::put('/investment_plans/edit/{investmentPlan}', 'InvestmentPlansController@update');
     Route::get('/investment_plans/edit/{investmentPlan}', 'InvestmentPlansController@edit');
+
+    Route::get('/banks/index', 'BanksController@index');
+    Route::post('/banks/create', 'BanksController@store');
+    Route::get('/banks/create', 'BanksController@create');
+    Route::put('/banks/edit/{bank}', 'BanksController@update');
+    Route::get('/banks/edit/{bank}', 'BanksController@edit');
 });
 

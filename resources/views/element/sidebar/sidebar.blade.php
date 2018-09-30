@@ -63,6 +63,12 @@
                     <span> {{ __('Reports') }} </span>
                 </a>
             </li>
+            <li class="">
+                <a href="{{ url('/banks/index') }}">
+                    <i class="fa fa-institution"></i>
+                    <span> {{ __('Banks') }} </span>
+                </a>
+            </li>
             @endrole
             <li class="">
                 <a href="{{ url('user_investments/index') }}">

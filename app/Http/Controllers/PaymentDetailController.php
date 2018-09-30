@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Bank;
 use App\UserPaymentDetail;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class PaymentDetailController extends Controller
     public function edit()
     {
         $paymentDetail = auth()->user()->user_payment_details;
-        return view('payment_detail.edit')->with(compact('paymentDetail'));
+        $banks = Bank::query()->pluck('name', 'id')->toArray();
+        return view('payment_detail.edit')->with(compact('paymentDetail', 'banks'));
     }
 
     /**

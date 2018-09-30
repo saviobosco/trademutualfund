@@ -69,7 +69,7 @@
                 <div class="card-block">
                     <blockquote class="card-blockquote">
                         <p class="f-s-14 text-inverse f-w-600"> It seem you don't have any investment yet!</p>
-                        <a class="btn btn-sm btn-primary" href="{{ url('/user_investments/create') }}"> Start Investing </a>
+                        <a class="btn btn-sm btn-danger" href="{{ url('/user_investments/create') }}"> Provide Donation </a>
                     </blockquote>
                 </div>
             </div>
@@ -97,7 +97,11 @@
                     <h4 class="panel-title"> Referral Link </h4>
                 </div>
                 <div class="panel-body">
-                    <p>{{ auth()->user()->referral_link->getLinkAttribute()  }} </p>
+                    <p>
+                        <a href="{{ auth()->user()->referral_link->getLinkAttribute()  }}">
+                            {{ url('register').'/'.urlencode(auth()->user()->name) }}
+                        </a>
+                    </p>
 
                 </div>
             </div>
