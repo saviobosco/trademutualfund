@@ -33,11 +33,17 @@
                     <span> {{ __('Investment Rules') }} </span>
                 </a>
             </li>
-            <li class="">
-                <a href="{{ url('/global_funds/index') }}">
-                    <i class="fa fa-users"></i>
-                    <span> {{ __('Global Funds') }} </span>
+            <li class="has-sub">
+                <a href="javascript:;">
+                    <b class="caret"></b>
+                    <i class="fa fa-hdd"></i>
+                    <span>Global Funds </span>
                 </a>
+                <ul class="sub-menu">
+                    <li><a href="{{ url('/global_funds/index') }}"> Global Funds </a></li>
+                    <li><a href="{{ url('/global_funds/cash_out') }}"> Cash out fund </a></li>
+                    <li><a href="{{ url('/global_funds/activities') }}"> Global Funds Activity </a></li>
+                </ul>
             </li>
             <li class="">
                 <a href="{{ url('/transactions/index') }}">
@@ -69,6 +75,12 @@
                     <span> {{ __('Banks') }} </span>
                 </a>
             </li>
+            <li class="">
+                <a href="{{ url('/settings/update') }}">
+                    <i class="fa fa-gears"></i>
+                    <span> {{ __('Settings') }} </span>
+                </a>
+            </li>
             @endrole
             <li class="">
                 <a href="{{ url('user_investments/index') }}">
@@ -76,11 +88,11 @@
                     <span> {{ __('My Investments') }} </span>
                 </a>
             </li>
-            {{--<li class="">--}}
-                {{--<a href="{{ url('user_transaction/index') }}">--}}
-                    {{--<span> {{ __('My Transactions') }} </span>--}}
-                {{--</a>--}}
-            {{--</li>--}}
+            <li class="">
+                <a href="{{ url('profile/activities') }}">
+                    <span> {{ __('My Transactions') }} </span>
+                </a>
+            </li>
             <li class="">
                 <a href="{{ url('user_referral/index') }}">
                     <span> {{ __('My Referrals') }} </span>

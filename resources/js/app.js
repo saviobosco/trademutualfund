@@ -72,6 +72,59 @@ setTimeout(() => {
             }
         });
     })();
+    (function() {
+        "use strict";
+        
+        var expandTime = ($('.sidebar').attr('data-disable-slide-animation')) ? 0 : 250;
+        $('.sidebar .nav > .has-sub > a').click(function() {
+            var target = $(this).next('.sub-menu');
+            var otherMenu = $('.sidebar .nav > li.has-sub > .sub-menu').not(target);
+    
+            if ($('.page-sidebar-minified').length === 0) {
+                $(otherMenu).closest('li').addClass('closing');
+                $(otherMenu).slideUp(expandTime, function() {
+                    $(otherMenu).closest('li').addClass('closed').removeClass('expand closing');
+                });
+                if ($(target).is(':visible')) {
+                    $(target).closest('li').addClass('closing').removeClass('expand');
+                } else {
+                    $(target).closest('li').addClass('expanding').removeClass('closed');
+                }
+                $(target).slideToggle(expandTime, function() {
+                    var targetLi = $(this).closest('li');
+                    if (!$(target).is(':visible')) {
+                        $(targetLi).addClass('closed');
+                        $(targetLi).removeClass('expand');
+                    } else {
+                        $(targetLi).addClass('expand');
+                        $(targetLi).removeClass('closed');
+                    }
+                    $(targetLi).removeClass('expanding closing');
+                });
+            }
+        });
+        $('.sidebar .nav > .has-sub .sub-menu li.has-sub > a').click(function() {
+            if ($('.page-sidebar-minified').length === 0) {
+                var target = $(this).next('.sub-menu');
+                if ($(target).is(':visible')) {
+                    $(target).closest('li').addClass('closing').removeClass('expand');
+                } else {
+                    $(target).closest('li').addClass('expanding').removeClass('closed');
+                }
+                $(target).slideToggle(expandTime, function() {
+                    var targetLi = $(this).closest('li');
+                    if (!$(target).is(':visible')) {
+                        $(targetLi).addClass('closed');
+                        $(targetLi).removeClass('expand');
+                    } else {
+                        $(targetLi).addClass('expand');
+                        $(targetLi).removeClass('closed');
+                    }
+                    $(targetLi).removeClass('expanding closing');
+                });
+            }
+        });
+    })();
 },500);
 
 import VueSweetalert2 from 'vue-sweetalert2';
@@ -79,7 +132,7 @@ import VueCountdown from '@xkeshi/vue-countdown';
 
 
 window.Vue = require('vue');
-
+Vue.config.devtools = true;
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

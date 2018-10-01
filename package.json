@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "@xkeshi/vue-countdown": "^1.0.1",
+        "nprogress": "^0.2.0",
         "vue-axios": "^2.1.3",
         "vue-notification": "^1.3.13",
         "vue-select": "^2.5.0",

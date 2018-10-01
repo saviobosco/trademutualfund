@@ -9,8 +9,9 @@ class Investment extends Model
     CONST CANCELLED = -1;
     CONST ACTIVE = 1;
     CONST CONFIRMED = 2;
-    CONST MERGED = 3; // when a get payment record has been created
-    CONST COMPLETED = 4; // when the transaction is complete
+    CONST CASH_OUT = 3;
+    CONST CASHED_OUT = 4; // when investment has been be cashed out
+    CONST COMPLETED = 5; // when the transaction is complete
 
     protected $fillable = ['user_id','make_payment_id','investment_plan_id','global_funds_amount','amount_invested','roi_amount','','release_date','status'];
 
@@ -32,6 +33,8 @@ class Investment extends Model
     public function cancel()
     {
         if ($this->canCancel() && $this->isActive()) {
+            $makePayment = $this->make_payments()->get()[0];
+            $makePayment->cancel();
             return $this->update(['status' => static::CANCELLED]);
         }
         return false;
@@ -51,6 +54,11 @@ class Investment extends Model
         return (int)$this->status === static::ACTIVE;
     }
 
+    public function isConfirmed()
+    {
+        return (int) $this->status === static::CONFIRMED;
+    }
+
     public function confirm()
     {
         return $this->update(['status' => static::CONFIRMED]);
@@ -58,17 +66,67 @@ class Investment extends Model
 
     public function complete()
     {
+        if (! $this->isCashedOut()) {
+            return false;
+        }
         return $this->update(['status' => static::COMPLETED]);
     }
 
-    public function merged()
+    public function cashOut()
     {
-        return $this->update(['status' => static::MERGED]);
+        return $this->update(['status' => static::CASH_OUT]);
     }
 
-    public function isMerged()
+    public function isCashAble()
     {
-        return $this->status === static::MERGED;
+        return (int)$this->status === static::CASH_OUT;
+    }
+
+    public function cashOutInvestment()
+    {
+        // get all active referral bonuses
+        $referrals = ReferralsBonus::query()
+            ->where('status',1)
+            ->where('user_id', $this->user_id)
+            ->get();
+        // sum all
+        $referralsSum = $referrals->sum('amount');
+        // change status as paid out
+        $data = [
+            'user_id' => $this->user_id,
+            'investment_id' => $this->id,
+            'amount' => $this->roi_amount + $referralsSum,
+            'initial_amount' => $this->roi_amount + $referralsSum,
+        ];
+        if (GetPayment::create($data)) {
+            GlobalFund::create([
+                'investment_id' => $this->id,
+                'amount' => $this->global_funds_amount
+            ]);
+            foreach($referrals as $referral) {
+                $referral->paidOut();
+            }
+            $global_funds = setting('global_funds');
+            $global_funds_cumulative = setting('global_funds_cumulative');
+            $global_funds += $this->global_funds_amount;
+            $global_funds_cumulative += $this->global_funds_amount;
+            setting(['global_funds' => $global_funds]);
+            setting(['global_funds_cumulative' => $global_funds_cumulative]);
+            setting()->save();
+            $this->cashedOut();
+            return true;
+        }
+        return false;
+    }
+
+    public function cashedOut()
+    {
+        return $this->update(['status' => static::CASHED_OUT]);
+    }
+
+    public function isCashedOut()
+    {
+        return (int)$this->status === static::CASHED_OUT;
     }
 
     public function testimony()

@@ -94,4 +94,32 @@ class UserInvestmentsController extends Controller
             ]);
         }
     }
+
+    public function cancel(Investment $investment)
+    {
+        if (auth()->user()->id !== $investment->user_id) {
+            return response(null,401)->send();
+        }
+        if ($investment->cancel()) {
+            return response()->json(['data' => 'OK']);
+        } else {
+            return response()->json(['data' => 'Error'],422);
+        }
+        // belongs to user
+        // is active
+        // cancel
+    }
+
+    public function cashOut(Investment $investment)
+    {
+        if (auth()->user()->id !== $investment->user_id) {
+            return response(null,401)->send();
+        }
+        if (! $investment->isCashAble()) {
+            return response()->json(['data' => 'Error'],422);
+        }
+        if ($investment->cashOutInvestment()) {
+            return response()->json(['data' => 'OK']);
+        }
+    }
 }

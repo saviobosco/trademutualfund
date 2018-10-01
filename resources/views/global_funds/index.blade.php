@@ -18,8 +18,6 @@
                                 <th> id</th>
                                 <th> investment Id </th>
                                 <th> amount </th>
-                                <th> user merged to </th>
-                                <th> status </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -28,8 +26,6 @@
                                     <td> {{ $globalFund->id }} </td>
                                     <td> {{ $globalFund->investment_id }} </td>
                                     <td> {{ $globalFund->amount }} </td>
-                                    <td> {{ $globalFund->user_id }} </td>
-                                    <td> {{ $globalFund->status }} </td>
                                 </tr>
                             @endforeach
                             </tbody>

@@ -47,20 +47,9 @@ class ProcessInvestments extends Command
         foreach($investments as $investment) {
             // if the investment->release_date < time // release it
             if ($investment->release_date < new Carbon()) {
-                // create a new get payment
-                $investment->get_payment()->create([
-                    'amount' => $investment->roi_amount,
-                    'initial_amount' => $investment->roi_amount,
-                    'user_id' => $investment->user_id,
-                ]);
-                $investment->merged();
-                // create global funds
-                GlobalFund::create([
-                   'investment_id' => $investment['id'],
-                    'amount' => $investment['global_funds_amount'],
-                ]);
+                // update status to cashable
+                $investment->cashOut();
             }
         }
     }
-
 }

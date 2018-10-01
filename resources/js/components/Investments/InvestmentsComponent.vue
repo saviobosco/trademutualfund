@@ -16,6 +16,42 @@ export default {
             this.clearTestimony();
             this.clearInvestment();
         },
+        async cancelInvestment(id) {
+            let result = await Vue.swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#388e3c',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Cancel Investment!'
+                });
+                if (result.value) {
+                    let response = await this.$http.post(`/user_investments/cancel/${id}`);
+                    if (response.data.data === 'OK') {
+                        Vue.swal('Confirmed!','investment has been cancelled.', 'success');
+                    }
+                }
+                this.getInvestments();
+        },
+        async cashOutInvestment(id) {
+            let result = await Vue.swal({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#388e3c',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, CashOut Investment!'
+                });
+                if (result.value) {
+                    let response = await this.$http.post(`/user_investments/cash_out/${id}`);
+                    if (response.data.data === 'OK') {
+                        Vue.swal('Confirmed!','investment has been cashed out.', 'success');
+                    }
+                }
+                this.getInvestments();
+        },
         selectInvestment(id) {
                 let selectedInvestment = this.investments.filter((investment) => {
                     return investment.id === id;
@@ -59,13 +95,16 @@ export default {
                 return '<span class="label label-success"> confirmed </span>';
               break;
               case 3:
-                return '<span class="label label-success"> cashed_out </span>';
+                return '<span class="label label-success"> cash out </span>';
               break;
               case 4:
-                return '<span class="label label-success"> completed </span>';
+                return '<span class="label label-success"> cashed out </span>';
                 break;
+              case 5:
+                return '<span class="label label-success"> completed </span>';
+                break;  
               case -1:
-                return '<span class="label label-danger"> active </span>'
+                return '<span class="label label-danger"> cancelled </span>'
                 break;
               default:
                 return '<span> Unknown </span>';

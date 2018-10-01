@@ -23,7 +23,8 @@ Route::middleware(['verified'])->group(function() {
     Route::get('/user_investments/create','UserInvestmentsController@create')->name('new_investment');
     Route::post('/user_investments/create', 'UserInvestmentsController@store');
     Route::get('/user_investments/index', 'UserInvestmentsController@index');
-    Route::put('/user_investments/cancel/{investment}', 'UserInvestmentsController@cancel');
+    Route::post('/user_investments/cancel/{investment}', 'UserInvestmentsController@cancel');
+    Route::post('/user_investments/cash_out/{investment}', 'UserInvestmentsController@cashOut');
     Route::post('/user_investments/addTestimony/{investment}', 'UserInvestmentsController@addTestimony');
 
     // User Transactions
@@ -75,6 +76,9 @@ Route::middleware(['verified','role:admin'])->group(function() {
 
     //Global Funds
     Route::get('/global_funds/index','GlobalFundsController@index');
+    Route::get('/global_funds/cash_out','GlobalFundsController@cashOut');
+    Route::post('/global_funds/cash_out','GlobalFundsController@processCashOut');
+    Route::get('/global_funds/activities','GlobalFundsController@cashOut');
 
     Route::get('/investment_rules/index', 'InvestmentRulesController@index');
     Route::post('/investment_rules/create', 'InvestmentRulesController@store');
@@ -93,5 +97,8 @@ Route::middleware(['verified','role:admin'])->group(function() {
     Route::get('/banks/create', 'BanksController@create');
     Route::put('/banks/edit/{bank}', 'BanksController@update');
     Route::get('/banks/edit/{bank}', 'BanksController@edit');
+
+    Route::get('/settings/update', 'SettingsController@edit');
+    Route::post('/settings/update', 'SettingsController@update');
 });
 

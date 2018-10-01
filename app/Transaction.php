@@ -58,7 +58,7 @@ class Transaction extends Model
         if ($env === 'local') {
             Storage::delete('public/images/'.$photo['photo_name']);
         } elseif ($env === 'cloud') {
-            Storage::disk()->delete($photo['photo_url_part'].$photo['photo_name']);
+            Storage::disk('s3')->delete($photo['photo_url_part'].'/'.$photo['photo_name']);
         }
         return $photo;
     }
@@ -132,5 +132,10 @@ class Transaction extends Model
     protected function serializeDate(\DateTimeInterface $date)
     {
         return $date->format('c');
+    }
+
+    public function resetTimer()
+    {
+        $this->update(['time_elapse_after' => new Carbon('+12 hours')]);
     }
 }

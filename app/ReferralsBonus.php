@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ReferralsBonus extends Model
 {
+    CONST PAID_OUT = 2;
+
     protected $table = 'referrals_bonuses';
 
     protected $guarded = [];
@@ -30,5 +32,10 @@ class ReferralsBonus extends Model
     public function referred_user()
     {
         return $this->belongsTo(User::class,'referred_user_id');
+    }
+
+    public function paidOut()
+    {
+        return $this->update(['status' => static::PAID_OUT]);
     }
 }

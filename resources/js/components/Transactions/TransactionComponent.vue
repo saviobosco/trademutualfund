@@ -65,7 +65,7 @@
                                 {{ photo.id }}
                             </p>
                         </div>
-                        <button :disabled="! canRemoveImage" @click="removeImage(photo.id)" class="btn btn-sm btn-danger m-t-5">remove</button>
+                        <!-- <button :disabled="! canRemoveImage" @click="removeImage(photo.id)" class="btn btn-sm btn-danger m-t-5">remove</button> -->
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div>
-                <button :disabled="! canRemoveImage" type="button" data-toggle="modal" @click="openModal" class="btn btn-sm btn-primary"> Upload Proof </button>
+                <button :disabled="! canUploadImage" type="button" data-toggle="modal" @click="openModal" class="btn btn-sm btn-primary"> Upload Proof </button>
                 <span class="" v-if="transaction.photo_proofs.length > 0">{{ transaction.photo_proofs.length  }} Images Uploaded </span> |
                 <span class="" v-if="transaction.transaction_reports.length > 0">{{ transaction.transaction_reports.length  }} Report(s) </span>
             </div>
@@ -95,7 +95,7 @@
                         </div>
                         <div class="modal-footer">
                             <a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
-                            <button :disabled="!showPreview" @click="uploadImage" type="button" class="btn btn-sm btn-success"> Upload</button>
+                            <button :disabled="!showPreview || isUploadingImage" @click="uploadImage" type="button" class="btn btn-sm btn-success"> Upload</button>
                         </div>
                     </div>
                 </div>
@@ -128,7 +128,9 @@ export default {
             showPreview: false,
             imagePreview: '',
             modal: 'modal-' + this.id,
-            canRemoveImage: (this.transaction.transaction_reports.length) ? false : true
+            canRemoveImage: (this.transaction.transaction_reports.length) ? false : true,
+            canUploadImage: (this.transaction.photo_proofs.length) ? false : true,
+            isUploadingImage: false
         };
     },
     computed: {
@@ -140,6 +142,11 @@ export default {
         'transaction.transaction_reports'(value) {
             if (value.length > 0 && this.canRemoveImage === true) {
                 this.canRemoveImage = false
+            }
+        },
+        'transaction.photo_proofs'(value) {
+            if (value.length > 0 && this.canRemoveImage === true) {
+                this.canUploadImage = false
             }
         }
 
@@ -202,6 +209,7 @@ export default {
             }
         },
         uploadImage() {
+            this.isUploadingImage = true;
             /*
             Initialize the form data
             */
@@ -225,9 +233,11 @@ export default {
             ).then((response) => {
                 this.transaction.photo_proofs.push(response.data.data);
                 $(`#modal-${this.id}`).modal('hide');
+                this.isUploadingImage = false;
             })
             .catch(function(){
                 console.log('FAILURE!!');
+                this.isUploadingImage = false;
             });
         },
         removeImage(id) {

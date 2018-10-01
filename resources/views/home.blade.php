@@ -1,3 +1,4 @@
+<?php $referral_link = auth()->user()->referral_link->getLinkAttribute(); ?>
 @extends('layouts.app')
 
 @section('title', 'Dashboard')
@@ -98,10 +99,21 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        <a href="{{ auth()->user()->referral_link->getLinkAttribute()  }}">
+                        <a target="_blank" href="{{ $referral_link }}">
                             {{ url('register').'/'.urlencode(auth()->user()->name) }}
                         </a>
                     </p>
+                    <p> Share on social media </p>
+                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{ $referral_link }}" class="btn btn-primary btn-icon btn-circle btn-lg m-r-10">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                    <a target="_blank" href="https://plus.google.com/share?url={{ $referral_link }}" class="btn btn-info btn-icon btn-circle btn-lg m-r-10">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <a target="_blank" href="https://twitter.com/share?url={{ $referral_link }}" class="btn btn-danger btn-icon btn-circle btn-lg">
+                        <i class="fa fa-google-plus"></i>
+                    </a>
+
 
                 </div>
             </div>

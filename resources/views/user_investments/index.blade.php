@@ -34,13 +34,13 @@
                                         <td> @{{ investment.release_date }} </td>
                                         <td v-html="$options.filters.status(investment.status)"> </td>
                                         <td>
-                                            <button v-if="investment.status == 2"  class="btn btn-sm btn-success">
+                                            <button v-if="investment.status == 3"  @click="cashOutInvestment(investment.id)"  class="btn btn-sm btn-success">
                                                 Cash Out
                                             </button>
-                                            <button v-if="investment.status == 1"  class="btn btn-sm btn-danger">
+                                            <button v-if="investment.status == 1" @click="cancelInvestment(investment.id)"  class="btn btn-sm btn-danger">
                                                 Cancel
                                             </button>
-                                            <button v-if="investment.status == 4" @click="addTestimony(investment.id)"  class="btn btn-sm btn-primary">
+                                            <button v-if="investment.status == 5 && investment.testimony === null" @click="addTestimony(investment.id)"  class="btn btn-sm btn-primary">
                                                 Add testimony
                                             </button>
                                         </td>

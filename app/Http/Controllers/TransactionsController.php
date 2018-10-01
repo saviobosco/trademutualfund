@@ -138,6 +138,7 @@ class TransactionsController extends Controller
             ]);
         }
         $savedImage = $transaction->addImageProof($input);
+        $transaction->resetTimer();
         return response()->json([
             'data' => $savedImage
         ]);

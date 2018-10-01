@@ -161,6 +161,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         Webpatser\Countries\CountriesServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Musonza\Chat\ChatServiceProvider::class,
+        Akaunting\Setting\Provider::class,
     ],
 
     /*
@@ -212,5 +214,7 @@ return [
         'Countries' => Webpatser\Countries\CountriesFacade::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Chat' => Musonza\Chat\Facades\ChatFacade::class,
+        'Setting' => Akaunting\Setting\Facade::class,
     ],
 ];

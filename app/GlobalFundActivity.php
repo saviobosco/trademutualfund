@@ -4,7 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GlobalFund extends Model
+class GlobalFundActivity extends Model
 {
     protected $guarded = ['id'];
+
 }
