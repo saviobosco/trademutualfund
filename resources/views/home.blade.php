@@ -17,16 +17,14 @@
         {{--</div>--}}
         <div class="col-md-3 col-sm-6">
             <div class="widget widget-stats bg-green">
-                <div class="stats-icon"><i class="fa fa-desktop"></i></div>
                 <div class="stats-info">
                     <h4> Global Funds </h4>
-                    <p>{{ setting('global_funds_cumulative') }}</p>
+                    <p>{{ ($globalFundsCumulative) ? $globalFundsCumulative : 0  }}</p>
                 </div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="widget widget-stats bg-green">
-                <div class="stats-icon"><i class="fa fa-desktop"></i></div>
                 <div class="stats-info">
                     <h4> Cash out </h4>
                     <p> {{ $cashAbleInvestments }} </p>
@@ -35,7 +33,6 @@
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="widget widget-stats bg-green">
-                <div class="stats-icon"><i class="fa fa-desktop"></i></div>
                 <div class="stats-info">
                     <h4> Referral Bonus </h4>
                     <p>{{ $referralBonus }}</p>
@@ -53,7 +50,6 @@
         {{--</div>--}}
         <div class="col-md-3 col-sm-6">
             <div class="widget widget-stats bg-green">
-                <div class="stats-icon"><i class="fa fa-desktop"></i></div>
                 <div class="stats-info">
                     <h4> Referrals </h4>
                     <p> {{ $referralsCount }} </p>

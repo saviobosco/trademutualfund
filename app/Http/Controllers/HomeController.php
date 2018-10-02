@@ -33,8 +33,9 @@ class HomeController extends Controller
         //$supportTickets = UsersRepository::getUserSupportTickets($loggedInUser->id);
         $cashAbleInvestments = UsersRepository::getUserCashAbleInvestments($loggedInUser->id);
         $referralsCount = UsersRepository::getUserReferralCount($loggedInUser->id);
+        $globalFundsCumulative = setting('global_funds_cumulative');
 
         $referralBonus = UsersRepository::getUserReferralBonus($loggedInUser->id);
-        return view('home')->with(compact('transactions','investments','globalFunds','referralBonus','supportTickets','cashAbleInvestments', 'referralsCount'));
+        return view('home')->with(compact('transactions','investments','globalFunds','referralBonus','cashAbleInvestments', 'referralsCount','globalFundsCumulative'));
     }
 }
