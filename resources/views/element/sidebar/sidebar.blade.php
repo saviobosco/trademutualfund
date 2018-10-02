@@ -94,11 +94,11 @@
                     <span> {{ __('My Investments') }} </span>
                 </a>
             </li>
-            <li class="">
-                <a href="{{ url('profile/activities') }}">
-                    <span> {{ __('My Transactions') }} </span>
-                </a>
-            </li>
+            {{--<li class="">--}}
+                {{--<a href="{{ url('profile/activities') }}">--}}
+                    {{--<span> {{ __('My Transactions') }} </span>--}}
+                {{--</a>--}}
+            {{--</li>--}}
             <li class="">
                 <a href="{{ url('user_referral/index') }}">
                     <span> {{ __('My Referrals') }} </span>
