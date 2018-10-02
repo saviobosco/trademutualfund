@@ -70,6 +70,12 @@
                 </a>
             </li>
             <li class="">
+                <a href="{{ url('/testimonies/index') }}">
+                    <i class="fa fa-comment"></i>
+                    <span> {{ __('Testimonies') }} </span>
+                </a>
+            </li>
+            <li class="">
                 <a href="{{ url('/banks/index') }}">
                     <i class="fa fa-institution"></i>
                     <span> {{ __('Banks') }} </span>

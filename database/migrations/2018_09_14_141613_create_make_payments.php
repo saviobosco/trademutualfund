@@ -17,9 +17,9 @@ class CreateMakePayments extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('investment_id')->nullable();
-            $table->decimal('amount', 13, 4);
-            $table->decimal('initial_amount', 13, 4);
-            $table->decimal('amount_paid')->nullable()->comment('This column hold the total amount the users has paid out, if it is equal to the amount column, the record will be marked as completed');
+            $table->decimal('amount', 13, 2);
+            $table->decimal('initial_amount', 13, 2);
+            $table->decimal('amount_paid', 13, 2)->nullable()->comment('This column hold the total amount the users has paid out, if it is equal to the amount column, the record will be marked as completed');
             $table->dateTime('completed_at')->nullable();
             $table->integer('status')->default(1);
             $table->timestamps();

@@ -54,12 +54,10 @@ class UsersRepository
 
     public static function getUserReferralBonus($user_id)
     {
-        return Cache::remember($user_id.'-referralBonus', (new Carbon())->addMinutes(10), function () use ($user_id) {
-            return ReferralsBonus::query()
-                ->where('status',1)
-                ->where('user_id', $user_id)
-                ->pluck('amount')->sum();
-        });
+        return ReferralsBonus::query()
+        ->where('status',1)
+        ->where('user_id', $user_id)
+        ->pluck('amount')->sum();
     }
 
     public static function getUserSupportTickets($user_id)
@@ -76,7 +74,7 @@ class UsersRepository
         $investments = Investment::query()
             ->select(['roi_amount'])
             ->where('user_id', $user_id)
-            ->whereBetween('status', [2,3])
+            ->whereBetween('status', [2,4])
             ->pluck('roi_amount')
             ->sum();
         return $investments;

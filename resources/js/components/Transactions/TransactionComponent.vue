@@ -1,42 +1,52 @@
 <template>
     <div>
         <div v-if="logged_in_user === transaction.get_payment_user_id">
-            <h5> You are to be paid by</h5>
-            <countdown :time="transaction_expires">
-                <template slot-scope="props">Time Remaining：{{ props.days }} days, {{ props.hours }} hours, {{ props.minutes }} minutes, {{ props.seconds }} seconds.</template>
-            </countdown>
-            <div>
-                <p> Name : {{ transaction.make_payment_user.name }} </p>
-                <p> Phone : {{ transaction.make_payment_user.phone_number }} </p>
-                <p> Amount : {{ transaction.amount }} </p>
-            </div>
-            <div class="m-b-20">
-                <div v-if="transaction.photo_proofs.length > 0" id="gallery" class="gallery clearfix">
-                    <div v-for="photo in transaction.photo_proofs" :key="photo.id" class="image pull-left">
-                        <div class="image-inner">
-                            <a target="_blank" :href="photo.photo_url" data-lightbox="gallery-group-1">
-                                <img class="img-thumbnail" :src="photo.photo_url" :alt="photo.photo_name" />
-                            </a>
-                            <p class="image-caption">
-                                {{ photo.id }}
-                            </p>
+                <h5> You are to be paid by</h5>
+                <countdown ref="countdown" :time="transaction_expires">
+                    <template slot-scope="props">Time Remaining：{{ props.days }} days, {{ props.hours }} hours, {{ props.minutes }} minutes, {{ props.seconds }} seconds.</template>
+                </countdown>
+                <div>
+                    <p> Name : {{ transaction.make_payment_user.name }} </p>
+                    <p> Phone : {{ transaction.make_payment_user.phone_number }} </p>
+                    <p> Amount : {{ transaction.amount }} </p>
+                    <p> Transaction Status : <span v-html="$options.filters.status(transaction.status)"></span> </p>
+                </div>
+                <div class="m-b-20">
+                    <div v-if="transaction.photo_proofs.length > 0" id="gallery" class="gallery clearfix">
+                        <div v-for="photo in transaction.photo_proofs" :key="photo.id" class="image pull-left">
+                            <div class="image-inner">
+                                <a target="_blank" :href="photo.photo_url" data-lightbox="gallery-group-1">
+                                    <img class="img-thumbnail" :src="photo.photo_url" :alt="photo.photo_name" />
+                                </a>
+                                <p class="image-caption">
+                                    {{ photo.id }}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
-                <div v-if="transaction.transaction_reports.length > 0">
-                <div class="alert alert-danger">
-                    Image(s) has been report as fake POP!
+                <div>
+                    <div v-if="transaction.transaction_reports.length > 0">
+                        <div class="alert alert-danger">
+                            Image(s) has been report as fake POP!
+                        </div>
+                    </div>
                 </div>
+            <div v-if="transaction.status == 1">
+                <button @click="confirmTransaction" class="btn btn-sm btn-primary"> Confirm payment  </button>
+                <button :disabled="! canRemoveImage" @click="reportFakePOP" class="btn btn-sm btn-danger"> Report Transaction</button>
+                <span class="" v-if="transaction.photo_proofs.length > 0">{{ transaction.photo_proofs.length  }} Image(s) Uploaded </span> | 
+                <span class="" v-if="transaction.transaction_reports.length > 0">{{ transaction.transaction_reports.length  }} Report(s) </span>
             </div>
+            <div v-if="transaction.status == 2">
+                <add-testimony-component :investment_id="transaction.get_payment.investment_id" @testimonyAdded="transactionCompleted">
+                </add-testimony-component>
             </div>
-            <button @click="confirmTransaction" class="btn btn-sm btn-primary"> Confirm payment  </button>
-            <button :disabled="! canRemoveImage" @click="reportFakePOP" class="btn btn-sm btn-danger"> Report Transaction</button>
-            <span class="" v-if="transaction.photo_proofs.length > 0">{{ transaction.photo_proofs.length  }} Image(s) Uploaded </span> | 
-            <span class="" v-if="transaction.transaction_reports.length > 0">{{ transaction.transaction_reports.length  }} Report(s) </span>
 
         </div>
+
+
+
 
         <div v-if="logged_in_user === transaction.make_payment_user_id">
             <h5> You are to pay </h5>
@@ -51,7 +61,7 @@
                 <p> Account Name: {{ transaction.get_payment_user.user_payment_details.account_name }} </p>
                 <p> Account Number: {{ transaction.get_payment_user.user_payment_details.account_number }} </p>
                 <p> Account Name: {{ transaction.get_payment_user.user_payment_details.bank_name }} </p>
-                <p> Bitcoin Address: {{ transaction.get_payment_user.user_payment_details.account_name }} </p>
+                <p> Transaction Status : <span v-html="$options.filters.status(transaction.status)"></span> </p>
             </div>
 
             <div class="m-b-20">
@@ -151,6 +161,21 @@ export default {
         }
 
     },
+    filters: {
+        status(status) {
+            status = parseInt(status);
+            switch(status) {
+                case 1:
+                    return '<span class="label label-primary"> active </span>';
+                 break;
+                case 2:
+                    return '<span class="label label-success"> confirmed </span>';
+                 break;
+                default:
+                return '<span class="label label-default"> Unknown </span>';
+            }
+        }
+    },
     methods: {
         async confirmTransaction() {
             let result = await this.$swal({
@@ -167,6 +192,7 @@ export default {
                     if (response.data.data === 'OK') {
                         this.$swal('Confirmed!','transaction has been confirmed.', 'success');
                         this.transaction.status = 2;
+                        this.$refs.countdown.stop();
                     }
                 }
 
@@ -276,7 +302,14 @@ export default {
         openModal()
         {
             $(`#${this.modal}`).modal('show');
+        },
+        transactionCompleted()
+        {
+            this.$emit('remove-transaction', this.transaction.id);
         }
-    }
+    },
+    components: {
+        'add-testimony-component': require('./AddTestimonyComponent.vue'),
+    },
 }
 </script>

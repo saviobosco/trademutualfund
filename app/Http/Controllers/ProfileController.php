@@ -8,36 +8,6 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -86,5 +56,18 @@ class ProfileController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function addTestimony(Request $request)
+    {
+        if (auth()->user()->addTestimony($request->input('testimony'))) {
+            return response()->json([
+                'data' => 'OK'
+            ]);
+        } else {
+            return response()->json([
+                'data' => 'Error'
+            ]);
+        }
     }
 }

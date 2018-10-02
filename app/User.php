@@ -68,7 +68,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function testimonies()
     {
-        return $this->hasMany(Testimonies::class);
+        return $this->hasMany(Testimony::class);
     }
 
     public function referral_link()
@@ -117,6 +117,13 @@ class User extends Authenticatable implements MustVerifyEmail
             'user_id' => $this->id,
             'amount' => $amount,
             'referred_user_id' => $referred_user_id
+        ]);
+    }
+
+    public function addTestimony($testimony)
+    {
+        return $this->testimonies()->create([
+            'testimony' => $testimony
         ]);
     }
 }

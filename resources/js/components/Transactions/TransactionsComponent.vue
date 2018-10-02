@@ -21,6 +21,14 @@ export default {
         if (response.status === 200) {
             this.transactions = response.data.data;
         }
+    },
+    methods: {
+        removeTransactionById(id) {
+            id = parseInt(id);
+            this.transactions = this.transactions.filter((transaction) => {
+                return transaction.id !== id;
+            })
+        }
     }
 }
 </script>

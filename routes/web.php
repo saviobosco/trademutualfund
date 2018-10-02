@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $testimonies = \App\Testimony::query()->with(['user:id,name'])->where('published',1)->latest('default')->get()->toArray();
+    return view('welcome')->with(compact('testimonies'));
 });
 
 Auth::routes(['verify' => true]);
@@ -52,6 +53,8 @@ Route::middleware(['verified'])->group(function() {
     Route::get('/profile/change_password', 'ChangePasswordController@edit');
     Route::put('/profile/update_payment_info', 'PaymentDetailController@update');
     Route::get('/profile/update_payment_info', 'PaymentDetailController@edit');
+
+    Route::post('/profile/add_testimony', 'ProfileController@addTestimony');
 
     Route::get('/user_referral/index', 'ReferralsController@index');
 });
@@ -100,5 +103,12 @@ Route::middleware(['verified','role:admin'])->group(function() {
 
     Route::get('/settings/update', 'SettingsController@edit');
     Route::post('/settings/update', 'SettingsController@update');
+
+    Route::get('/testimonies/index', 'TestimoniesController@index');
+    Route::get('/testimonies/create', 'TestimoniesController@create');
+    Route::post('/testimonies/create', 'TestimoniesController@store');
+    Route::put('/testimonies/edit/{testimony}', 'TestimoniesController@update');
+    Route::get('/testimonies/edit/{testimony}', 'TestimoniesController@edit');
+    Route::delete('/testimonies/delete/{testimony}', 'TestimoniesController@destroy');
 });
 

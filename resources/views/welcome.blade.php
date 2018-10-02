@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="description" content="Worlds first decentralized trading and crowd funding mutual community">
+    <meta name="keywords" content="trade,peer to peer,bitcoin,investment,trading">
     <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}">
-    <title>{{ config('app.name', '') }} - @yield('title') </title>
+    <title>{{ config('app.name', '') }} - Homepage </title>
     <link rel="stylesheet" href="{{ asset('vendors/bootstrap/4.1.3/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/animate/animate.min.css') }}">
@@ -17,6 +18,11 @@
 <div id="page-container">
     <!-- begin #header -->
     <div id="header" class="header navbar navbar-transparent navbar-fixed-top">
+        <div style="background: #080808; color: #fff;">
+            <div class="container clearfix">
+                <p class="pull-right" style="margin:5px 0px;"> <i class="fa fa-envelope"></i> : support@trademutalclub.com  </p>
+            </div>
+        </div>
         <!-- begin container -->
         <div class="container">
             <!-- begin navbar-header -->
@@ -28,7 +34,7 @@
                 </button>
                 <a href="index.html" class="navbar-brand">
                     <picture>
-                        <img src="{{ asset('images/logo-white.png') }}" alt="Logo" >
+                        <img src="{{ asset('images/logo-white-1500.png') }}" alt="Logo">
                     </picture>
                 </a>
             </div>
@@ -58,9 +64,9 @@
         <!-- begin container -->
         <div class="container home-content">
             <h1>Welcome to {{ config('app.name') }}</h1>
-            <h3> Another Description here </h3>
+            <h3> Worlds first decentralized trading and crowd funding mutual community </h3>
 
-            <a href="{{ route('register') }}" class="btn btn-outline"> Start Now! </a><br />
+            <a href="{{ route('register') }}" class="btn btn-outline"> Register </a><br />
             <div class="row home-stats">
                 <!-- begin col-3 -->
                 <div class="col-md-4 col-4 milestone-col">
@@ -103,30 +109,31 @@
         <!-- begin container -->
         <div class="container" data-animation="true" data-animation-type="fadeInDown">
             <h2 class="content-title">About Us</h2>
-            <p class="content-desc">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum consectetur eros dolor,<br />
-                sed bibendum turpis luctus eget
-            </p>
             <!-- begin row -->
             <div class="row">
                 <!-- begin col-4 -->
                 <div class="col-md-12 col-sm-12">
                     <!-- begin about -->
-                    <div class="about">
+                    <div class="about text-center">
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Vestibulum posuere augue eget ante porttitor fringilla.
-                            Aliquam laoreet, sem eu dapibus congue, velit justo ullamcorper urna,
-                            non rutrum dolor risus non sapien. Vivamus vel tincidunt quam.
-                            Donec ultrices nisl ipsum, sed elementum ex dictum nec.
+                            Trade Mutual Fund(TMF) is a mutual peer to peer crowd funding community . Your donation grows by 30% weekly. While the admin takes 10% of your weekly growth and places it in a central trading account for sustainability.
                         </p>
-                        <p>
-                            In non libero at orci rutrum viverra at ac felis.
-                            Curabitur a efficitur libero, eu finibus quam.
-                            Pellentesque pretium ante vitae est molestie, ut faucibus tortor commodo.
-                            Donec gravida, eros ac pretium cursus, est erat dapibus quam,
-                            sit amet dapibus nisl magna sit amet orci.
-                        </p>
+                        <div>
+                            <h3> 3 investment optional packages </h3>
+                            <h4> 10,000 to 200,000  </h4>
+                            <p>
+                                Funds grows by 30% weekly but 20% would be withdrawn while 10% would be moved to global central trading fund.
+                            </p>
+                            <h4> 200,000 -500,000  </h4>
+                            <p>
+                                you have the option of monthly lock where your money grows 120% for 30days. 30% is sent to global trading fund
+                            </p>
+                            <h4> 500,000-1,000,000 </h4>
+                            <p>
+                                all funds goes into master lock where you receive 300% in 3months(optional).
+                            </p>
+                        </div>
+
                     </div>
                     <!-- end about -->
                 </div>
@@ -155,46 +162,65 @@
             <div class="carousel testimonials slide" data-ride="carousel" id="testimonials">
                 <!-- begin carousel-inner -->
                 <div class="carousel-inner text-center">
+                    <?php $testimoniesCount = count($testimonies); ?>
+                    @if($testimoniesCount >= 1)
+                        @for($num = 0; $num < $testimoniesCount; $num++)
+                            <!-- begin item -->
+                            <div class="carousel-item @if($num === 0) active @endif">
+                                <blockquote>
+                                    <i class="fa fa-quote-left"></i>
+                                    {{ $testimonies[$num]['testimony'] }}
+                                    <i class="fa fa-quote-right"></i>
+                                </blockquote>
+                                <div class="name"> — <span class="text-theme"> {{ $testimonies[$num]['user']['name'] }} </span></div>
+                            </div>
+                            <!-- end item -->
+                        @endfor
+
+                    @else
                     <!-- begin item -->
                     <div class="carousel-item active">
-                        <blockquote>
-                            <i class="fa fa-quote-left"></i>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce viverra, nulla ut interdum fringilla,<br />
-                            urna massa cursus lectus, eget rutrum lectus neque non ex.
-                            <i class="fa fa-quote-right"></i>
-                        </blockquote>
-                        <div class="name"> — <span class="text-theme">Mark Doe</span>, Designer</div>
-                    </div>
-                    <!-- end item -->
-                    <!-- begin item -->
-                    <div class="carousel-item">
-                        <blockquote>
-                            <i class="fa fa-quote-left"></i>
-                            Donec cursus ligula at ante vulputate laoreet. Nulla egestas sit amet lorem non bibendum.<br />
-                            Nulla eget risus velit. Pellentesque tincidunt velit vitae tincidunt finibus.
-                            <i class="fa fa-quote-right"></i>
-                        </blockquote>
-                        <div class="name"> — <span class="text-theme">Joe Smith</span>, Developer</div>
-                    </div>
-                    <!-- end item -->
-                    <!-- begin item -->
-                    <div class="carousel-item">
-                        <blockquote>
-                            <i class="fa fa-quote-left"></i>
-                            Sed tincidunt quis est sed ultrices. Sed feugiat auctor ipsum, sit amet accumsan elit vestibulum<br />
-                            fringilla. In sollicitudin ac ligula eget vestibulum.
-                            <i class="fa fa-quote-right"></i>
-                        </blockquote>
-                        <div class="name"> — <span class="text-theme">Linda Adams</span>, Programmer</div>
-                    </div>
-                    <!-- end item -->
+                            <blockquote>
+                                <i class="fa fa-quote-left"></i>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce viverra, nulla ut interdum fringilla,<br />
+                                urna massa cursus lectus, eget rutrum lectus neque non ex.
+                                <i class="fa fa-quote-right"></i>
+                            </blockquote>
+                            <div class="name"> — <span class="text-theme">Mark Doe</span>, Designer</div>
+                        </div>
+                        <!-- end item -->
+                        <!-- begin item -->
+                        <div class="carousel-item">
+                            <blockquote>
+                                <i class="fa fa-quote-left"></i>
+                                Donec cursus ligula at ante vulputate laoreet. Nulla egestas sit amet lorem non bibendum.<br />
+                                Nulla eget risus velit. Pellentesque tincidunt velit vitae tincidunt finibus.
+                                <i class="fa fa-quote-right"></i>
+                            </blockquote>
+                            <div class="name"> — <span class="text-theme">Joe Smith</span>, Developer</div>
+                        </div>
+                        <!-- end item -->
+                        <!-- begin item -->
+                        <div class="carousel-item">
+                            <blockquote>
+                                <i class="fa fa-quote-left"></i>
+                                Sed tincidunt quis est sed ultrices. Sed feugiat auctor ipsum, sit amet accumsan elit vestibulum<br />
+                                fringilla. In sollicitudin ac ligula eget vestibulum.
+                                <i class="fa fa-quote-right"></i>
+                            </blockquote>
+                            <div class="name"> — <span class="text-theme">Linda Adams</span>, Programmer</div>
+                        </div>
+                        <!-- end item -->
+                    @endif
                 </div>
                 <!-- end carousel-inner -->
                 <!-- begin carousel-indicators -->
                 <ol class="carousel-indicators m-b-0">
-                    <li data-target="#testimonials" data-slide-to="0" class="active"></li>
-                    <li data-target="#testimonials" data-slide-to="1" class=""></li>
-                    <li data-target="#testimonials" data-slide-to="2" class=""></li>
+                    @if($testimoniesCount >= 1)
+                        @for($num = 0; $num < $testimoniesCount; $num++)
+                            <li data-target="#testimonials" data-slide-to="{{$num}}" class="@if($num === 0) active @endif"></li>
+                        @endfor
+                    @endif
                 </ol>
                 <!-- end carousel-indicators -->
             </div>

@@ -597,6 +597,7 @@ Website: http://www.seantheme.com/color-admin-v4.2/admin/
 	.page-sidebar-minifed .content {
 		margin-left: 0 !important;
 		margin-right: 0 !important;
+		margin-top: 60px;
 	}
 	.content.content-full-width .breadcrumb {
 		margin: 20px;

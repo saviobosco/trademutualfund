@@ -1,5 +1,6 @@
 @extends('layouts.auth')
 
+@section('title', 'Reset Password')
 @section('content')
     @if (session('status'))
         <div class="alert alert-success" role="alert">

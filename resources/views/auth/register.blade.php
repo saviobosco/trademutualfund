@@ -1,5 +1,6 @@
 @extends('layouts.auth')
 
+@section('title', 'Register')
 @section('content')
 <!-- begin register-content -->
 <div class="login-content">

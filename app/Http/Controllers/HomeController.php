@@ -30,12 +30,10 @@ class HomeController extends Controller
         $loggedInUser = auth()->user();
         $transactions = UsersRepository::getUserActiveTransactions($loggedInUser->id);
         $investments = UsersRepository::getUserActiveInvestments($loggedInUser->id);
-        $supportTickets = UsersRepository::getUserSupportTickets($loggedInUser->id);
+        //$supportTickets = UsersRepository::getUserSupportTickets($loggedInUser->id);
         $cashAbleInvestments = UsersRepository::getUserCashAbleInvestments($loggedInUser->id);
         $referralsCount = UsersRepository::getUserReferralCount($loggedInUser->id);
-        $globalFunds = Cache::remember('globalFundsTotal', (new Carbon())->addMinutes(10), function () {
-            return GlobalFund::query()->pluck('amount')->sum();
-        });
+
         $referralBonus = UsersRepository::getUserReferralBonus($loggedInUser->id);
         return view('home')->with(compact('transactions','investments','globalFunds','referralBonus','supportTickets','cashAbleInvestments', 'referralsCount'));
     }

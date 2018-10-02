@@ -5,26 +5,26 @@
 @section('content')
 <div class="">
     <div class="row">
-        <div class="col-md-2 col-sm-6">
-            <div class="widget widget-stats bg-green">
-                <div class="stats-icon"><i class="fa fa-desktop"></i></div>
-                <div class="stats-info">
-                    <h4> Donation Fund </h4>
-                    <p>0,00</p>
-                </div>
+        {{--<div class="col-md-2 col-sm-6">--}}
+            {{--<div class="widget widget-stats bg-green">--}}
+                {{--<div class="stats-icon"><i class="fa fa-desktop"></i></div>--}}
+                {{--<div class="stats-info">--}}
+                    {{--<h4> Donation Fund </h4>--}}
+                    {{--<p>0,00</p>--}}
+                {{--</div>--}}
 
-            </div>
-        </div>
-        <div class="col-md-2 col-sm-6">
+            {{--</div>--}}
+        {{--</div>--}}
+        <div class="col-md-3 col-sm-6">
             <div class="widget widget-stats bg-green">
                 <div class="stats-icon"><i class="fa fa-desktop"></i></div>
                 <div class="stats-info">
                     <h4> Global Funds </h4>
-                    <p>{{ $globalFunds }}</p>
+                    <p>{{ setting('global_funds_cumulative') }}</p>
                 </div>
             </div>
         </div>
-        <div class="col-md-2 col-sm-6">
+        <div class="col-md-3 col-sm-6">
             <div class="widget widget-stats bg-green">
                 <div class="stats-icon"><i class="fa fa-desktop"></i></div>
                 <div class="stats-info">
@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2 col-sm-6">
+        <div class="col-md-3 col-sm-6">
             <div class="widget widget-stats bg-green">
                 <div class="stats-icon"><i class="fa fa-desktop"></i></div>
                 <div class="stats-info">
@@ -42,16 +42,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2 col-sm-6">
-            <div class="widget widget-stats bg-green">
-                <div class="stats-icon"><i class="fa fa-desktop"></i></div>
-                <div class="stats-info">
-                    <h4> Support </h4>
-                    <p> {{ $supportTickets }} </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 col-sm-6">
+        {{--<div class="col-md-2 col-sm-6">--}}
+            {{--<div class="widget widget-stats bg-green">--}}
+                {{--<div class="stats-icon"><i class="fa fa-desktop"></i></div>--}}
+                {{--<div class="stats-info">--}}
+                    {{--<h4> Support </h4>--}}
+                    {{--<p> {{ $supportTickets }} </p>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</div>--}}
+        <div class="col-md-3 col-sm-6">
             <div class="widget widget-stats bg-green">
                 <div class="stats-icon"><i class="fa fa-desktop"></i></div>
                 <div class="stats-info">
