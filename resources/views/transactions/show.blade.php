@@ -16,8 +16,10 @@
                                 <div>
                                     <p> Transaction Id: @{{ transaction.id }} </p>
                                     <p> Amount: @{{ transaction.amount }} </p>
-                                    <p> Status: @{{ transaction.status }} </p>
-                                    <p> Time Ends: @{{ transaction.time_elapse_after }} </p>
+                                    <p> Transaction Status : <span v-html="$options.filters.status(transaction.status)"></span> </p>
+                                    <countdown ref="countdown" :time="transaction_expires">
+                                        <template slot-scope="props">Time Remaining：@{{ props.days }} days, @{{ props.hours }} hours, @{{ props.minutes }} minutes, @{{ props.seconds }} seconds.</template>
+                                    </countdown>
                                     <div>
                                         <h5> Provide Help User</h5>
                                         <p> Name : @{{ transaction.make_payment_user.name }} </p>
@@ -37,16 +39,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row" v-if="transaction.transaction_reports.length > 0">
-                                        <ul>
-                                            <li v-for="report in transaction.transaction_reports" :key="report.id">
-                                                <p> @{{ report.type }} </p>
-                                            </li>
-                                        </ul>
+                                    <div v-if="transaction.transaction_reports.length > 0">
+                                        <div class="alert alert-danger">
+                                            Image(s) has been report as fake POP!
+                                        </div>
                                     </div>
                                 </div>
                                 <button :disabled="transaction.status === 2" @click="confirmTransaction" class="btn btn-sm btn-primary"> Confirm Transaction  </button>
                                 <button :disabled="transaction.status === 2" @click="cancelTransaction" class="btn btn-sm btn-danger"> Cancel Transaction</button>
+                                <button :disabled="transaction.status === 2" @click="resolveIssue" class="btn btn-sm btn-danger"> Resolved Issue </button>
+                                <button :disabled="transaction.status === 2" @click="resetTimer" class="btn btn-sm btn-danger"> Reset Timer </button>
                             </div>
                         </admin-transaction-component>
                     </div>

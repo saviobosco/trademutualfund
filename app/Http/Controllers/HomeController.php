@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\GlobalFund;
+use App\Repository\StatisticsRepository;
 use App\Repository\UsersRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,15 +28,32 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if (auth()->user()->hasRole('admin')) {
+            $globalFunds = setting('global_funds_cumulative');
+            $totalUsers = StatisticsRepository::getTotalOfUsers();
+            $totalPayout = StatisticsRepository::getTotalOfPayOuts();
+            $totalTransactions = StatisticsRepository::getTotalOfTransactions();
+            $totalSupports = StatisticsRepository::getTotalActiveSupportTickets();
+        }
         $loggedInUser = auth()->user();
         $transactions = UsersRepository::getUserActiveTransactions($loggedInUser->id);
         $investments = UsersRepository::getUserActiveInvestments($loggedInUser->id);
-        //$supportTickets = UsersRepository::getUserSupportTickets($loggedInUser->id);
         $cashAbleInvestments = UsersRepository::getUserCashAbleInvestments($loggedInUser->id);
         $referralsCount = UsersRepository::getUserReferralCount($loggedInUser->id);
         $globalFundsCumulative = setting('global_funds_cumulative');
 
         $referralBonus = UsersRepository::getUserReferralBonus($loggedInUser->id);
-        return view('home')->with(compact('transactions','investments','globalFunds','referralBonus','cashAbleInvestments', 'referralsCount','globalFundsCumulative'));
+        return view('home')->with(compact('transactions',
+            'totalUsers',
+            'globalFunds',
+            'totalPayout',
+            'totalTransactions',
+            'totalSupports',
+            'investments',
+            'globalFunds',
+            'referralBonus',
+            'cashAbleInvestments',
+            'referralsCount',
+            'globalFundsCumulative'));
     }
 }

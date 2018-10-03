@@ -6,6 +6,7 @@ use App\Http\Resources\InvestmentPlansCollection;
 use App\InvestmentPlan;
 use App\InvestmentRule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class InvestmentPlansController extends Controller
@@ -53,20 +54,9 @@ class InvestmentPlansController extends Controller
             foreach( $attachedRules as $ruleId) {
                 $investmentPlan->investment_rules()->attach($ruleId);
             }
-            Session::flash('message', 'Investment rule was successfully created!');
+            flash('Investment rule was successfully created!')->success();
             return back();
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\InvestmentPlan  $investmentPlan
-     * @return \Illuminate\Http\Response
-     */
-    public function show(InvestmentPlan $investmentPlan)
-    {
-        //
     }
 
     /**
@@ -77,8 +67,9 @@ class InvestmentPlansController extends Controller
      */
     public function edit(InvestmentPlan $investmentPlan)
     {
-        //dd($investmentPlan);
-        return view('investment_plans.edit')->with(compact('investmentPlan'));
+        $investmentAttachedRules = DB::table('investment_plan_rules')->where('investment_plan_id', $investmentPlan->id)->pluck('investment_rule_id')->toArray();
+        $investmentRules = InvestmentRule::query()->get()->pluck('duration', 'id')->toArray();
+        return view('investment_plans.edit')->with(compact('investmentPlan','investmentAttachedRules','investmentRules'));
     }
 
     /**
@@ -90,18 +81,14 @@ class InvestmentPlansController extends Controller
      */
     public function update(Request $request, InvestmentPlan $investmentPlan)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\InvestmentPlan  $investmentPlan
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(InvestmentPlan $investmentPlan)
-    {
-        //
+        $investmentPlan->update($request->only([
+            'name',
+            'minimum_amount',
+            'maximum_amount',
+        ]));
+        $investmentPlan->investment_rules()->sync($request->input('attach_rules'));
+        flash('Investment Plan has been updated')->success();
+        return back();
     }
 
     public function getRules(InvestmentPlan $investmentPlan) {

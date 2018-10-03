@@ -21,14 +21,7 @@
                                 {!! Form::text('name',null,['class' => 'form-control']) !!}
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-md-4 col-form-label text-md-right">
-                                {!! Form::label('email', 'Email') !!}
-                            </div>
-                            <div class="col-sm-6">
-                                {!! Form::text('email',null,['class' => 'form-control']) !!}
-                            </div>
-                        </div>
+
 
                         <div class="form-group row">
                             <div class="col-md-4 col-form-label text-md-right">
@@ -48,6 +41,14 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <div class="col-md-4 col-form-label text-md-right">
+                                {!! Form::label('roles', 'Roles') !!}
+                            </div>
+                            <div class="col-sm-6">
+                                {!! Form::select('roles[]', $roles, $userRoles, ['class' => 'form-control', 'multiple' => true]) !!}
+                            </div>
+                        </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

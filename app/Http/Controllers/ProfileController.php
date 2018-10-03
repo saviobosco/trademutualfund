@@ -30,32 +30,20 @@ class ProfileController extends Controller
     {
         $countries = Countries::query()->select(['id', 'full_name'])->pluck('full_name', 'id')->toArray();
         $user = auth()->user();
-        return view('users.edit')->with(compact('user','countries'));
+        return view('profile.edit')->with(compact('user','countries'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
         auth()->user()->update($request->except(['_token','_method']));
-        Session::flash('message', 'Your details has been updated');
+        flash('Your details has been updated')->success();
         return back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
     }
 
     public function addTestimony(Request $request)

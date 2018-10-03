@@ -32,27 +32,6 @@ class TransactionsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Transaction  $transaction
@@ -68,7 +47,9 @@ class TransactionsController extends Controller
                     'get_payment',
                     'make_payment',
                     'photo_proofs',
-                    'transaction_reports'
+                    'transaction_reports' => function($query) {
+                        $query->where('status', 1);
+                    }
                 ])
                 ->where('transactions.id', $transaction->id)
                 ->first();
@@ -77,40 +58,6 @@ class TransactionsController extends Controller
             ]);
         }
         return view('transactions.show')->with(compact('transaction'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Transaction $transaction)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Transaction $transaction)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Transaction $transaction)
-    {
-        //
     }
 
     public function uploadProofOfPayment(Request $request,Transaction $transaction)
@@ -199,5 +146,29 @@ class TransactionsController extends Controller
         return response()->json([
             'data' => 'Error'
         ]);
+    }
+
+    public function resolveIssue(Transaction $transaction)
+    {
+        if ($transaction->resolveReports()) {
+            return response()->json([
+                'data' => 'OK'
+            ]);
+        }
+        return response()->json([
+            'data' => 'Error'
+        ],422);
+    }
+
+    public function resetTimer(Transaction $transaction)
+    {
+        if ($transaction->resetTimer()) {
+            return response()->json([
+                'data' => 'OK'
+            ]);
+        }
+        return response()->json([
+            'data' => 'Error'
+        ],422);
     }
 }

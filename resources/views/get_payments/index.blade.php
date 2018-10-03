@@ -8,12 +8,11 @@
 
                 <div class="panel panel-inverse">
                     <div class="panel-heading">
-
-                        <h4 class="panel-title">  Get Helps </h4>
                         {!! Html::link("get_payments/create",'New Get Help',['class' => 'pull-right'])  !!}
+                        <h4 class="panel-title">  Get Helps </h4>
                     </div>
                     <div class="panel-body">
-                        <table class="table">
+                        <table class="table table-responsive-sm">
                             <thead>
                             <tr>
                                 <th> id</th>

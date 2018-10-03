@@ -94,6 +94,7 @@ class Transaction extends Model
                 $report->resolved();
             }
         }
+        return true;
     }
 
     public function cancel()
@@ -136,6 +137,6 @@ class Transaction extends Model
 
     public function resetTimer()
     {
-        $this->update(['time_elapse_after' => new Carbon('+12 hours')]);
+        return $this->update(['time_elapse_after' => new Carbon('+12 hours')]);
     }
 }

@@ -35,7 +35,7 @@ class UserSettingsController extends Controller
             $update['email_notification'] = 0;
         }
         $userSettings->update($update);
-        Session::flash('message', 'settings was successfully updated');
+        flash('settings was successfully updated');
         return back();
     }
 }

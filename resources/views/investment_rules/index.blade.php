@@ -1,24 +1,23 @@
 @extends('layouts.app')
 
+@section('title', 'Investment Rules')
 @section('content')
     <div>
         <div class="row">
             <div class="col-sm-12">
                 <div class="panel panel-inverse">
                     <div class="panel-heading">
-
-                        <h4 class="panel-title"> Investment Plans </h4>
-                         {!! Html::link("investment_rules/create",'New Rule',['class' => 'pull-right'])  !!}
+                        {!! Html::link("investment_rules/create",'New Rule',['class' => 'pull-right'])  !!}
+                        <h4 class="panel-title"> Investment Rules </h4>
                     </div>
                     <div class="panel-body">
-                        <table class="table">
+                        <table class="table table-responsive">
                             <thead>
                             <tr>
                                 <th> id</th>
                                 <th> duration </th>
                                 <th> investment percentage </th>
                                 <th> global percentage </th>
-                                <th> status </th>
                                 <th> actions </th>
                             </tr>
                             </thead>
@@ -29,9 +28,8 @@
                                     <td> {{ $investmentRule->duration }} </td>
                                     <td> {{ $investmentRule->investment_percentage }}% </td>
                                     <td> {{ $investmentRule->global_percentage }}% </td>
-                                    <td> {{ $investmentRule->status }} </td>
                                     <td>
-                                        {!! Html::link("investment_rules/edit/$investmentRule->id",'Edit Rule')  !!}
+                                        {!! Html::link("investment_rules/edit/$investmentRule->id",'Edit Rule', ['class' => 'btn btn-primary btn-sm'])  !!}
                                     </td>
                                 </tr>
                             @endforeach

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Create Get Help')
+@section('title', 'Cash out global fund')
 @section('content')
     <div class="row">
         <div class="col-sm-12">

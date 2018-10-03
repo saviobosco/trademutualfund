@@ -16,7 +16,8 @@ class SettingsController extends Controller
         $request->validate([
             'app_name' => 'required'
         ]);
-        foreach( $request->except(['_token']) as $key => $value) {
+        $requestData = $request->except(['_token']);
+        foreach( $requestData as $key => $value) {
             setting([$key => $value]);
         }
         setting()->save();

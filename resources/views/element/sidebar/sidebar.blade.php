@@ -42,7 +42,6 @@
                 <ul class="sub-menu">
                     <li><a href="{{ url('/global_funds/index') }}"> Global Funds </a></li>
                     <li><a href="{{ url('/global_funds/cash_out') }}"> Cash out fund </a></li>
-                    <li><a href="{{ url('/global_funds/activities') }}"> Global Funds Activity </a></li>
                 </ul>
             </li>
             <li class="">

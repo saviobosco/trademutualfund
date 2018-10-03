@@ -11,22 +11,22 @@ class InvestmentPlansSeeder extends Seeder
      */
     public function run()
     {
-        factory('App\InvestmentPlan')->create([
+        \App\InvestmentPlan::create([
             'name' => 'Standard',
             'minimum_amount' => '50000',
             'maximum_amount' => '100000'
         ]);
-        factory('App\InvestmentPlan')->create([
+        \App\InvestmentPlan::create([
             'name' => 'Silver',
             'minimum_amount' => '100000',
             'maximum_amount' => '500000'
         ]);
-        factory('App\InvestmentPlan')->create([
+        \App\InvestmentPlan::create([
             'name' => 'Gold',
             'minimum_amount' => '500000',
             'maximum_amount' => '1000000'
         ]);
-        factory('App\InvestmentPlan')->create([
+        \App\InvestmentPlan::create([
             'name' => 'Platinum',
             'minimum_amount' => '1000000',
             'maximum_amount' => '10000000'

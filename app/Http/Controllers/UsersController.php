@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Countries;
 use App\User;
+use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -16,7 +17,6 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //flash()->overlay('Modal Message', 'Modal Title');
         return view('users.index')->with('users',User::all());
     }
 
@@ -61,8 +61,10 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
+        $roles = Role::pluck('name', 'id');
+        $userRoles = $user->roles()->pluck('id');
         $countries = Countries::query()->select(['id', 'full_name'])->pluck('full_name', 'id')->toArray();
-        return view('users.edit')->with(compact('user','countries'));
+        return view('users.edit')->with(compact('user','countries','roles','userRoles'));
     }
 
     /**
@@ -74,8 +76,9 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->update($request->except(['_token','_method']));
-        Session::flash('message', 'User record has been updated');
+        $user->update($request->except(['_token','_method','roles']));
+        $user->syncRoles($request->input('roles'));
+        flash('User record has been updated')->success();
         return back();
     }
 

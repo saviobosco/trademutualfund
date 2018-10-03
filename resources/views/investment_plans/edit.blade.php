@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
+@section('title', 'Update Investment Plan')
 @section('content')
     <div class="row justify-content-center">
         <div class="col-sm-12">
             <div class="panel panel-inverse">
                 <div class="panel-heading">
-                    <h4 class="panel-title"> Investment Plans </h4>
+                    <h4 class="panel-title">Update Investment Plan </h4>
                 </div>
                 <div class="panel-body">
                     {!! Form::model($investmentPlan, ['url' => ['investment_plans/edit', $investmentPlan->id] ,'method' => 'PUT']) !!}
@@ -31,6 +32,14 @@
                         </div>
                         <div class="col-sm-6">
                             {!! Form::text('maximum_amount', null, ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-form-label text-md-right">
+                            {!! Form::label('attach_rules', 'Attached Rules') !!}
+                        </div>
+                        <div class="col-sm-6">
+                            {!! Form::select('attach_rules[]', $investmentRules, $investmentAttachedRules, ['class' => 'form-control', 'multiple']) !!}
                         </div>
                     </div>
                     <div class="form-group row mb-0">

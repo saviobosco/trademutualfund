@@ -4,22 +4,50 @@
 @section('title', 'Dashboard')
 @section('content')
 <div class="">
+    @role('admin')
+    <h4> Admin Dashboard View </h4>
     <div class="row">
-        {{--<div class="col-md-2 col-sm-6">--}}
-            {{--<div class="widget widget-stats bg-green">--}}
-                {{--<div class="stats-icon"><i class="fa fa-desktop"></i></div>--}}
-                {{--<div class="stats-info">--}}
-                    {{--<h4> Donation Fund </h4>--}}
-                    {{--<p>0,00</p>--}}
-                {{--</div>--}}
-
-            {{--</div>--}}
-        {{--</div>--}}
+        <div class="col-md-3 col-sm-6">
+            <div class="widget widget-stats bg-green">
+                <div class="stats-info">
+                    <h4> Users </h4>
+                    <p>{{ $totalUsers }}</p>
+                </div>
+            </div>
+        </div>
         <div class="col-md-3 col-sm-6">
             <div class="widget widget-stats bg-green">
                 <div class="stats-info">
                     <h4> Global Funds </h4>
-                    <p>{{ ($globalFundsCumulative) ? $globalFundsCumulative : 0  }}</p>
+                    <p>{{ ($globalFunds) ?  format_decimal($globalFunds) : 0  }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="widget widget-stats bg-green">
+                <div class="stats-info">
+                    <h4> Payouts </h4>
+                    <p>{{ format_decimal($totalPayout) }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="widget widget-stats bg-green">
+                <div class="stats-info">
+                    <h4> Total Transactions </h4>
+                    <p>{{ format_decimal($totalTransactions) }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    @endrole
+    <div class="row">
+        <div class="col-md-3 col-sm-6">
+            <div class="widget widget-stats bg-green">
+                <div class="stats-info">
+                    <h4> Global Funds </h4>
+                    <p>{{ ($globalFundsCumulative) ? format_decimal($globalFundsCumulative) : 0  }}</p>
                 </div>
             </div>
         </div>
@@ -27,7 +55,7 @@
             <div class="widget widget-stats bg-green">
                 <div class="stats-info">
                     <h4> Cash out </h4>
-                    <p> {{ $cashAbleInvestments }} </p>
+                    <p> {{ format_decimal($cashAbleInvestments) }} </p>
                 </div>
             </div>
         </div>
@@ -35,19 +63,10 @@
             <div class="widget widget-stats bg-green">
                 <div class="stats-info">
                     <h4> Referral Bonus </h4>
-                    <p>{{ $referralBonus }}</p>
+                    <p>{{ format_decimal($referralBonus) }}</p>
                 </div>
             </div>
         </div>
-        {{--<div class="col-md-2 col-sm-6">--}}
-            {{--<div class="widget widget-stats bg-green">--}}
-                {{--<div class="stats-icon"><i class="fa fa-desktop"></i></div>--}}
-                {{--<div class="stats-info">--}}
-                    {{--<h4> Support </h4>--}}
-                    {{--<p> {{ $supportTickets }} </p>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
         <div class="col-md-3 col-sm-6">
             <div class="widget widget-stats bg-green">
                 <div class="stats-info">

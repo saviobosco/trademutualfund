@@ -71,7 +71,7 @@
                 <!-- begin col-3 -->
                 <div class="col-md-4 col-4 milestone-col">
                     <div class="milestone">
-                        <div class="number" data-animation="true" data-animation-type="number" data-final-number="1292">1,292</div>
+                        <div class="number"> {{ $totalUsers }} </div>
                         <div class="title"> Users </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                 <!-- begin col-3 -->
                 <div class="col-md-4 col-4 milestone-col">
                     <div class="milestone">
-                        <div class="number" data-animation="true" data-animation-type="number" data-final-number="9039">9,039</div>
+                        <div class="number">{{ format_decimal($totalPayout) }}</div>
                         <div class="title"> Payouts </div>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                 <!-- begin col-3 -->
                 <div class="col-md-4 col-4 milestone-col">
                     <div class="milestone">
-                        <div class="number" data-animation="true" data-animation-type="number" data-final-number="89291">89,291</div>
+                        <div class="number" >{{ format_decimal($totalTransactions) }}</div>
                         <div class="title"> Total Transactions </div>
                     </div>
                 </div>

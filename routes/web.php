@@ -1,5 +1,6 @@
 <?php
 
+use App\Repository\StatisticsRepository;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,8 +13,11 @@
 */
 
 Route::get('/', function () {
+    $totalUsers = StatisticsRepository::getTotalOfUsers();
+    $totalPayout = StatisticsRepository::getTotalOfPayOuts();
+    $totalTransactions = StatisticsRepository::getTotalOfTransactions();
     $testimonies = \App\Testimony::query()->with(['user:id,name'])->where('published',1)->latest('default')->get()->toArray();
-    return view('welcome')->with(compact('testimonies'));
+    return view('welcome')->with(compact('testimonies','totalUsers','totalPayout','totalTransactions'));
 });
 
 Auth::routes(['verify' => true]);
@@ -45,7 +49,7 @@ Route::middleware(['verified'])->group(function() {
 
     // Profile
     Route::get('/profile/view', 'ProfileController@show');
-    Route::put('/profile/edit', 'UsersController@update');
+    Route::put('/profile/edit', 'ProfileController@update');
     Route::get('/profile/edit', 'ProfileController@edit');
     Route::put('/profile/update_settings', 'UserSettingsController@update');
     Route::get('/profile/update_settings', 'UserSettingsController@edit');
@@ -76,6 +80,8 @@ Route::middleware(['verified','role:admin'])->group(function() {
 
     Route::get('/transactions/index', 'TransactionsController@index');
     Route::get('/transactions/view/{transaction}', 'TransactionsController@show');
+    Route::post('/transactions/reset_timer/{transaction}', 'TransactionsController@resetTimer');
+    Route::post('/transactions/resolve_issue/{transaction}', 'TransactionsController@resolveIssue');
 
     //Global Funds
     Route::get('/global_funds/index','GlobalFundsController@index');

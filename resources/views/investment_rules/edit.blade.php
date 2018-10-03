@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@section('title', 'Edit Investment Rules')
 @section('content')
     <div>
         <div class="row">

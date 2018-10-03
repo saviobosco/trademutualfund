@@ -6,11 +6,11 @@
             <div class="col-sm-12">
                 <div class="panel panel-inverse">
                     <div class="panel-heading">
-
+                        {!! Html::link("investment_plans/create",'New Investment Plan',['class' => 'pull-right'])  !!}
                         <h4 class="panel-title"> Investment Plans </h4>
                     </div>
                     <div class="panel-body">
-                        <table class="table">
+                        <table class="table table-responsive">
                             <thead>
                             <tr>
                                 <th> id</th>
@@ -30,7 +30,7 @@
                                     <td> {{ $investmentPlan->maximum_amount }} </td>
                                     <td> {{ $investmentPlan->status }} </td>
                                     <td>
-                                        {!! Html::link("investment_plans/edit/$investmentPlan->id",'Edit Investment Plan')  !!}
+                                        {!! Html::link("investment_plans/edit/$investmentPlan->id",'Edit Investment Plan',['class' => 'btn btn-primary btn-sm'])  !!}
                                     </td>
                                 </tr>
                             @endforeach

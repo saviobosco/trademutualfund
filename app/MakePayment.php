@@ -42,6 +42,16 @@ class MakePayment extends Model
 
     public function cancel()
     {
+        // get all transactions and cancel it
+        $transactions = Transaction::query()->where([
+            ['make_payment_id'=> $this->id],
+            ['status' => Transaction::ACTIVE]
+        ])->get();
+        if (count($transactions)) {
+            foreach($transactions as $transaction) {
+                $transaction->cancel();
+            }
+        }
         $this->update(['status' => static::CANCELLED ]);
     }
 

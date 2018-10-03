@@ -12,7 +12,7 @@
                         <h4 class="panel-title"> Provide Helps </h4>
                     </div>
                     <div class="panel-body">
-                        <table class="table">
+                        <table class="table table-responsive">
                             <thead>
                             <tr>
                                 <th> id</th>
