@@ -19,7 +19,7 @@ class CreateTransactions extends Migration
             $table->integer('get_payment_user_id');
             $table->integer('get_payment_id')->nullable();
             $table->integer('make_payment_id')->nullable();
-            $table->decimal('amount', 13, 4);
+            $table->decimal('amount', 13, 2);
             $table->dateTime('time_elapse_after');
             $table->dateTime('confirmed_at')->nullable();
             $table->integer('status')->default(1);

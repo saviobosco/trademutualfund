@@ -19,9 +19,9 @@ class CreateInvestments extends Migration
             $table->integer('make_payment_id', false, true)->nullable();
             $table->integer('get_payment_id', false, true)->nullable();
             $table->integer('investment_plan_id', false, true);
-            $table->decimal('amount_invested', 13, 4)->nullable();
-            $table->decimal('roi_amount', 13, 4)->nullable();
-            $table->decimal('global_funds_amount', 13, 4)->nullable();
+            $table->decimal('amount_invested', 13, 2)->nullable();
+            $table->decimal('roi_amount', 13, 2)->nullable();
+            $table->decimal('global_funds_amount', 13, 2)->nullable();
             $table->dateTime('release_date');
             $table->tinyInteger('status')->default(1)->comment('0 => created, 1 => commitment made, 2 => get payment created , 3 => completed');
             $table->timestamps();

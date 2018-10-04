@@ -42,10 +42,8 @@ class TransactionsController extends Controller
         if(request()->wantsJson()) {
             $transaction = Transaction::query()
                 ->with([
-                    'make_payment_user',
-                    'get_payment_user',
-                    'get_payment',
-                    'make_payment',
+                    'make_payment_user:id,name',
+                    'get_payment_user:id, name',
                     'photo_proofs',
                     'transaction_reports' => function($query) {
                         $query->where('status', 1);

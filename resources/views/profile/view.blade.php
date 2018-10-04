@@ -13,7 +13,7 @@
                         <p> Name : {{ $user->name }} </p>
                         <p> Email : {{ $user->email }} </p>
                         <p> Phone Number : {{ $user->phone_number }} </p>
-                        <p> Country : {{ $countries[$user->country_id] }} </p>
+                        <p> Country : {{ @$countries[$user->country_id] }} </p>
                     </div>
                 </div>
             </div>

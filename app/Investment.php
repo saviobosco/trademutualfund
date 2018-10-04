@@ -4,6 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Investment
+ * @package App
+ * @property int $status
+ */
 class Investment extends Model
 {
     CONST CANCELLED = -1;
@@ -99,10 +104,12 @@ class Investment extends Model
             'initial_amount' => $this->roi_amount + $referralsSum,
         ];
         if (GetPayment::create($data)) {
-            GlobalFund::create([
-                'investment_id' => $this->id,
-                'amount' => $this->global_funds_amount
-            ]);
+            if ($this->global_funds_amount) {
+                GlobalFund::create([
+                    'investment_id' => $this->id,
+                    'amount' => $this->global_funds_amount
+                ]);
+            }
             foreach($referrals as $referral) {
                 $referral->paidOut();
             }

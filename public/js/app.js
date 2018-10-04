@@ -52803,12 +52803,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             investment: {
                 plan: 0,
                 rule: null,
-                amount: null
+                amount: 0
             },
             validation: {
                 minimum_amount: null,
                 maximum_amount: null
-            }
+            },
+            error: false
         };
     },
 
@@ -52818,6 +52819,9 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             if (this.validation.minimum_amount && this.validation.maximum_amount && this.investment.amount) {
                 if (parseInt(this.investment.amount) < parseInt(this.validation.minimum_amount) || parseInt(this.investment.amount) > parseInt(this.validation.maximum_amount)) {
                     amountValidationMessage = 'Amount must be between ' + this.validation.minimum_amount + ' and ' + this.validation.maximum_amount;
+                    this.error = true;
+                } else {
+                    this.error = false;
                 }
             } else {
                 amountValidationMessage = '';
@@ -52837,9 +52841,21 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
             }
             this.validation.minimum_amount = selectedPlan[0].minimum_amount;
             this.validation.maximum_amount = selectedPlan[0].maximum_amount;
+            this.investment.rule = null;
         }
     },
     methods: {
+        validateAmount: function validateAmount() {
+            if (this.validation.minimum_amount && this.validation.maximum_amount && this.investment.amount) {
+                if (parseInt(this.investment.amount) < parseInt(this.validation.minimum_amount) || parseInt(this.investment.amount) > parseInt(this.validation.maximum_amount)) {
+                    this.error = 'Amount must be between ' + this.validation.minimum_amount + ' and ' + this.validation.maximum_amount;
+                    return false;
+                } else {
+                    this.error = '';
+                }
+            }
+            return true;
+        },
         submitInvestmentRequest: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
                 var response;

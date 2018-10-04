@@ -46,15 +46,15 @@
                                         <label for="amount"> Amount </label>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" v-model.lazy="investment.amount" required>
-                                        <span> @{{ amountValidation }} </span>
+                                        <input type="number" class="form-control" v-model="investment.amount" required>
+                                        <span class="text-danger"> @{{ amountValidation }} </span>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit"
                                                 class="btn btn-primary"
-                                                :disabled=" investment.amount <= 0 || !Number.isInteger(parseInt(investment.amount)) || investment.rule === null "
+                                                :disabled=" investment.amount <= 0 || !Number.isInteger(parseInt(investment.amount)) || investment.rule === null || error "
                                         @click="submitInvestmentRequest"
                                         >
                                         {{ __('Invest') }}

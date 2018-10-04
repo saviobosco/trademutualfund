@@ -23,7 +23,7 @@
             <div class="news-caption">
                 <h4 class="caption-title"><b> {{ config('app.name') }} </b></h4>
                 <p>
-                    Make money while sleeping ...
+                    Worlds first decentralized trading and crowd funding mutual community
                 </p>
             </div>
         </div>

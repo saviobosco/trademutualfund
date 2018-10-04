@@ -16,8 +16,8 @@ class CreateInvestmentPlans extends Migration
         Schema::create('investment_plans', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->decimal('minimum_amount', 13, 4);
-            $table->decimal('maximum_amount', 13, 4);
+            $table->decimal('minimum_amount', 13, 2);
+            $table->decimal('maximum_amount', 13, 2);
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

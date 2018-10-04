@@ -40,7 +40,7 @@ Route::middleware(['verified'])->group(function() {
     Route::post('/transactions/confirm/{transaction}', 'TransactionsController@confirm');
     Route::post('/transactions/cancel/{transaction}', 'TransactionsController@cancel');
 
-    Route::get('/user_transactions/index', 'UserTransactionsController@index');
+    //Route::get('/user_transactions/index', 'UserTransactionsController@index');
 
     //MakePayment
     Route::get('/make_payments/index', 'MakePaymentsController@index');

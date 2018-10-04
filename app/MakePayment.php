@@ -65,15 +65,22 @@ class MakePayment extends Model
                     $investment->confirm();
                 }
                 try {
-                    $directReferral = $this->user->referredByUser();
-                    $directReferralBonus = $this->initial_amount * (5 / 100);
-                    $directReferral->getReferralCredit($directReferralBonus,$this->user_id );
-
-                    $indirectReferral = $directReferral->referredByUser();
-                    $indirectReferralBonus = $this->initial_amount * (2 / 100);
-                    $indirectReferral->getReferralCredit($indirectReferralBonus,$this->user_id );
-                } catch (ModelNotFoundException $exception) {
-                    //sub due error
+                    $referralAncestors = ReferralPyramid::defaultOrder()->ancestorsOf($this->user_id);
+                    $referralAncestorsCount = count($referralAncestors);
+                    if ($referralAncestorsCount >= 1) {
+                        $parentReferral = (isset($referralAncestors[$referralAncestorsCount - 1])) ? $referralAncestors[$referralAncestorsCount - 1] : null ;
+                        if ($parentReferral) {
+                            $parentReferralUser = User::find($parentReferral['user_id']);
+                            $parentReferralUser->getReferralCredit( $this->initial_amount * (5 / 100) ,$this->user_id );
+                        }
+                        $grandParentReferral = (isset($referralAncestors[$referralAncestorsCount - 2])) ? $referralAncestors[$referralAncestorsCount - 2] : null ;
+                        if ($grandParentReferral) {
+                            $grandParentReferralUser = User::find($grandParentReferral['user_id']);
+                            $grandParentReferralUser->getReferralCredit( $this->initial_amount * (2 / 100) ,$this->user_id );
+                        }
+                    }
+                } catch ( \Exception $exception ) {
+                    // sub due error
                 }
             }
             return true;

@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('title', 'Edit User')
-
 @section('content')
     <div>
         <div class="row">

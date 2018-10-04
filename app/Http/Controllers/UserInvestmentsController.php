@@ -77,7 +77,7 @@ class UserInvestmentsController extends Controller
                     'data' => $investment
                 ]);
             }
-            Session::flash('message', 'You have successfully started a new investment!');
+            flash('You have successfully started a new investment!')->success();
             return back();
         }
     }
@@ -97,8 +97,10 @@ class UserInvestmentsController extends Controller
 
     public function cancel(Investment $investment)
     {
-        if (auth()->user()->id !== $investment->user_id) {
-            return response(null,401)->send();
+        if (auth()->user()->id !== (int)$investment->user_id) { // type hinted the user_id to an Integer
+            return response()->json([
+                'data' => 'Error'
+            ],401);
         }
         if ($investment->cancel()) {
             return response()->json(['data' => 'OK']);
@@ -112,8 +114,10 @@ class UserInvestmentsController extends Controller
 
     public function cashOut(Investment $investment)
     {
-        if (auth()->user()->id !== $investment->user_id) {
-            return response(null,401)->send();
+        if (auth()->user()->id !== (int)$investment->user_id) {
+            return response()->json([
+                'data' => 'Error'
+            ],401);
         }
         if (! $investment->isCashAble()) {
             return response()->json(['data' => 'Error'],422);

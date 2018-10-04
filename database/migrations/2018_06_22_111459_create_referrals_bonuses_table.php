@@ -16,7 +16,7 @@ class CreateReferralsBonusesTable extends Migration
         Schema::create('referrals_bonuses', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->decimal('amount', 13, 4);
+            $table->decimal('amount', 13, 2);
             $table->unsignedInteger('referred_user_id');
             $table->integer('status')->default(1);
             $table->timestamps();

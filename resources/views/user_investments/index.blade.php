@@ -17,7 +17,7 @@
                                     <thead>
                                     <tr>
                                         <th> id</th>
-                                        <th> amount investment </th>
+                                        <th> amount invested </th>
                                         <th> return on investment </th>
                                         <th> global funds amount </th>
                                         <th> release date </th>

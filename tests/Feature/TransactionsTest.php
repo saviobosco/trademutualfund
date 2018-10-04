@@ -12,6 +12,7 @@ namespace tests\Feature;
 use App\Http\Middleware\VerifyCsrfToken;
 use App\Investment;
 use App\Transaction;
+use App\TransactionReport;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use \Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Http\UploadedFile;
@@ -22,18 +23,19 @@ class TransactionsTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public $transaction;
+    public $transaction, $make_payment;
 
     public function setUp()
     {
         parent::setUp();
         $this->signIn();
-        $make_payment = factory('App\MakePayment')->create(['user_id' => auth()->user()->id, 'status' => 2]);
+        $this->make_payment = factory('App\MakePayment')->create(['user_id' => auth()->user()->id, 'status' => 2]);
         $get_payment = factory('App\GetPayment')->create(['status' => 2,'amount' => 0]);
         $this->transaction = factory('App\Transaction')->create([
             'make_payment_user_id' => auth()->user()->id,
-            'make_payment_id' => $make_payment['id'],
+            'make_payment_id' => $this->make_payment['id'],
             'get_payment_id' => $get_payment['id'],
+            'amount' => 50000
         ]);
         $this->withoutMiddleware([VerifyCsrfToken::class, EnsureEmailIsVerified::class]);
     }
@@ -94,10 +96,13 @@ class TransactionsTest extends TestCase
             'id' => $this->transaction['id']
         ]);
         $this->assertDatabaseHas('transaction_reports', [
-            'status' => 2,
+            'status' => TransactionReport::STATUS_RESOLVED,
             'transaction_id' => $this->transaction['id']
         ]);
         $this->assertDatabaseHas('make_payments', [
+            'amount_paid' => $this->transaction['amount'] ,
+        ]);
+        $this->assertDatabaseHas('get_payments', [
             'amount_paid' => $this->transaction['amount'] ,
         ]);
         $this->assertDatabaseHas('investments', [
@@ -118,7 +123,50 @@ class TransactionsTest extends TestCase
         ]);
         $this->assertDatabaseHas('get_payments', [
             'status' => 1,
+            'amount' => 50000
         ]);
-
     }
+
+    public function user_can_cancel_all_transactions_with_same_make_payment_id()
+    {
+        /** for multiple transaction cancellation */
+        factory('App\Transaction')->create([
+            'make_payment_user_id' => auth()->user()->id,
+            'make_payment_id' => $this->make_payment['id'],
+        ]);
+        factory('App\Transaction')->create([
+            'make_payment_user_id' => auth()->user()->id,
+            'make_payment_id' => $this->make_payment['id'],
+        ]);
+    }
+
+    /** @test */
+    public function user_can_reset_timer()
+    {
+        $this->signInAsAdmin();
+        $response = $this->postJson('/transactions/reset_timer/'.$this->transaction['id']);
+        $response->assertJsonFragment(['data' => 'OK']);
+    }
+
+    /** @test */
+    public function user_can_resolve_issues()
+    {
+        $this->signInAsAdmin();
+        $transaction = Transaction::find($this->transaction['id']);
+        $transaction->reportFakeProofOfPayment(['user_id' => auth()->user()->id, 'type' => 'fake_pop']);
+        $response = $this->postJson('/transactions/resolve_issue/'.$this->transaction['id']);
+        $response->assertJsonFragment(['data' => 'OK']);
+        $this->assertDatabaseHas('transaction_reports', [
+            'status' =>TransactionReport::STATUS_RESOLVED
+        ]);
+    }
+
+    /** @test */
+    public function admin_can_view_transaction()
+    {
+        $this->signInAsAdmin();
+        $response = $this->getJson('/transactions/view/'.$this->transaction['id']);
+        $response->assertJsonCount(1);
+    }
+
 }

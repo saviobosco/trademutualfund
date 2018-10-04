@@ -11,20 +11,16 @@
                         <h4 class="panel-title"> Referrals </h4>
                     </div>
                     <div class="panel-body">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th> name </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach( $referrals as $referral)
-                                <tr>
-                                    <td> {{ $referral['user']['name'] }} </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                        <?php
+                        $traverse = function ($referrals, $prefix = '-') use (&$traverse) {
+                            foreach ($referrals as $category) {
+                                echo PHP_EOL.$prefix.' '.$category->name . "<br>";
+
+                                $traverse($category->children, $prefix.'-');
+                            }
+                        };
+                        $traverse($referrals);
+                        ?>
                     </div>
                 </div>
             </div>

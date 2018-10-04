@@ -24,7 +24,7 @@ class ChangePasswordController extends Controller
         ]);
         $current_password = Auth::User()->password;
         if(! Hash::check($request_data['current_password'], $current_password)) {
-            Session::flash('message', 'Please enter correct current password!');
+            flash('Please enter correct current password!')->error();
             return back();
         }
         $user_id = Auth::User()->id;
@@ -32,22 +32,7 @@ class ChangePasswordController extends Controller
         $obj_user->password = Hash::make($request_data['password']);
         $obj_user->save();
         Auth::login($obj_user);
-        Session::flash('message', 'password was successfully updated!');
+        flash('password was successfully updated!')->success();
         return back();
-    }
-
-    public function password_credential_rules(array $data)
-    {
-        $messages = [
-            'current_password.required' => 'Please enter current password',
-            'password.required' => 'Please enter password',
-        ];
-
-        $validator = Validator::make($data, [
-            'current_password' => 'required',
-            'password' => 'required|string|min:6|confirmed',
-        ], $messages);
-
-        return $validator;
     }
 }

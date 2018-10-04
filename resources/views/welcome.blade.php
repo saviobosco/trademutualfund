@@ -20,7 +20,7 @@
     <div id="header" class="header navbar navbar-transparent navbar-fixed-top">
         <div style="background: #080808; color: #fff;">
             <div class="container clearfix">
-                <p class="pull-right" style="margin:5px 0px;"> <i class="fa fa-envelope"></i> : support@trademutalclub.com  </p>
+                <p class="pull-right" style="margin:5px 0px;"> <i class="fa fa-envelope"></i> : {{ setting('support_email') }}  </p>
             </div>
         </div>
         <!-- begin container -->
@@ -116,21 +116,21 @@
                     <!-- begin about -->
                     <div class="about text-center">
                         <p>
-                            Trade Mutual Fund(TMF) is a mutual peer to peer crowd funding community . Your donation grows by 30% weekly. While the admin takes 10% of your weekly growth and places it in a central trading account for sustainability.
+                            Trade Mutual Fund (TMF) is a mutual peer to peer crowd funding community. Your donation grows by 30% weekly while the admin takes 10% of your weekly growth and places it in a central trading account for sustainability. 
                         </p>
                         <div>
                             <h3> 3 investment optional packages </h3>
                             <h4> 10,000 to 200,000  </h4>
                             <p>
-                                Funds grows by 30% weekly but 20% would be withdrawn while 10% would be moved to global central trading fund.
+                                Fund grows by 30% weekly but 20% would be withdrawn while 10% would be moved to global central trading fund.
                             </p>
-                            <h4> 200,000 -500,000  </h4>
+                            <h4> 200,000 - 500,000  </h4>
                             <p>
-                                you have the option of monthly lock where your money grows 120% for 30days. 30% is sent to global trading fund
+                                You have the option of monthly lock where your money grows by 120% for 30days. 30% is sent to global trading fund
                             </p>
-                            <h4> 500,000-1,000,000 </h4>
+                            <h4> 500,000 - 1,000,000 </h4>
                             <p>
-                                all funds goes into master lock where you receive 300% in 3months(optional).
+                                Fund goes into master lock where you receive 300% in 3months(optional).
                             </p>
                         </div>
 

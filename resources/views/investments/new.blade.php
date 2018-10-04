@@ -46,8 +46,8 @@
                                         <label for="amount"> Amount </label>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" v-model.lazy="investment.amount" required>
-                                        <span> @{{ amountValidation }} </span>
+                                        <input type="number" class="form-control" v-model.lazy="investment.amount" required>
+                                        <span> @{{ error }} </span>
                                     </div>
                                 </div>
                                 <div class="form-group row mb-0">

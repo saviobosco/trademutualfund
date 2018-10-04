@@ -25,9 +25,7 @@ class UserInvestmentPlansController extends Controller
         } else {
             $investmentPlans = InvestmentPlan::all();
         }
-        if (request()->wantsJson()) {
-            return new InvestmentPlansCollection($investmentPlans);
-        }
+        return new InvestmentPlansCollection($investmentPlans);
     }
 
     /**

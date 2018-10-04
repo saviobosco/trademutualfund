@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use App\Role;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\DB;
 
@@ -19,11 +21,24 @@ abstract class TestCase extends BaseTestCase
     public function signIn($user = null)
     {
         if ($user === null) {
-            $this->be(factory('App\User')->create());
+            $this->be(factory('App\User')->create(
+                ['email_verified_at' => new Carbon()]
+            ));
             return;
         }
         $this->be($user);
     }
+
+    public function signInAsAdmin()
+    {
+        $role = Role::firstOrCreate(['name' => 'admin']);
+        $user = factory('App\User')->create(
+            ['email_verified_at' => new Carbon()]
+        );
+        $user->assignRole($role->name);
+        $this->be($user);
+    }
+
 
     public function makeInvestmentPlans()
     {

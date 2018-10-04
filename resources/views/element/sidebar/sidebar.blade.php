@@ -33,16 +33,11 @@
                     <span> {{ __('Investment Rules') }} </span>
                 </a>
             </li>
-            <li class="has-sub">
-                <a href="javascript:;">
-                    <b class="caret"></b>
-                    <i class="fa fa-hdd"></i>
-                    <span>Global Funds </span>
+            <li class="">
+                <a href="{{ url('/global_funds/cash_out') }}">
+                    <i class="fa fa-users"></i>
+                    <span> {{ __('Global Funds') }} </span>
                 </a>
-                <ul class="sub-menu">
-                    <li><a href="{{ url('/global_funds/index') }}"> Global Funds </a></li>
-                    <li><a href="{{ url('/global_funds/cash_out') }}"> Cash out fund </a></li>
-                </ul>
             </li>
             <li class="">
                 <a href="{{ url('/transactions/index') }}">

@@ -49,6 +49,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label for="total_users" class="col-sm-4 col-form-label text-md-right">{{ __('Support Email') }}</label>
+                                <div class="col-sm-6">
+                                    <input id="support_email" type="email" class="form-control" name="support_email" value="{{ setting('support_email') }}">
+                                </div>
+                            </div>
 
                             <div class="row">
                                 <div class="col-sm-offset-4"> </div>

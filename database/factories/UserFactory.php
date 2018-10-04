@@ -113,3 +113,12 @@ $factory->define(App\UserSetting::class, function() {
         },
     ];
 });
+
+$factory->define(App\Testimony::class, function(Faker $faker) {
+    return [
+        'user_id' => function() {
+            return factory('App\User')->create()->id;
+        },
+        'testimony' => $faker->paragraph()
+    ];
+});
