@@ -20,7 +20,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('vendors/bootstrap/4.1.3/css/bootstrap.min.css') }}">
     <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style-responsive.css') }}" rel="stylesheet">
     {{--<link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
     <link href="https://unpkg.com/nprogress@0.2.0/nprogress.css" rel="stylesheet" />
