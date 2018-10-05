@@ -61,6 +61,19 @@ Route::middleware(['verified'])->group(function() {
     Route::post('/profile/add_testimony', 'ProfileController@addTestimony');
 
     Route::get('/user_referral/index', 'ReferralsController@index');
+
+    Route::get('/user/completed_investments',function() {
+       $completedInvestment = App\Investment::query()
+           ->doesntHave('testimony')
+           ->where([
+               ['user_id',auth()->user()->id],
+               ['status', App\Investment::COMPLETED]
+           ])
+           ->count();
+        return response()->json([
+            'data' => $completedInvestment
+        ]);
+    });
 });
 
 

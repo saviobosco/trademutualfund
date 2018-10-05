@@ -17,6 +17,7 @@ const instance = axios.create({
         'Accepts': 'application/json'
     }
 });
+NProgress.configure({ showSpinner: false });
 
 // before a request is made start the nprogress
 instance.interceptors.request.use(config => {

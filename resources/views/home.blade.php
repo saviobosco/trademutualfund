@@ -134,6 +134,22 @@
             </div>
         </div>
     </div>
-
+</div>
+<div class="modal fade" id="addInvestmentTestimony">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"> Missing Investment Testimony </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body text-center">
+                You have completed investments with no testimony. <br>
+                click <a href="{{ url('/user_investments/index') }}"> here </a> to add testimony
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

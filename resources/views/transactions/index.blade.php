@@ -12,7 +12,7 @@
                         <h4 class="panel-title"> Transactions  </h4>
                     </div>
                     <div class="panel-body">
-                        <table class="table">
+                        <table class="table table-responsive-sm">
                             <thead>
                             <tr>
                                 <th> id</th>

@@ -148,5 +148,21 @@ Vue.component('investments-component', require('./components/Investments/Investm
 Vue.component('transactions-component', require('./components/Transactions/TransactionsComponent.vue'));
 Vue.component('admin-transaction-component', require('./components/Transactions/AdminTransactionComponent.vue'));
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    methods:{
+        openModal()
+        {
+            $('#addInvestmentTestimony').modal('show');
+        },
+    },
+    async created() {
+        try {
+            let response = await this.$http.get('/user/completed_investments');
+            if (response.data.data >= 1) {
+                this.openModal();
+            }
+        } catch (error) {
+
+        }
+    }
 });

@@ -46,7 +46,7 @@ class UsersRepository
             ->where('user_id', $user_id)
             ->where(function($query) {
                 $query->where('status', '<>', -1)
-                    ->where('status', '<>', 4);
+                    ->where('status', '<>', 5);
             })
             ->count();
         return $transactions;
@@ -88,5 +88,16 @@ class UsersRepository
             ->with(['relationships:referral_link_id'])
             ->get();
         return count($referrals[0]['relationships']);
+    }
+
+    public static function getUserCompletedInvestments($user_id)
+    {
+        $transactions = Investment::query()
+            ->where([
+                ['user_id', $user_id],
+                ['status', Investment::COMPLETED]
+            ])
+            ->count();
+        return $transactions;
     }
 }

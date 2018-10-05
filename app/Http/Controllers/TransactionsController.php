@@ -43,7 +43,7 @@ class TransactionsController extends Controller
             $transaction = Transaction::query()
                 ->with([
                     'make_payment_user:id,name',
-                    'get_payment_user:id, name',
+                    'get_payment_user:id,name',
                     'photo_proofs',
                     'transaction_reports' => function($query) {
                         $query->where('status', 1);
