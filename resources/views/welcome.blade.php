@@ -34,7 +34,7 @@
                 </button>
                 <a href="index.html" class="navbar-brand">
                     <picture>
-                        <img src="{{ asset('images/logo-white-1500.png') }}" alt="Logo">
+                        <img src="{{ asset('images/logo-white.png') }}" alt="Logo">
                     </picture>
                 </a>
             </div>
