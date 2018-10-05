@@ -11,6 +11,7 @@ namespace tests\Feature;
 
 use App\Investment;
 use App\InvestmentPlan;
+use App\MakePayment;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Http\Middleware\VerifyCsrfToken;
@@ -64,7 +65,8 @@ class InvestmentsTest extends TestCase
             'id' => $investment['id']
         ]);
         $this->assertDatabaseHas('make_payments', [
-            'investment_id' => $investment['id']
+            'investment_id' => $investment['id'],
+            'status' => MakePayment::CANCELLED
         ]);
     }
 

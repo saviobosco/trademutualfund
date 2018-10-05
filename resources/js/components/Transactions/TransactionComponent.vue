@@ -38,10 +38,10 @@
                 <span class="" v-if="transaction.photo_proofs.length > 0">{{ transaction.photo_proofs.length  }} Image(s) Uploaded </span> | 
                 <span class="" v-if="transaction.transaction_reports.length > 0">{{ transaction.transaction_reports.length  }} Report(s) </span>
             </div>
-            <div v-if="transaction.status == 2">
+            <!-- <div v-if="transaction.status == 2">
                 <add-testimony-component :investment_id="transaction.get_payment.investment_id" @testimonyAdded="transactionCompleted">
                 </add-testimony-component>
-            </div>
+            </div> -->
 
         </div>
 
@@ -188,14 +188,18 @@ export default {
                     confirmButtonText: 'Yes, Confirm Transaction!'
                 });
                 if (result.value) {
-                    let response = await this.$http.post(`/transactions/confirm/${this.id}`);
-                    if (response.data.data === 'OK') {
-                        this.$swal('Confirmed!','transaction has been confirmed.', 'success');
-                        this.transaction.status = 2;
-                        this.$refs.countdown.stop();
+                    try {
+                        let response = await this.$http.post(`/transactions/confirm/${this.id}`);
+                        if (response.data.data === 'OK') {
+                            this.$swal('Confirmed!','transaction has been confirmed.', 'success');
+                            this.transaction.status = 2;
+                            this.$refs.countdown.stop();
+                            this.transactionCompleted();
+                        }
+                    } catch(error) {
+                        this.$swal('Error!','transaction could not be confirmed.', 'error');
                     }
                 }
-
         },
         handleFileUpload(){
             /*
@@ -307,9 +311,6 @@ export default {
         {
             this.$emit('remove-transaction', this.transaction.id);
         }
-    },
-    components: {
-        'add-testimony-component': require('./AddTestimonyComponent.vue'),
-    },
+    }
 }
 </script>

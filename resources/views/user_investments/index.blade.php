@@ -59,7 +59,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <a href="javascript:;" @click="closeModal" class="btn btn-sm btn-white">Close</a>
-                                                <button @click="submitTestimony" type="button" class="btn btn-sm btn-success"> Add Testimony </button>
+                                                <button :disabled="testimony === null || testimony.length <=0 " @click="submitTestimony" type="button" class="btn btn-sm btn-success"> Add Testimony </button>
                                             </div>
                                         </div>
                                     </div>

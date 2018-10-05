@@ -66,7 +66,7 @@
              // validate amount
              let response = await this.$http.post('/user_investments/create', this.investment);
              if (response.status === 200) {
-                Vue.swal('Success','Your investment was successfully!','success');
+                Vue.swal('Success','Your investment was successfully Added!','success');
                 this.resetInvestment();
                 this.clearInvestmentRules();
              } 

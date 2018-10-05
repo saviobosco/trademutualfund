@@ -51,7 +51,7 @@ class Investment extends Model
         if ($makePayment->count() <= 0) {
             return true;
         }
-        return $this->amount_invested === $makePayment[0]['amount'];
+        return (float)$this->amount_invested === (float)$makePayment[0]['amount'];
     }
 
     public function isActive()

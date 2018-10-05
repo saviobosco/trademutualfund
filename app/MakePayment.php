@@ -44,8 +44,8 @@ class MakePayment extends Model
     {
         // get all transactions and cancel it
         $transactions = Transaction::query()->where([
-            ['make_payment_id'=> $this->id],
-            ['status' => Transaction::ACTIVE]
+            ['make_payment_id', $this->id],
+            ['status', Transaction::ACTIVE]
         ])->get();
         if (count($transactions)) {
             foreach($transactions as $transaction) {

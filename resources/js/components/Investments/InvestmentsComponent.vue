@@ -27,12 +27,18 @@ export default {
                     confirmButtonText: 'Yes, Cancel Investment!'
                 });
                 if (result.value) {
-                    let response = await this.$http.post(`/user_investments/cancel/${id}`);
-                    if (response.data.data === 'OK') {
-                        Vue.swal('Confirmed!','investment has been cancelled.', 'success');
+                    try {
+                        let response = await this.$http.post(`/user_investments/cancel/${id}`);
+                        if (response.data.data === 'OK') {
+                            Vue.swal('Confirmed!','investment has been cancelled.', 'success');
+                            this.getInvestments();
+                        }
+                    } catch (error) {
+                            console.log('Error occurred');
+                            Vue.swal('Error!','investment could not be cancelled.', 'error');
                     }
+                    
                 }
-                this.getInvestments();
         },
         async cashOutInvestment(id) {
             let result = await Vue.swal({
@@ -45,12 +51,18 @@ export default {
                     confirmButtonText: 'Yes, CashOut Investment!'
                 });
                 if (result.value) {
-                    let response = await this.$http.post(`/user_investments/cash_out/${id}`);
-                    if (response.data.data === 'OK') {
-                        Vue.swal('Confirmed!','investment has been cashed out.', 'success');
+                    try {
+                        let response = await this.$http.post(`/user_investments/cash_out/${id}`);
+                        if (response.data.data === 'OK') {
+                            Vue.swal('Confirmed!','investment has been cashed out.', 'success');
+                            this.getInvestments();
+                        }
+
+                    } catch (error) {
+                        Vue.swal('Error!','investment could not be cashed out.', 'error');
                     }
+                    
                 }
-                this.getInvestments();
         },
         selectInvestment(id) {
                 let selectedInvestment = this.investments.filter((investment) => {
@@ -64,11 +76,15 @@ export default {
             this.selectInvestment(id);            
         },
         async submitTestimony() {
-            let response = await this.$http.post(`/user_investments/addTestimony/${this.investment.id}`, {testimony: this.testimony});
-             if (response.status === 200) {
-                Vue.swal('Success','The testimony was successfully added!','success');
-             }
-             this.getInvestments();
+            try {
+                let response = await this.$http.post(`/user_investments/addTestimony/${this.investment.id}`, {testimony: this.testimony});
+                if (response.status === 200) {
+                    Vue.swal('Success','The testimony was successfully added!','success');
+                    this.getInvestments();
+                }
+            } catch (error) {
+                Vue.swal('Error!','Testimony could not be added!','error');
+            }
              this.closeModal();
         },
         clearTestimony() {
