@@ -27,6 +27,19 @@
                             </div>
 
                             <div class="form-group row">
+                                <label for="tag_line" class="col-sm-4 col-form-label text-md-right">{{ __('Tag Line') }}</label>
+                                <div class="col-md-6">
+                                    <input id="tag_line" type="text" class="form-control{{ $errors->has('tag_line') ? ' is-invalid' : '' }}" name="tag_line" value="{{ setting('tag_line') }}">
+
+                                    @if ($errors->has('tag_line'))
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('tag_line') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
                                 <label for="transaction_time" class="col-sm-4 col-form-label text-md-right">{{ __('Transaction Time') }}</label>
                                 <div class="col-md-6">
                                     <input id="transaction_time" type="text" class="form-control{{ $errors->has('transaction_time') ? ' is-invalid' : '' }}" name="transaction_time" value="{{ setting('transaction_time') }}">
@@ -76,6 +89,29 @@
                                 <label for="total_transactions" class="col-sm-4 col-form-label text-md-right">{{ __('Total Transaction') }}</label>
                                 <div class="col-sm-6">
                                     <input id="total_transactions" type="text" class="form-control" name="total_transactions" value="{{ setting('total_transactions') }}">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-offset-4"> </div>
+                                <div class="col-sm-6"><h4> Count Down Settings </h4></div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="show_count_down" class="col-sm-4 col-form-label text-md-right">{{ __('Show Count Down') }}</label>
+                                <div class="col-md-6">
+                                    <div class="col-sm-6">
+                                        <input type="hidden" name="show_count_down" value="0">
+                                        <label for="show_count_down">
+                                            <input type="checkbox" name="show_count_down" id="show_count_down" value="1" <?= (setting('show_count_down')) ? 'checked="checked"' : '' ?> >
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="end_time" class="col-sm-4 col-form-label text-md-right">{{ __('End Time') }}</label>
+                                <div class="col-sm-6">
+                                    <input id="end_time" type="text" class="form-control" name="end_time" value="{{ setting('end_time') }}">
                                 </div>
                             </div>
 

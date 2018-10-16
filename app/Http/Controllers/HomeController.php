@@ -43,6 +43,11 @@ class HomeController extends Controller
         $globalFundsCumulative = setting('global_funds_cumulative');
 
         $referralBonus = UsersRepository::getUserReferralBonus($loggedInUser->id);
+        $completedInvestmentsCount = UsersRepository::getCompletedInvestmentWithNoTestimony($loggedInUser->id);
+        if ($completedInvestmentsCount >= 1) {
+            flash()->overlay("You have completed investments with no testimony. <br>
+                click <a href='".url('/user_investments/index')."'> here </a> to add testimony", 'Missing Investment Testimony ');
+        }
         return view('home')->with(compact('transactions',
             'totalUsers',
             'globalFunds',

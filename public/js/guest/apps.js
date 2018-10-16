@@ -152,6 +152,7 @@ var handleTooltipActivation = function() {
     }
 };
 
+
 /* Application Controller
 ------------------------------------------------ */
 var App = function () {

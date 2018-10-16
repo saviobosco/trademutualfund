@@ -23,7 +23,7 @@
             <div class="news-caption">
                 <h4 class="caption-title"><b> {{ config('app.name') }} </b></h4>
                 <p>
-                    Worlds first decentralized trading and crowd funding mutual community
+                    {{ setting('tag_line') }}
                 </p>
             </div>
         </div>
@@ -48,6 +48,10 @@
     <!-- end login -->
 </div>
 
+<script src="{{ asset('vendors/jquery/jquery-3.3.1.min.js')  }}"></script>
+<script src="{{ asset('vendors/bootstrap/4.1.3/js/bootstrap.bundle.min.js')  }}"></script>
+<script src="{{ asset('vendors/masked-input/masked-input.min.js')  }}"></script>
+<script src="{{ asset('js/guest/register.js')  }}"></script>
 
 </body>
 </html>

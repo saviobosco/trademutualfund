@@ -64,7 +64,7 @@
         <!-- begin container -->
         <div class="container home-content">
             <h1>Welcome to {{ config('app.name') }}</h1>
-            <h3> Worlds first decentralized trading and crowd funding mutual community </h3>
+            <h3> {{ setting('tag_line') }} </h3>
 
             <a href="{{ route('register') }}" class="btn btn-outline"> Register </a><br />
             <div class="row home-stats">
@@ -133,6 +133,10 @@
                                 Fund goes into master lock where you receive 300% in 3months(optional).
                             </p>
                         </div>
+                        <p>
+                            Join Us on
+                            <a target="_blank" href="https://t.me/joinchat/J6CUKkmOJdB3KqAF57_bpA" class="text-inverse"><i class="fa fa-telegram fa-lg fa-fw text-info"></i> Telegram </a>
+                        </p>
 
                     </div>
                     <!-- end about -->

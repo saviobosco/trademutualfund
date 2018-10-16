@@ -10,10 +10,12 @@ namespace App\Repository;
 
 
 use App\Investment;
+use App\ReferralPyramid;
 use App\ReferralsBonus;
 use App\Transaction;
 use App\TransactionReport;
 use App\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 
@@ -82,12 +84,12 @@ class UsersRepository
 
     public static function getUserReferralCount($user_id)
     {
-        $user = User::query()->select(['id'])->where('id', $user_id)->first();
-        $referrals = $user->referral_link()
-            ->select(['referral_links.user_id','referral_links.id'])
-            ->with(['relationships:referral_link_id'])
-            ->get();
-        return count($referrals[0]['relationships']);
+        try {
+            return ReferralPyramid::whereDescendantOf($user_id)
+                ->count();
+        } catch ( ModelNotFoundException $exception) {
+            return 0;
+        }
     }
 
     public static function getUserCompletedInvestments($user_id)
@@ -99,5 +101,17 @@ class UsersRepository
             ])
             ->count();
         return $transactions;
+    }
+
+    public static function getCompletedInvestmentWithNoTestimony($user_id)
+    {
+        $completedInvestment = Investment::query()
+            ->doesntHave('testimony')
+            ->where([
+                ['user_id',$user_id],
+                ['status', Investment::COMPLETED]
+            ])
+            ->count();
+        return $completedInvestment;
     }
 }

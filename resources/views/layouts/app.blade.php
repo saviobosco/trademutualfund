@@ -22,9 +22,7 @@
     <link href="{{ asset('vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style-responsive.css') }}" rel="stylesheet">
-    {{--<link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
-    <link href="https://unpkg.com/nprogress@0.2.0/nprogress.css" rel="stylesheet" />
-    {{--<script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>--}}
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">

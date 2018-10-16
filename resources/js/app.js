@@ -6,9 +6,10 @@
  */
 
 require('./bootstrap');
-$('#flash-overlay-modal').modal();
+
 setTimeout(() => {
     (function() {
+        $('#flash-overlay-modal').modal();
         var sidebarProgress = false;
         $('.sidebar').bind('click touchstart', function(e) {
             if ($(e.target).closest('.sidebar').length !== 0) {
@@ -129,16 +130,17 @@ setTimeout(() => {
 
 import VueSweetalert2 from 'vue-sweetalert2';
 import VueCountdown from '@xkeshi/vue-countdown';
+import VueClipboard from 'vue-clipboard2'
 
 
 window.Vue = require('vue');
-Vue.config.devtools = true;
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 Vue.use(VueSweetalert2);
+Vue.use(VueClipboard)
 
 import axios from './utils/http';
 Vue.use(require('vue-axios'), axios);
@@ -147,22 +149,7 @@ Vue.component('investment-component', require('./components/InvestmentComponent.
 Vue.component('investments-component', require('./components/Investments/InvestmentsComponent.vue'));
 Vue.component('transactions-component', require('./components/Transactions/TransactionsComponent.vue'));
 Vue.component('admin-transaction-component', require('./components/Transactions/AdminTransactionComponent.vue'));
+Vue.component('coming-soon-component', require('./components/ComingSoonComponent.vue'));
 const app = new Vue({
     el: '#app',
-    methods:{
-        openModal()
-        {
-            $('#addInvestmentTestimony').modal('show');
-        },
-    },
-    async created() {
-        try {
-            let response = await this.$http.get('/user/completed_investments');
-            if (response.data.data >= 1) {
-                this.openModal();
-            }
-        } catch (error) {
-
-        }
-    }
 });

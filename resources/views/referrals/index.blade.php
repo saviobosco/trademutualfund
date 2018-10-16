@@ -19,7 +19,9 @@
                                 $traverse($category->children, $prefix.'-');
                             }
                         };
-                        $traverse($referrals);
+                            if ($referrals) {
+                                $traverse($referrals);
+                            }
                         ?>
                     </div>
                 </div>

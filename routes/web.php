@@ -13,6 +13,9 @@ use App\Repository\StatisticsRepository;
 */
 
 Route::get('/', function () {
+    if (setting('show_count_down')) {
+        return view('coming_soon');
+    }
     $totalUsers = StatisticsRepository::getTotalOfUsers();
     $totalPayout = StatisticsRepository::getTotalOfPayOuts();
     $totalTransactions = StatisticsRepository::getTotalOfTransactions();
@@ -22,7 +25,7 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::middleware(['verified'])->group(function() {
+Route::middleware(['auth','verified'])->group(function() {
     Route::get('/home', 'HomeController@index')->name('home');
     // Investment Routes
     Route::get('/user_investments/create','UserInvestmentsController@create')->name('new_investment');
@@ -61,24 +64,11 @@ Route::middleware(['verified'])->group(function() {
     Route::post('/profile/add_testimony', 'ProfileController@addTestimony');
 
     Route::get('/user_referral/index', 'ReferralsController@index');
-
-    Route::get('/user/completed_investments',function() {
-       $completedInvestment = App\Investment::query()
-           ->doesntHave('testimony')
-           ->where([
-               ['user_id',auth()->user()->id],
-               ['status', App\Investment::COMPLETED]
-           ])
-           ->count();
-        return response()->json([
-            'data' => $completedInvestment
-        ]);
-    });
 });
 
 
 
-Route::middleware(['verified','role:admin'])->group(function() {
+Route::middleware(['auth','verified','role:admin'])->group(function() {
     Route::get('/users/index', 'UsersController@index');
     Route::get('/users/view/{user}', 'UsersController@show');
     Route::put('/users/edit/{user}', 'UsersController@update');

@@ -163,6 +163,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Musonza\Chat\ChatServiceProvider::class,
         Akaunting\Setting\Provider::class,
+        Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
     ],
 
     /*
@@ -216,5 +217,6 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Chat' => Musonza\Chat\Facades\ChatFacade::class,
         'Setting' => Akaunting\Setting\Facade::class,
+        'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
     ],
 ];

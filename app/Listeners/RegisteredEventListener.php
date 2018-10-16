@@ -35,6 +35,12 @@ class RegisteredEventListener
         $userReferral = $this->getReferralUser($event->user);
         if ($userReferral instanceof Model) {
             $this->registerReferral($userReferral, $event->user);
+        } else {
+            // Register the user as a parent referral
+            ReferralPyramid::create([
+                'user_id' => $event->user->id,
+                'name' => $event->user->name
+            ]);
         }
     }
 

@@ -38,7 +38,7 @@
         </div>
 
         <div class="form-group m-b-15">
-            <input id="phone_number" type="text" class="form-control form-control-lg{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" placeholder="Phone Number" required>
+            <input  type="text" class="form-control form-control-lg{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" id="masked-input-phone" placeholder="(999) 999-9999" required>
 
             @if ($errors->has('phone_number'))
                 <span class="invalid-feedback" role="alert">
@@ -63,7 +63,7 @@
         @endif
 
         <div class="form-group m-b-15">
-            <input id="password-confirm" type="email" class="form-control form-control-lg" name="referral_email" placeholder="Referral Email (Optional) ">
+            <input id="referral-email" type="email" class="form-control form-control-lg" name="referral_email" placeholder="Referral Email (Optional) ">
         </div>
 
         <div class="login-buttons">

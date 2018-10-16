@@ -14,7 +14,8 @@ class SettingsController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'app_name' => 'required'
+            'app_name' => 'required',
+            'tag_line' => 'required'
         ]);
         $requestData = $request->except(['_token']);
         foreach( $requestData as $key => $value) {

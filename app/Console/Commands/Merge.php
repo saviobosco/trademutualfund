@@ -41,6 +41,9 @@ class Merge extends Command
      */
     public function handle()
     {
+        if (! setting('merge_status')) {
+            return;
+        }
         // get all get payments
         $getPayments = GetPayment::query()->where('status', 1)->get()->toArray();
         // if get payment request is empty exit
@@ -55,7 +58,7 @@ class Merge extends Command
             $getPayment = array_shift($getPayments);
 
             $transaction = [
-                'time_elapse_after' => new Carbon('+12 hours')
+                'time_elapse_after' => new Carbon(setting('transaction_time'))
             ];
 
             foreach($makePayments as $makePayment) {

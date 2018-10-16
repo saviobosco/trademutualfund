@@ -105,10 +105,10 @@ export default {
             status = parseInt(status);
             switch (status) {
               case 1:
-                return '<span class="label label-primary"> active </span>';
+                return '<span class="label label-primary"> pending </span>';
               break;
               case 2:
-                return '<span class="label label-success"> confirmed </span>';
+                return '<span class="label label-success"> active </span>';
               break;
               case 3:
                 return '<span class="label label-success"> cash out </span>';
