@@ -51,12 +51,17 @@ class Merge extends Command
             return;
         }
         while(count($getPayments) > 0) {
-            $makePayments = MakePayment::query()->where('status', 1)->get();
+            $getPayment = array_shift($getPayments);
+
+            $makePayments = MakePayment::query()
+                ->where([
+                    ['status', 1],
+                    ['user_id', '<>', $getPayment['user_id']]
+                ])
+                ->get();
             if (count($makePayments) <= 0) {
                 break;
             }
-            $getPayment = array_shift($getPayments);
-
             $transaction = [
                 'time_elapse_after' => new Carbon(setting('transaction_time'))
             ];

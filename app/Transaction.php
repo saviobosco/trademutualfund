@@ -127,7 +127,7 @@ class Transaction extends Model
 
     public function getTimeElapseAfterAttribute($date)
     {
-        return (new Carbon($date))->toAtomString();
+        return (new Carbon($date))/*->toAtomString()*/;
     }
 
     protected function serializeDate(\DateTimeInterface $date)

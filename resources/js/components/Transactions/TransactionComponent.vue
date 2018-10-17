@@ -145,7 +145,7 @@ export default {
     },
     computed: {
         transaction_expires() {
-            return (new Date(this.transaction.time_elapse_after)).getTime() - (new Date()).getTime();
+            return (new Date(this.transaction.time_elapse_after.date)).getTime() - (new Date()).getTime();
         }
     },
     watch: {
