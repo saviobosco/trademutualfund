@@ -18,6 +18,7 @@ use \Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
+use App\Http\Middleware\EnsurePhoneIsVerified;
 
 class TransactionsTest extends TestCase
 {
@@ -37,7 +38,7 @@ class TransactionsTest extends TestCase
             'get_payment_id' => $get_payment['id'],
             'amount' => 50000
         ]);
-        $this->withoutMiddleware([VerifyCsrfToken::class, EnsureEmailIsVerified::class]);
+        $this->withoutMiddleware([VerifyCsrfToken::class, EnsureEmailIsVerified::class, EnsurePhoneIsVerified::class]);
     }
     /** @test */
     public function user_can_view_active_transactions()

@@ -11,6 +11,8 @@ namespace tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
+use App\Http\Middleware\EnsurePhoneIsVerified;
+
 
 class ProfileTest extends TestCase
 {
@@ -19,6 +21,8 @@ class ProfileTest extends TestCase
     {
         parent::setUp();
         $this->signIn();
+        $this->withoutMiddleware([EnsurePhoneIsVerified::class]);
+
     }
 
     /** @test */

@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->string('phone_number', 15)->nullable();
             $table->integer('country_id', false, true)->nullable();
+            $table->dateTime('phone_verified_at')->nullable();
             $table->timestamps();
         });
     }

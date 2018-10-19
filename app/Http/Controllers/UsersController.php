@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Countries;
 use App\User;
 use App\Role;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -76,7 +77,18 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->update($request->except(['_token','_method','roles']));
+        $user->fill($request->except(['_token','_method','roles','email_verified_at','phone_verified_at']));
+        if ((int) $request->input('email_verified_at') === 1) {
+            $user->forceFill(['email_verified_at' => new Carbon()]);
+        } else {
+            $user->forceFill(['email_verified_at' => null]);
+        }
+        if ((int) $request->input('phone_verified_at') === 1) {
+            $user->forceFill(['phone_verified_at' => new Carbon()]);
+        } else {
+            $user->forceFill(['phone_verified_at' => null]);
+        }
+        $user->update();
         $user->syncRoles($request->input('roles'));
         flash('User record has been updated')->success();
         return back();

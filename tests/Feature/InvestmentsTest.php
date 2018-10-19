@@ -15,6 +15,7 @@ use App\MakePayment;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Http\Middleware\VerifyCsrfToken;
+use App\Http\Middleware\EnsurePhoneIsVerified;
 use \Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 
 class InvestmentsTest extends TestCase
@@ -24,7 +25,7 @@ class InvestmentsTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->withoutMiddleware([VerifyCsrfToken::class, EnsureEmailIsVerified::class]);
+        $this->withoutMiddleware([VerifyCsrfToken::class, EnsureEmailIsVerified::class, EnsurePhoneIsVerified::class]);
     }
 
     /** @test */

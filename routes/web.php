@@ -24,8 +24,15 @@ Route::get('/', function () {
 });
 
 Auth::routes(['verify' => true]);
+// for the phone verification
+Route::get('/phone_verification', 'Auth\VerifyPhoneController@displayNotice')->name('phone_verification.notice');
 
-Route::middleware(['auth','verified'])->group(function() {
+Route::post('/phone_verification/send_code', 'Auth\VerifyPhoneController@sendCode');
+Route::post('/phone_verification/resend_code', 'Auth\VerifyPhoneController@resendCode');
+Route::post('/phone_verification/verify_code', 'Auth\VerifyPhoneController@verifyCode');
+
+
+Route::middleware(['auth','verified','verified_phone'])->group(function() {
     Route::get('/home', 'HomeController@index')->name('home');
     // Investment Routes
     Route::get('/user_investments/create','UserInvestmentsController@create')->name('new_investment');

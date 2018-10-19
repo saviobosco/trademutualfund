@@ -118,199 +118,215 @@
 
 <script>
 export default {
-    name: 'Transaction',
-    props: {
-        id: {
-            type: Number,
-            required: true
-        },
-        transaction: {
-            type: Object
-        },
-        logged_in_user: {
-            type: Number,
-            required: true
+  name: "Transaction",
+  props: {
+    id: {
+      type: Number,
+      required: true
+    },
+    transaction: {
+      type: Object
+    },
+    logged_in_user: {
+      type: Number,
+      required: true
+    }
+  },
+  data() {
+    return {
+      file: "",
+      showPreview: false,
+      imagePreview: "",
+      modal: "modal-" + this.id,
+      canRemoveImage: this.transaction.transaction_reports.length
+        ? false
+        : true,
+      canUploadImage: this.transaction.photo_proofs.length ? false : true,
+      isUploadingImage: false
+    };
+  },
+  computed: {
+    transaction_expires() {
+      let time =
+        new Date(this.transaction.time_elapse_after.date).getTime() -
+        new Date().getTime();
+      if (time > 0) {
+        return time;
+      }
+      return 0;
+    }
+  },
+  watch: {
+    "transaction.transaction_reports"(value) {
+      if (value.length > 0 && this.canRemoveImage === true) {
+        this.canRemoveImage = false;
+      }
+    },
+    "transaction.photo_proofs"(value) {
+      if (value.length > 0 && this.canRemoveImage === true) {
+        this.canUploadImage = false;
+      }
+    }
+  },
+  filters: {
+    status(status) {
+      status = parseInt(status);
+      switch (status) {
+        case 1:
+          return '<span class="label label-primary"> active </span>';
+          break;
+        case 2:
+          return '<span class="label label-success"> confirmed </span>';
+          break;
+        default:
+          return '<span class="label label-default"> Unknown </span>';
+      }
+    }
+  },
+  methods: {
+    async confirmTransaction() {
+      let result = await this.$swal({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#388e3c",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Confirm Transaction!"
+      });
+      if (result.value) {
+        try {
+          let response = await this.$http.post(
+            `/transactions/confirm/${this.id}`
+          );
+          if (response.data.data === "OK") {
+            this.$swal(
+              "Confirmed!",
+              "transaction has been confirmed.",
+              "success"
+            );
+            this.transaction.status = 2;
+            this.$refs.countdown.stop();
+            this.transactionCompleted();
+          }
+        } catch (error) {
+          this.$swal("Error!", "transaction could not be confirmed.", "error");
         }
+      }
     },
-    data() {
-        return {
-            file: '',
-            showPreview: false,
-            imagePreview: '',
-            modal: 'modal-' + this.id,
-            canRemoveImage: (this.transaction.transaction_reports.length) ? false : true,
-            canUploadImage: (this.transaction.photo_proofs.length) ? false : true,
-            isUploadingImage: false
-        };
-    },
-    computed: {
-        transaction_expires() {
-            return (new Date(this.transaction.time_elapse_after.date)).getTime() - (new Date()).getTime();
-        }
-    },
-    watch: {
-        'transaction.transaction_reports'(value) {
-            if (value.length > 0 && this.canRemoveImage === true) {
-                this.canRemoveImage = false
-            }
-        },
-        'transaction.photo_proofs'(value) {
-            if (value.length > 0 && this.canRemoveImage === true) {
-                this.canUploadImage = false
-            }
-        }
-
-    },
-    filters: {
-        status(status) {
-            status = parseInt(status);
-            switch(status) {
-                case 1:
-                    return '<span class="label label-primary"> active </span>';
-                 break;
-                case 2:
-                    return '<span class="label label-success"> confirmed </span>';
-                 break;
-                default:
-                return '<span class="label label-default"> Unknown </span>';
-            }
-        }
-    },
-    methods: {
-        async confirmTransaction() {
-            let result = await this.$swal({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#388e3c',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, Confirm Transaction!'
-                });
-                if (result.value) {
-                    try {
-                        let response = await this.$http.post(`/transactions/confirm/${this.id}`);
-                        if (response.data.data === 'OK') {
-                            this.$swal('Confirmed!','transaction has been confirmed.', 'success');
-                            this.transaction.status = 2;
-                            this.$refs.countdown.stop();
-                            this.transactionCompleted();
-                        }
-                    } catch(error) {
-                        this.$swal('Error!','transaction could not be confirmed.', 'error');
-                    }
-                }
-        },
-        handleFileUpload(){
-            /*
+    handleFileUpload() {
+      /*
             Set the local file variable to what the user has selected.
             */
-            this.file = this.$refs.file.files[0];
-            /*
+      this.file = this.$refs.file.files[0];
+      /*
             Initialize a File Reader object
             */
-            let reader  = new FileReader();
+      let reader = new FileReader();
 
-            /*
+      /*
             Add an event listener to the reader that when the file
             has been loaded, we flag the show preview as true and set the
             image to be what was read from the reader.
             */
-            reader.addEventListener("load", function () {
-            this.showPreview = true;
-            this.imagePreview = reader.result;
-            }.bind(this), false);
+      reader.addEventListener(
+        "load",
+        function() {
+          this.showPreview = true;
+          this.imagePreview = reader.result;
+        }.bind(this),
+        false
+      );
 
-            /*
+      /*
             Check to see if the file is not empty.
             */
-            if( this.file ){
-            /*
+      if (this.file) {
+        /*
                 Ensure the file is an image file.
             */
-                if ( /\.(jpe?g|png|gif)$/i.test( this.file.name ) ) {
-                    /*
+        if (/\.(jpe?g|png|gif)$/i.test(this.file.name)) {
+          /*
                     Fire the readAsDataURL method which will read the file in and
                     upon completion fire a 'load' event which we will listen to and
                     display the image in the preview.
                     */
-                    reader.readAsDataURL( this.file );
-                }
-            }
-        },
-        uploadImage() {
-            this.isUploadingImage = true;
-            /*
+          reader.readAsDataURL(this.file);
+        }
+      }
+    },
+    uploadImage() {
+      this.isUploadingImage = true;
+      /*
             Initialize the form data
             */
-            let formData = new FormData();
+      let formData = new FormData();
 
-            /*
+      /*
                 Add the form data we need to submit
             */
-            formData.append('file', this.file);
+      formData.append("file", this.file);
 
-            /*
+      /*
                 Make the request to the POST /single-file URL
             */
-            this.$http.post( `/transactions/upload_proof/${this.id}`,
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
-            ).then((response) => {
-                this.transaction.photo_proofs.push(response.data.data);
-                $(`#modal-${this.id}`).modal('hide');
-                this.isUploadingImage = false;
-            })
-            .catch(function(){
-                console.log('FAILURE!!');
-                this.isUploadingImage = false;
-            });
-        },
-        removeImage(id) {
-            this.$http.post(`/transactions/remove_proof/${this.id}`,
-            {image_id: id}
-            )
-            .then((response) => {
-                this.transaction.photo_proofs = 
-                this.transaction.photo_proofs.filter((image) => {
-                    return image.id !== id
-                });
-            })
-        },
-        async reportFakePOP() {
-            let result = await this.$swal({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#388e3c',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, Report Transaction!'
-                });
-                if (result.value) {
-                    let response = await this.$http.post(`/transactions/report/${this.id}`,
-                                        {
-                                            type: 'fake_pop'
-                                        });
-                    if (response.data.data === 'OK') {
-                        this.$swal('Reported!','transaction has been reported.', 'success');
-                        let transaction = response.data.data;
-                        this.transaction.transaction_reports.push(transaction);
-                    }
-                }
-        },
-        openModal()
-        {
-            $(`#${this.modal}`).modal('show');
-        },
-        transactionCompleted()
-        {
-            this.$emit('remove-transaction', this.transaction.id);
+      this.$http
+        .post(`/transactions/upload_proof/${this.id}`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(response => {
+          this.transaction.photo_proofs.push(response.data.data);
+          $(`#modal-${this.id}`).modal("hide");
+          this.isUploadingImage = false;
+        })
+        .catch(function() {
+          console.log("FAILURE!!");
+          this.isUploadingImage = false;
+        });
+    },
+    removeImage(id) {
+      this.$http
+        .post(`/transactions/remove_proof/${this.id}`, { image_id: id })
+        .then(response => {
+          this.transaction.photo_proofs = this.transaction.photo_proofs.filter(
+            image => {
+              return image.id !== id;
+            }
+          );
+        });
+    },
+    async reportFakePOP() {
+      let result = await this.$swal({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#388e3c",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Report Transaction!"
+      });
+      if (result.value) {
+        let response = await this.$http.post(
+          `/transactions/report/${this.id}`,
+          {
+            type: "fake_pop"
+          }
+        );
+        if (response.data.data === "OK") {
+          this.$swal("Reported!", "transaction has been reported.", "success");
+          let transaction = response.data.data;
+          this.transaction.transaction_reports.push(transaction);
         }
+      }
+    },
+    openModal() {
+      $(`#${this.modal}`).modal("show");
+    },
+    transactionCompleted() {
+      this.$emit("remove-transaction", this.transaction.id);
     }
-}
+  }
+};
 </script>

@@ -48,6 +48,28 @@
                                 {!! Form::select('roles[]', $roles, $userRoles, ['class' => 'form-control', 'multiple' => true]) !!}
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="col-md-4 col-form-label text-md-right">
+                                {!! Form::label('email_verified_at', 'Email verified') !!}
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="hidden" name="email_verified_at" value="0">
+                                <label for="email_verified_at">
+                                    <input type="checkbox" name="email_verified_at" id="email_verified_at" value="1" <?= ($user->email_verified_at) ? 'checked="checked"' : '' ?> >
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4 col-form-label text-md-right">
+                                {!! Form::label('phone_verified_at', 'Phone verified') !!}
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="hidden" name="phone_verified_at" value="0">
+                                <label for="phone_verified_at">
+                                    <input type="checkbox" name="phone_verified_at" id="phone_verified_at" value="1" <?= ($user->phone_verified_at) ? 'checked="checked"' : '' ?> >
+                                </label>
+                            </div>
+                        </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

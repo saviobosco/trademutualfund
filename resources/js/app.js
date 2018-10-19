@@ -141,7 +141,7 @@ window.Vue = require('vue');
  */
 Vue.use(VueSweetalert2);
 Vue.use(VueClipboard)
-Vue.config.devtools = false;
+Vue.config.devtools = true;
 
 import axios from './utils/http';
 Vue.use(require('vue-axios'), axios);
@@ -151,6 +151,7 @@ Vue.component('investments-component', require('./components/Investments/Investm
 Vue.component('transactions-component', require('./components/Transactions/TransactionsComponent.vue'));
 Vue.component('admin-transaction-component', require('./components/Transactions/AdminTransactionComponent.vue'));
 Vue.component('coming-soon-component', require('./components/ComingSoonComponent.vue'));
+Vue.component('verify-phone-component', require('./components/VerifyPhoneComponent.vue'));
 const app = new Vue({
     el: '#app',
 });
