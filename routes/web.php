@@ -18,7 +18,7 @@ Route::get('/', function () {
     }
     $totalUsers = StatisticsRepository::getTotalOfUsers();
     $totalPayout = StatisticsRepository::getTotalOfPayOuts();
-    $totalTransactions = StatisticsRepository::getTotalOfTransactions();
+    //$totalTransactions = StatisticsRepository::getTotalOfTransactions();
     $testimonies = \App\Testimony::query()->with(['user:id,name'])->where('published',1)->latest('default')->get()->toArray();
     return view('welcome')->with(compact('testimonies','totalUsers','totalPayout','totalTransactions'));
 });
@@ -87,6 +87,14 @@ Route::middleware(['auth','verified','role:admin'])->group(function() {
     Route::get('/get_payments/index', 'GetPaymentsController@index');
     Route::get('/get_payments/create', 'GetPaymentsController@create');
     Route::post('/get_payments/create', 'GetPaymentsController@store');
+    Route::put('/get_payments/edit/{getPayment}', 'GetPaymentsController@update');
+    Route::get('/get_payments/edit/{getPayment}', 'GetPaymentsController@edit');
+
+    Route::get('/get_payments/cancel/{getPayment}', 'GetPaymentsController@showCancel');
+    Route::put('/get_payments/cancel/{getPayment}', 'GetPaymentsController@cancel');
+
+    Route::get('/get_payments/delete/{getPayment}', 'GetPaymentsController@delete');
+    Route::delete('/get_payments/delete/{getPayment}', 'GetPaymentsController@destroy');
 
     Route::get('/transactions/index', 'TransactionsController@index');
     Route::get('/transactions/view/{transaction}', 'TransactionsController@show');

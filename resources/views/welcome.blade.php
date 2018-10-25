@@ -87,8 +87,8 @@
                 <!-- begin col-3 -->
                 <div class="col-md-4 col-4 milestone-col">
                     <div class="milestone">
-                        <div class="number" >{{ format_decimal($totalTransactions) }}</div>
-                        <div class="title"> Total Transactions </div>
+                        <div class="number" >{{ format_decimal(setting('global_funds_cumulative', 0)) }}</div>
+                        <div class="title"> Global Funds</div>
                     </div>
                 </div>
                 <!-- end col-3 -->

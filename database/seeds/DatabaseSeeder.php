@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Seeded the Permissions!');
         $this->call('BanksSeeder');
         $this->command->info('Seeded the banks!');
-        $this->call('InvestmentRulesSeeder');
-        $this->command->info('Seeded the Investment Rules!');
-        $this->call('InvestmentPlansSeeder');
-        $this->command->info('Seeded the Investment Plans!');
+        //$this->call('InvestmentRulesSeeder');
+        //$this->command->info('Seeded the Investment Rules!');
+        //$this->call('InvestmentPlansSeeder');
+        //$this->command->info('Seeded the Investment Plans!');
         // $this->call(UsersTableSeeder::class);
     }
 }

@@ -56,4 +56,9 @@ class GetPayment extends Model
             return true;
         }
     }
+
+    public function cancel()
+    {
+        return $this->update(['status' => static::STATUS_CANCELLED]);
+    }
 }

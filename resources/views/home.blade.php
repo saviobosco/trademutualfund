@@ -63,7 +63,7 @@
             <div class="widget widget-stats bg-green">
                 <div class="stats-info">
                     <h4> Referral Bonus </h4>
-                    <p>{{ format_decimal($referralBonus) }}</p>
+                    <p>{{ format_decimal($globalFundsCumulative) }}</p>
                 </div>
             </div>
         </div>

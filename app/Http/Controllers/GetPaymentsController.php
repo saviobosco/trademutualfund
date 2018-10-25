@@ -49,7 +49,7 @@ class GetPaymentsController extends Controller
             'initial_amount' => $validatedData['amount']
         ]);
         if ($getPayment) {
-            Session::flash('message', 'Investment rule was successfully created!');
+            flash('Investment rule was successfully created!')->success();
             return redirect('/get_payments/index');
         }
     }
@@ -73,7 +73,8 @@ class GetPaymentsController extends Controller
      */
     public function edit(GetPayment $getPayment)
     {
-        //
+        $users = User::query()->get()->pluck('name', 'id');
+        return view('get_payments.edit')->with(compact('getPayment','users'));
     }
 
     /**
@@ -85,17 +86,45 @@ class GetPaymentsController extends Controller
      */
     public function update(Request $request, GetPayment $getPayment)
     {
-        //
+        $validatedData = $this->validate($request, [
+            'user_id' => 'required',
+            'amount' => 'required',
+        ]);
+        $getPayment->update([
+            'user_id' => $validatedData['user_id'],
+            'amount' => $validatedData['amount'],
+            'initial_amount' => $validatedData['amount']
+        ]);
+
+        if ($getPayment) {
+            flash('Investment rule was successfully updated!')->success();
+            return redirect('/get_payments/index');
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\GetPayment  $getPayment
-     * @return \Illuminate\Http\Response
-     */
+    public function showCancel(GetPayment $getPayment)
+    {
+        return view('get_payments.show_cancel')->with(compact('getPayment'));
+    }
+
+    public function cancel(GetPayment $getPayment)
+    {
+        if ($getPayment->cancel()) {
+            flash("#$getPayment->id was successfully cancelled!")->success();
+        } else {
+            flash("#$getPayment->id could not be cancelled!")->error();
+        }
+        return redirect('/get_payments/index');
+    }
+
+    public function delete(GetPayment $getPayment)
+    {
+        return view('get_payments.delete')->with(compact('getPayment'));
+    }
+
     public function destroy(GetPayment $getPayment)
     {
-        //
+        $getPayment->delete();
+        return redirect('/get_payments/index');
     }
 }

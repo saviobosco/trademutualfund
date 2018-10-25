@@ -21,6 +21,7 @@
                                 <th> amount </th>
                                 <th> completed at </th>
                                 <th> status </th>
+                                <th> actions </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -32,6 +33,11 @@
                                     <td> {{ $getPayment->initial_amount }} </td>
                                     <td> {{ $getPayment->completed_at }} </td>
                                     <td> {{ $getPayment->status }} </td>
+                                    <td>
+                                        <a href="{{ url('/get_payments/edit/'.$getPayment->id) }}"> edit </a> |
+                                        <a href="{{ url('/get_payments/cancel/'.$getPayment->id) }}"> cancel </a> |
+                                        <a class="text-danger" href="{{ url('/get_payments/delete/'.$getPayment->id) }}"> delete </a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
