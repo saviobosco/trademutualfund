@@ -23,12 +23,12 @@ class StatisticsRepository
 
     public static function getTotalOfPayOuts()
     {
-        return setting('total_payout') + GetPayment::sum('initial_amount');
+        return setting('total_payout') + GetPayment::query()->select(['initial_amount'])->where('status', GetPayment::STATUS_CONFIRM)->sum('initial_amount');
     }
 
     public static function getTotalOfTransactions()
     {
-        return setting('total_transactions') + static::getTotalOfPayOuts() + MakePayment::sum('initial_amount');
+        return setting('total_transactions') + MakePayment::sum('initial_amount');
     }
 
     public static function getTotalActiveSupportTickets()

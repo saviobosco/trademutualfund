@@ -141,7 +141,7 @@ window.Vue = require('vue');
  */
 Vue.use(VueSweetalert2);
 Vue.use(VueClipboard)
-Vue.config.devtools = false;
+//Vue.config.devtools = false;
 
 import axios from './utils/http';
 Vue.use(require('vue-axios'), axios);

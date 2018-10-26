@@ -105,6 +105,11 @@ class Transaction extends Model
                 $getPayment->status = GetPayment::STATUS_ACTIVE;
                 $getPayment->update();
             }
+            if ($makePayment = $this->make_payment()->first()) {
+                $makePayment->amount += $this->amount;
+                $makePayment->status = MakePayment::ACTIVE;
+                $makePayment->update();
+            }
             return $this->update(['status' => static::CANCELLED]);
         }
         return false;

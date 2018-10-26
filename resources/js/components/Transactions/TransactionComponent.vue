@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="logged_in_user === transaction.get_payment_user_id">
+        <div v-if="parseInt(logged_in_user) === get_payment_user">
                 <h5> You are to be paid by</h5>
                 <countdown ref="countdown" :time="transaction_expires">
                     <template slot-scope="props">Time Remaining：{{ props.days }} days, {{ props.hours }} hours, {{ props.minutes }} minutes, {{ props.seconds }} seconds.</template>
@@ -48,7 +48,7 @@
 
 
 
-        <div v-if="logged_in_user === transaction.make_payment_user_id">
+        <div v-if="parseInt(logged_in_user) === make_payment_user">
             <h5> You are to pay </h5>
             <countdown :time="transaction_expires">
                 <template slot-scope="props">Time Remaining：{{ props.days }} days, {{ props.hours }} hours, {{ props.minutes }} minutes, {{ props.seconds }} seconds.</template>
@@ -154,6 +154,12 @@ export default {
         return time;
       }
       return 0;
+    },
+    get_payment_user() {
+      return parseInt(this.transaction.get_payment_user_id);
+    },
+    make_payment_user() {
+      return parseInt(this.transaction.make_payment_user_id);
     }
   },
   watch: {

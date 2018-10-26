@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use App\GetPayment;
 use App\MakePayment;
+use App\PhoneVerification;
+use App\SMSGateWay;
 use App\Transaction;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -45,7 +47,7 @@ class Merge extends Command
             return;
         }
         // get all get payments
-        $getPayments = GetPayment::query()->where('status', 1)->get()->toArray();
+        $getPayments = GetPayment::query()->with(['user'])->where('status', 1)->get()->toArray();
         // if get payment request is empty exit
         if (count($getPayments) <= 0) {
             return;
@@ -54,6 +56,7 @@ class Merge extends Command
             $getPayment = array_shift($getPayments);
 
             $makePayments = MakePayment::query()
+                ->with(['user'])
                 ->where([
                     ['status', 1],
                     ['user_id', '<>', $getPayment['user_id']]
@@ -92,15 +95,24 @@ class Merge extends Command
                     $makePayment->amount -= $transaction['amount'];
                 }
                 // save transaction
-                Transaction::create($transaction);
+                $transaction = Transaction::create($transaction);
                 // update makePayment
                 $makePayment->update();
+                // user notification
+                $SMSMessage = env('APP_NAME').": You have been merged to payout the sum of #$transaction->amount to ";
+                $SMSMessage .= $getPayment['user']['name'];
+                $SMSMessage .= ". Please login and proceed.";
+                (new SMSGateWay(env('SMS_HOST'), env('SMS_USERNAME'), env('SMS_PASSWORD')))
+                    ->sendMessage((new PhoneVerification())
+                        ->verifyPhoneNumber($makePayment['user']['phone_number'])->getPhoneNumber(), $SMSMessage)
+                    ->sendRequestToSMSServer();
+
                 $getPayment['amount'] -= $transaction['amount'];
 
                 if ($getPayment['amount'] <= 0) {
                     $getPayment['status'] = 2;
                 }
-                (GetPayment::find($getPayment['id']))->update((collect($getPayment))->except(['id','created_at','updated_at'])->toArray());
+                (GetPayment::find($getPayment['id']))->update((collect($getPayment))->except(['id','created_at','updated_at','user'])->toArray());
             }
             // Getpayment amount has not be cleared
             // put it back in the array
