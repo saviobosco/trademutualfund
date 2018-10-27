@@ -60,7 +60,7 @@
                 <h4> Payment Detail </h4>
                 <p> Account Name: {{ transaction.get_payment_user.user_payment_details.account_name }} </p>
                 <p> Account Number: {{ transaction.get_payment_user.user_payment_details.account_number }} </p>
-                <p> Account Name: {{ transaction.get_payment_user.user_payment_details.bank_name }} </p>
+                <p> Bank Name: {{ transaction.get_payment_user.user_payment_details.bank.name }} </p>
                 <p> Transaction Status : <span v-html="$options.filters.status(transaction.status)"></span> </p>
             </div>
 

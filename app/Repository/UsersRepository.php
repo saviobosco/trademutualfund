@@ -25,7 +25,7 @@ class UsersRepository
     {
         $transactions = Transaction::query()->with([
             'make_payment_user',
-            'get_payment_user.user_payment_details',
+            'get_payment_user.user_payment_details.bank',
             'get_payment',
             'make_payment',
             'photo_proofs',
