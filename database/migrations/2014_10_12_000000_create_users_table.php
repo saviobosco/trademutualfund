@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('phone_number', 15)->nullable();
             $table->integer('country_id', false, true)->nullable();
             $table->dateTime('phone_verified_at')->nullable();
+            $table->dateTime('blocked_at')->nullable();
             $table->timestamps();
         });
     }

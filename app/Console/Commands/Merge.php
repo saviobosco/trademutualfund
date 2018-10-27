@@ -95,7 +95,7 @@ class Merge extends Command
                     $makePayment->amount -= $transaction['amount'];
                 }
                 // save transaction
-                $transaction = Transaction::create($transaction);
+                Transaction::create($transaction);
                 // update makePayment
                 $makePayment->update();
                 // user notification

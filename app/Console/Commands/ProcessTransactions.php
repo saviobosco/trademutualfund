@@ -2,7 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Investment;
+use App\MakePayment;
 use App\Transaction;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -55,7 +58,18 @@ class ProcessTransactions extends Command
                 if (count($transaction->photo_proofs) >= 1) {
                     $transaction->confirm();
                 } else {
-                    $transaction->cancel();
+                    //$transaction->cancel();
+                    // find all make payment and cancel them
+                    $transactionsWithSameMakePayment = Transaction::query()->where('make_payment_id', $transaction['make_payment_id'])->get();
+                    foreach($transactionsWithSameMakePayment as $transactionWithSameMakePayment) {
+                        $transactionWithSameMakePayment->cancel();
+                    }
+                    $makePayment = MakePayment::find($transaction['make_payment_id']);
+                    if ($investment = Investment::find($makePayment['investment_id'])) {
+                        $investment->cancel();
+                        $user = User::find($investment['user_id']);
+                        $user->markUserAsBlocked();
+                    }
                 }
             }
         }

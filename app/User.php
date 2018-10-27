@@ -126,4 +126,16 @@ class User extends Authenticatable implements MustVerifyEmail
             'testimony' => $testimony
         ]);
     }
+
+    public function markUserAsBlocked()
+    {
+        return $this->forceFill([
+            'blocked_at' => $this->freshTimestamp(),
+        ])->save();
+    }
+
+    public function isUserBlocked()
+    {
+        return ! is_null($this->blocked_at);
+    }
 }

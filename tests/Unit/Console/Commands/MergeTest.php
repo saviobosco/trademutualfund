@@ -13,6 +13,7 @@ use App\Console\Commands\Merge;
 use App\GetPayment;
 use App\MakePayment;
 use App\Transaction;
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -86,4 +87,45 @@ class MergeTest extends TestCase
         // check if all get payment status is Merged
         $this->assertEquals(2, GetPayment::query()->where('status', GetPayment::STATUS_MERGED)->count());
     }
+
+    /** @test */
+    /*public function testHandleMergingWithBlockedUsers()
+    {
+        // make get payments
+        // make make payments
+        $user = factory('App\User')->create(['blocked_at' => now()]);
+        $user2 = factory('App\User')->create(['blocked_at' => now()]);
+        factory('App\GetPayment')->create([
+            'user_id' => $user->id,
+            'amount' => 500000,
+            'initial_amount' => 500000
+        ]);
+        factory('App\GetPayment',2)->create();
+
+        factory('App\MakePayment')->create([
+            'amount' => 50000,
+            'initial_amount' => 50000,
+            'user_id' => $user2->id
+        ]);
+        factory('App\MakePayment',4)->create([
+            'amount' => 50000,
+            'initial_amount' => 50000
+        ]);
+        factory('App\MakePayment')->create([
+            'user_id' => $user->id,
+            'amount' => 150000,
+            'initial_amount' => 150000
+        ]);
+        $this->Merge->handle();
+        // assert the transactions has 4 rows
+        // assert that the get payment is amount is 300000
+        $transactions = Transaction::count();
+        $this->assertEquals(2, $transactions);
+
+        // check that 2 make payment status is Merged
+        $this->assertEquals(2, MakePayment::query()->where('status', MakePayment::MERED_OUT)->count());
+
+        $getPayment = GetPayment::query()->where('user_id', $user->id)->first();
+        $this->assertEquals('500000', $getPayment['amount']);
+    }*/
 }

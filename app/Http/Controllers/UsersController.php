@@ -88,6 +88,11 @@ class UsersController extends Controller
         } else {
             $user->forceFill(['phone_verified_at' => null]);
         }
+        if ((int) $request->input('blocked_at') === 1) {
+            $user->forceFill(['blocked_at' => new Carbon()]);
+        } else {
+            $user->forceFill(['blocked_at' => null]);
+        }
         $user->update();
         $user->syncRoles($request->input('roles'));
         flash('User record has been updated')->success();

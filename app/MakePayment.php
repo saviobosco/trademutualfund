@@ -10,6 +10,7 @@ class MakePayment extends Model
 {
     CONST CONFIRMED = 3;
     CONST MERED_OUT = 2;
+    CONST MERGED_OUT = 2;
     CONST CANCELLED = -1;
     CONST ACTIVE = 1;
 
@@ -43,7 +44,7 @@ class MakePayment extends Model
     public function cancel()
     {
         // get all transactions and cancel it
-        $transactions = Transaction::query()->where([
+        /*$transactions = Transaction::query()->where([
             ['make_payment_id', $this->id],
             ['status', Transaction::ACTIVE]
         ])->get();
@@ -51,7 +52,7 @@ class MakePayment extends Model
             foreach($transactions as $transaction) {
                 $transaction->cancel();
             }
-        }
+        }*/
         $this->update(['status' => static::CANCELLED ]);
     }
 

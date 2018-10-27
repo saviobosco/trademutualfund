@@ -70,6 +70,17 @@
                                 </label>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="col-md-4 col-form-label text-md-right">
+                                {!! Form::label('blocked_at', 'Blocked') !!}
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="hidden" name="blocked_at" value="0">
+                                <label for="blocked_at">
+                                    <input type="checkbox" name="blocked_at" id="blocked_at" value="1" <?= ($user->blocked_at) ? 'checked="checked"' : '' ?> >
+                                </label>
+                            </div>
+                        </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
