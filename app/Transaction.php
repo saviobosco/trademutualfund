@@ -142,6 +142,6 @@ class Transaction extends Model
 
     public function resetTimer()
     {
-        return $this->update(['time_elapse_after' => new Carbon('+12 hours')]);
+        return $this->update(['time_elapse_after' => new Carbon(setting('transaction_time'))]);
     }
 }

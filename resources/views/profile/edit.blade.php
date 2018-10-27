@@ -26,7 +26,7 @@
                                 {!! Form::label('phone_number', 'Phone Number') !!}
                             </div>
                             <div class="col-sm-6">
-                                {!! Form::text('phone_number',null,['class' => 'form-control']) !!}
+                                {!! Form::text('phone_number',null,['class' => 'form-control', 'disabled'=>true]) !!}
                             </div>
                         </div>
 
