@@ -34,6 +34,12 @@
                 </a>
             </li>
             <li class="">
+                <a href="{{ url('/investments/index') }}">
+                    <i class="fa fa-users"></i>
+                    <span> {{ __('Investments') }} </span>
+                </a>
+            </li>
+            <li class="">
                 <a href="{{ url('/global_funds/cash_out') }}">
                     <i class="fa fa-users"></i>
                     <span> {{ __('Global Funds') }} </span>

@@ -27,7 +27,7 @@ class TransactionsController extends Controller
             'make_payment',
             'photo_proofs',
             'transaction_reports'
-        ])->get();
+        ])->latest('transactions.created_at')->orderBy('status')->paginate(30);
         return view('transactions.index')->with(compact('transactions'));
     }
 

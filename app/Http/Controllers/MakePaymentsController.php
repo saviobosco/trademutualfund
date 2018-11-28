@@ -14,7 +14,7 @@ class MakePaymentsController extends Controller
      */
     public function index()
     {
-        $makePayments = MakePayment::query()->with(['user'])->get();
+        $makePayments = MakePayment::query()->oldest()->with(['user'])->get();
         return view('make_payments.index')->with(compact('makePayments'));
     }
 

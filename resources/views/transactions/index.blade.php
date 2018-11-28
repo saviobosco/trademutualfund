@@ -19,7 +19,8 @@
                                 <th> make payment user </th>
                                 <th> get payment user </th>
                                 <th> amount </th>
-                                <th> Time </th>
+                                <th> created at </th>
+                                <th> Elapse Time </th>
                                 <th> status </th>
                                 <th> actions </th>
                             </tr>
@@ -30,8 +31,9 @@
                                     <td> {{ $transaction->id }} </td>
                                     <td> {{ $transaction->make_payment_user->name }} </td>
                                     <td> {{ $transaction->get_payment_user->name }} </td>
-                                    <td> {{ $transaction->amount }} </td>
-                                    <td> {{ $transaction->time_elapse_after }} </td>
+                                    <td> &#x20A6;{{ format_decimal($transaction->amount) }} </td>
+                                    <td> {{ $transaction->created_at->format('l jS, F Y h:i:s A') }} </td>
+                                    <td> {{ $transaction->time_elapse_after->format('l jS, F Y h:i:s A') }} </td>
                                     <td>
                                         @switch($transaction->status)
                                             @case(1)
@@ -52,6 +54,7 @@
                             @endforeach
                             </tbody>
                         </table>
+                        {{ $transactions->links() }}
                     </div>
                 </div>
             </div>

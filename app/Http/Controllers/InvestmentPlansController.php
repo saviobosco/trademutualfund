@@ -85,6 +85,7 @@ class InvestmentPlansController extends Controller
             'name',
             'minimum_amount',
             'maximum_amount',
+            'status'
         ]));
         $investmentPlan->investment_rules()->sync($request->input('attach_rules'));
         flash('Investment Plan has been updated')->success();

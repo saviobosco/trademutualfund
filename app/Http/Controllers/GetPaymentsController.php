@@ -74,7 +74,13 @@ class GetPaymentsController extends Controller
     public function edit(GetPayment $getPayment)
     {
         $users = User::query()->get()->pluck('name', 'id');
-        return view('get_payments.edit')->with(compact('getPayment','users'));
+        $status = [
+            GetPayment::STATUS_ACTIVE => 'Active',
+            GetPayment::STATUS_MERGED => 'Merged',
+            GetPayment::STATUS_CONFIRM => 'Completed',
+            GetPayment::STATUS_CANCELLED => 'Cancelled'
+        ];
+        return view('get_payments.edit')->with(compact('getPayment','users','status'));
     }
 
     /**
@@ -89,11 +95,13 @@ class GetPaymentsController extends Controller
         $validatedData = $this->validate($request, [
             'user_id' => 'required',
             'amount' => 'required',
+            'status' => 'required'
         ]);
         $getPayment->update([
             'user_id' => $validatedData['user_id'],
             'amount' => $validatedData['amount'],
-            'initial_amount' => $validatedData['amount']
+            'initial_amount' => $validatedData['amount'],
+            'status' => $validatedData['status']
         ]);
 
         if ($getPayment) {

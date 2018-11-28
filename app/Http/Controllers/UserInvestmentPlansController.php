@@ -21,9 +21,10 @@ class UserInvestmentPlansController extends Controller
         if (! is_null($userSettings->last_investment_plan)) {
             $investmentPlans = InvestmentPlan::query()
                 ->where('id', '>=', $userSettings->last_investment_plan)
+                ->where('status', 1)
                 ->get();
         } else {
-            $investmentPlans = InvestmentPlan::all();
+            $investmentPlans = InvestmentPlan::query()->where('status', 1)->get();
         }
         return new InvestmentPlansCollection($investmentPlans);
     }

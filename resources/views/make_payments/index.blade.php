@@ -15,7 +15,7 @@
                         <table class="table table-responsive">
                             <thead>
                             <tr>
-                                <th> id</th>
+                                {{--<th> id</th>--}}
                                 <th>user </th>
                                 <th> investment Id </th>
                                 <th> amount </th>
@@ -26,7 +26,7 @@
                             <tbody>
                             @foreach( $makePayments as $makePayment)
                                 <tr>
-                                    <td> {{ $makePayment->id }} </td>
+                                    {{--<td> {{ $makePayment->id }} </td>--}}
                                     <td> {{ $makePayment->user->name }} </td>
                                     <td> {{ $makePayment->investment_id }} </td>
                                     <td> {{ $makePayment->initial_amount }} </td>

@@ -45,12 +45,13 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
         $countries = Countries::query()->select(['id', 'full_name'])->pluck('full_name', 'id')->toArray();
+        $user = User::query()->with(['investments'])->where('id', $id)->first();
         return view('users.view')->with(compact('user','countries'));
     }
 

@@ -7,9 +7,7 @@
             <div class="col-sm-12">
                 <div class="panel panel-inverse">
                     <div class="panel-heading">
-
                         <h4 class="panel-title"> Investments </h4>
-                        {!! Html::link("investments/new",'New Investment',['class' => 'pull-right'])  !!}
                     </div>
                     <div class="panel-body">
                         <table class="table">
@@ -34,7 +32,7 @@
                                     <td> {{ $investment->release_date }} </td>
                                     <td> {{ $investment->status }} </td>
                                     <td>
-                                        {!! Html::link("#",'View Investment')  !!}
+                                        {!! Html::link("/investments/view/$investment->id",'View Investment')  !!}
                                     </td>
                                 </tr>
                             @endforeach

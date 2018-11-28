@@ -67,32 +67,32 @@
             <h3> {{ setting('tag_line') }} </h3>
 
             <a href="{{ route('register') }}" class="btn btn-outline"> Register </a><br />
-            <div class="row home-stats">
-                <!-- begin col-3 -->
-                <div class="col-md-4 col-4 milestone-col">
-                    <div class="milestone">
-                        <div class="number"> {{ $totalUsers }} </div>
-                        <div class="title"> Users </div>
-                    </div>
-                </div>
-                <!-- end col-3 -->
-                <!-- begin col-3 -->
-                <div class="col-md-4 col-4 milestone-col">
-                    <div class="milestone">
-                        <div class="number">{{ format_decimal($totalPayout) }}</div>
-                        <div class="title"> Payouts </div>
-                    </div>
-                </div>
-                <!-- end col-3 -->
-                <!-- begin col-3 -->
-                <div class="col-md-4 col-4 milestone-col">
-                    <div class="milestone">
-                        <div class="number" >{{ format_decimal(setting('global_funds_cumulative', 0)) }}</div>
-                        <div class="title"> Global Funds</div>
-                    </div>
-                </div>
-                <!-- end col-3 -->
-            </div>
+            {{--<div class="row home-stats">--}}
+                {{--<!-- begin col-3 -->--}}
+                {{--<div class="col-md-4 col-4 milestone-col">--}}
+                    {{--<div class="milestone">--}}
+                        {{--<div class="number"> {{ $totalUsers }} </div>--}}
+                        {{--<div class="title"> Users </div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<!-- end col-3 -->--}}
+                {{--<!-- begin col-3 -->--}}
+                {{--<div class="col-md-4 col-4 milestone-col">--}}
+                    {{--<div class="milestone">--}}
+                        {{--<div class="number">{{ format_decimal($totalPayout) }}</div>--}}
+                        {{--<div class="title"> Payouts </div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<!-- end col-3 -->--}}
+                {{--<!-- begin col-3 -->--}}
+                {{--<div class="col-md-4 col-4 milestone-col">--}}
+                    {{--<div class="milestone">--}}
+                        {{--<div class="number" >{{ format_decimal(setting('global_funds_cumulative', 0)) }}</div>--}}
+                        {{--<div class="title"> Global Funds</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<!-- end col-3 -->--}}
+            {{--</div>--}}
         </div>
         <!-- end container -->
         <div class="container">

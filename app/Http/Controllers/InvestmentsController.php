@@ -18,7 +18,7 @@ class InvestmentsController extends Controller
      */
     public function index()
     {
-        $investments = auth()->user()->getInvestments();
+        $investments = Investment::query()->with(['user:id,name'])->get();
         return view('investments.index')->with(compact('investments'));
     }
 
@@ -80,12 +80,18 @@ class InvestmentsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Investment  $investment
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Investment $investment)
+    public function show($id)
     {
-        //
+        $investment = Investment::query()->with([
+            'make_payment',
+            'get_payment',
+            'user:id,name'
+        ])->where('investments.id', $id)
+            ->first();
+        return view('investments.show')->with(compact('investment'));
     }
 
     /**

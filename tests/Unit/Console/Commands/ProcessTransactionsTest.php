@@ -86,7 +86,7 @@ class ProcessTransactionsTest extends TestCase
 
 
         // create 4 transactions
-        $tran1 = factory('App\Transaction')->create(['make_payment_id' => $makePayment['id'], 'get_payment_id' => $getPayment1['id'], 'time_elapse_after' => (new Carbon())->subHour()]);
+        factory('App\Transaction')->create(['make_payment_id' => $makePayment['id'], 'get_payment_id' => $getPayment1['id'], 'time_elapse_after' => (new Carbon())->subHour()]);
         factory('App\Transaction')->create(['make_payment_id' => $makePayment['id'], 'get_payment_id' => $getPayment1['id'], 'time_elapse_after' => (new Carbon())->subHour()]);
         factory('App\Transaction')->create(['make_payment_id' => $makePayment['id'], 'get_payment_id' => $getPayment2['id'], 'time_elapse_after' => (new Carbon())->subHour()]);
         factory('App\Transaction')->create(['make_payment_id' => $makePayment['id'], 'get_payment_id' => $getPayment2['id'], 'time_elapse_after' => (new Carbon())->subHour()]);

@@ -61,6 +61,7 @@ class Merge extends Command
                     ['status', 1],
                     ['user_id', '<>', $getPayment['user_id']]
                 ])
+                ->oldest()
                 ->get();
             if (count($makePayments) <= 0) {
                 break;

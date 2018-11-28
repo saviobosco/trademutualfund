@@ -10,6 +10,7 @@ namespace App\Repository;
 
 
 use App\GetPayment;
+use App\Investment;
 use App\MakePayment;
 use App\User;
 use App\TransactionReport;
@@ -36,5 +37,40 @@ class StatisticsRepository
         return TransactionReport::query()
             ->where('status', 1)
             ->count();
+    }
+
+    public static function getTotalActiveMakePayments()
+    {
+        return MakePayment::query()
+            ->where('status', MakePayment::ACTIVE)
+            ->sum('amount');
+    }
+
+    public static function getTotalMergedMakePayments()
+    {
+        return MakePayment::query()
+            ->where('status', MakePayment::MERGED_OUT)
+            ->sum('initial_amount');
+    }
+
+    public static function getTotalActiveGetPayments()
+    {
+        return GetPayment::query()
+            ->where([
+                ['status', '>=', GetPayment::STATUS_ACTIVE],
+                ['status', '<', GetPayment::STATUS_CONFIRM]
+            ])
+            ->sum('initial_amount');
+    }
+
+    public static function getActiveRunningInvestments()
+    {
+        $sumActiveInvestments = Investment::query()
+            ->where([
+                ['status', '>=', Investment::CONFIRMED],
+                ['status', '<', Investment::CASHED_OUT]
+            ])
+            ->sum('roi_amount');
+        return $sumActiveInvestments;
     }
 }

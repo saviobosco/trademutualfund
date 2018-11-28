@@ -25,9 +25,9 @@ class Investment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function make_payments()
+    public function make_payment()
     {
-        return $this->hasMany(MakePayment::class);
+        return $this->hasOne(MakePayment::class);
     }
 
     public function get_payment()
@@ -38,7 +38,7 @@ class Investment extends Model
     public function cancel()
     {
         if ($this->canCancel() && $this->isActive()) {
-            $makePayment = $this->make_payments()->get()[0];
+            $makePayment = $this->make_payment()->get()[0];
             $makePayment->cancel();
             return $this->update(['status' => static::CANCELLED]);
         }
@@ -47,11 +47,11 @@ class Investment extends Model
 
     public function canCancel()
     {
-        $makePayment = $this->make_payments()->get();
-        if ($makePayment->count() <= 0) {
+        $makePayment = $this->make_payment;
+        if (is_null($makePayment)) {
             return true;
         }
-        return (float)$this->amount_invested === (float)$makePayment[0]['amount'];
+        return (float)$this->amount_invested === (float)$makePayment['amount'];
     }
 
     public function isActive()
@@ -66,7 +66,10 @@ class Investment extends Model
 
     public function confirm()
     {
-        return $this->update(['status' => static::CONFIRMED]);
+        if ($this->isActive()) {
+            return $this->update(['status' => static::CONFIRMED]);
+        }
+        return true;
     }
 
     public function complete()
@@ -90,18 +93,18 @@ class Investment extends Model
     public function cashOutInvestment()
     {
         // get all active referral bonuses
-        $referrals = ReferralsBonus::query()
+        /*$referrals = ReferralsBonus::query()
             ->where('status',1)
             ->where('user_id', $this->user_id)
-            ->get();
+            ->get();*/
         // sum all
-        $referralsSum = $referrals->sum('amount');
+        //$referralsSum = $referrals->sum('amount');
         // change status as paid out
         $data = [
             'user_id' => $this->user_id,
             'investment_id' => $this->id,
-            'amount' => $this->roi_amount + $referralsSum,
-            'initial_amount' => $this->roi_amount + $referralsSum,
+            'amount' => $this->roi_amount /*+ $referralsSum*/,
+            'initial_amount' => $this->roi_amount /*+ $referralsSum*/,
         ];
         if (GetPayment::create($data)) {
             if ($this->global_funds_amount) {
@@ -110,9 +113,9 @@ class Investment extends Model
                     'amount' => $this->global_funds_amount
                 ]);
             }
-            foreach($referrals as $referral) {
+            /*foreach($referrals as $referral) {
                 $referral->paidOut();
-            }
+            }*/
             $global_funds = setting('global_funds');
             $global_funds_cumulative = setting('global_funds_cumulative');
             $global_funds += $this->global_funds_amount;

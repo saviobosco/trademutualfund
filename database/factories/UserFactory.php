@@ -47,6 +47,7 @@ $factory->define(App\Investment::class, function() {
         'make_payment_id' => null,
         'investment_plan_id' => 1,
         'amount_invested' => 50000,
+        'roi_amount' => 65000,
         'release_date' => new \Carbon\Carbon()
     ];
 });

@@ -65,7 +65,7 @@ class MakePayment extends Model
                 if ($investment = $this->investment()->first()) {
                     $investment->confirm();
                 }
-                try {
+                /*try {
                     $referralAncestors = ReferralPyramid::defaultOrder()->ancestorsOf($this->user_id);
                     $referralAncestorsCount = count($referralAncestors);
                     if ($referralAncestorsCount >= 1) {
@@ -82,7 +82,7 @@ class MakePayment extends Model
                     }
                 } catch ( \Exception $exception ) {
                     // sub due error
-                }
+                }*/
             }
             return true;
         }
@@ -94,6 +94,11 @@ class MakePayment extends Model
             'status' => static::CONFIRMED,
             'completed_at' => new Carbon()
         ]);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
     }
 
 }

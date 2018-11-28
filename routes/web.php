@@ -16,11 +16,8 @@ Route::get('/', function () {
     if (setting('show_count_down')) {
         return view('coming_soon');
     }
-    $totalUsers = StatisticsRepository::getTotalOfUsers();
-    $totalPayout = StatisticsRepository::getTotalOfPayOuts();
-    //$totalTransactions = StatisticsRepository::getTotalOfTransactions();
     $testimonies = \App\Testimony::query()->with(['user:id,name'])->where('published',1)->latest('default')->get()->toArray();
-    return view('welcome')->with(compact('testimonies','totalUsers','totalPayout','totalTransactions'));
+    return view('welcome')->with(compact('testimonies'));
 });
 
 Auth::routes(['verify' => true]);
@@ -77,7 +74,7 @@ Route::middleware(['auth','verified','verified_phone'])->group(function() {
 
 Route::middleware(['auth','verified','role:admin'])->group(function() {
     Route::get('/users/index', 'UsersController@index');
-    Route::get('/users/view/{user}', 'UsersController@show');
+    Route::get('/users/view/{id}', 'UsersController@show');
     Route::put('/users/edit/{user}', 'UsersController@update');
     Route::get('/users/edit/{user}', 'UsersController@edit');
 
@@ -134,5 +131,8 @@ Route::middleware(['auth','verified','role:admin'])->group(function() {
     Route::put('/testimonies/edit/{testimony}', 'TestimoniesController@update');
     Route::get('/testimonies/edit/{testimony}', 'TestimoniesController@edit');
     Route::delete('/testimonies/delete/{testimony}', 'TestimoniesController@destroy');
+
+    Route::get('/investments/index', 'InvestmentsController@index');
+    Route::get('/investments/view/{id}', 'InvestmentsController@show');
 });
 

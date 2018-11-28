@@ -42,6 +42,17 @@
                             {!! Form::select('attach_rules[]', $investmentRules, $investmentAttachedRules, ['class' => 'form-control', 'multiple']) !!}
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <div class="col-md-4 col-form-label text-md-right">
+                            {!! Form::label('status', 'Status') !!}
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="hidden" name="status" value="0">
+                            <label for="status">
+                                <input type="checkbox" name="status" id="status" value="1" <?= ($investmentPlan->status) ? 'checked="checked"' : '' ?> >
+                            </label>
+                        </div>
+                    </div>
                     <div class="form-group row mb-0">
                         <div class="col-md-8 offset-md-4">
                             <button type="submit" class="btn btn-primary">

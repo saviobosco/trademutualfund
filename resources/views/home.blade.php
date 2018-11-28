@@ -26,16 +26,34 @@
         <div class="col-md-3 col-sm-6">
             <div class="widget widget-stats bg-green">
                 <div class="stats-info">
-                    <h4> Payouts </h4>
-                    <p>{{ format_decimal($totalPayout) }}</p>
+                    <h4> Active Provide Donations </h4>
+                    <p>{{ format_decimal($totalActiveMakePayments) }}</p>
                 </div>
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
             <div class="widget widget-stats bg-green">
                 <div class="stats-info">
-                    <h4> Total Transactions </h4>
-                    <p>{{ format_decimal($totalTransactions) }}</p>
+                    <h4>Active Investments </h4>
+                    <p>{{ format_decimal($totalActiveInvestments) }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-6">
+            <div class="widget widget-stats bg-green">
+                <div class="stats-info">
+                    <h4>Merged Provide Donation </h4>
+                    <p>{{ format_decimal($totalMergedMakePayments) }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="widget widget-stats bg-green">
+                <div class="stats-info">
+                    <h4>Active Get Donation </h4>
+                    <p>{{ format_decimal($totalActiveGetPayments) }}</p>
                 </div>
             </div>
         </div>
@@ -63,7 +81,7 @@
             <div class="widget widget-stats bg-green">
                 <div class="stats-info">
                     <h4> Referral Bonus </h4>
-                    <p>{{ format_decimal($globalFundsCumulative) }}</p>
+                    <p>{{ format_decimal($referralBonus) }}</p>
                 </div>
             </div>
         </div>
@@ -76,6 +94,14 @@
             </div>
         </div>
     </div>
+
+    @if(! $userPaymentDetails['account_number'])
+        <div class="row">
+            <div class="col-sm-12 alert alert-danger">
+              <i class="fa fa-warning"></i>  Payment details is missing. click <a href="{{ url('/profile/update_payment_info') }}"> here </a>  here to add your payment details .
+            </div>
+        </div>
+    @endif
 
     @if($investments <= 0)
     <div class="row">

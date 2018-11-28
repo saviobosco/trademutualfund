@@ -31,9 +31,11 @@ class HomeController extends Controller
         if (auth()->user()->hasRole('admin')) {
             $globalFunds = setting('global_funds_cumulative');
             $totalUsers = StatisticsRepository::getTotalOfUsers();
-            $totalPayout = StatisticsRepository::getTotalOfPayOuts();
-            $totalTransactions = StatisticsRepository::getTotalOfTransactions();
             $totalSupports = StatisticsRepository::getTotalActiveSupportTickets();
+            $totalActiveMakePayments = StatisticsRepository::getTotalActiveMakePayments();
+            $totalMergedMakePayments = StatisticsRepository::getTotalMergedMakePayments();
+            $totalActiveGetPayments = StatisticsRepository::getTotalActiveGetPayments();
+            $totalActiveInvestments = StatisticsRepository::getActiveRunningInvestments();
         }
         $loggedInUser = auth()->user();
         $transactions = UsersRepository::getUserActiveTransactions($loggedInUser->id);
@@ -41,6 +43,8 @@ class HomeController extends Controller
         $cashAbleInvestments = UsersRepository::getUserCashAbleInvestments($loggedInUser->id);
         $referralsCount = UsersRepository::getUserReferralCount($loggedInUser->id);
         $globalFundsCumulative = setting('global_funds_cumulative');
+
+        $userPaymentDetails = auth()->user()->user_payment_details;
 
         $referralBonus = UsersRepository::getUserReferralBonus($loggedInUser->id);
         $completedInvestmentsCount = UsersRepository::getCompletedInvestmentWithNoTestimony($loggedInUser->id);
@@ -51,14 +55,18 @@ class HomeController extends Controller
         return view('home')->with(compact('transactions',
             'totalUsers',
             'globalFunds',
-            'totalPayout',
-            'totalTransactions',
             'totalSupports',
             'investments',
             'globalFunds',
             'referralBonus',
             'cashAbleInvestments',
             'referralsCount',
-            'globalFundsCumulative'));
+            'userPaymentDetails',
+            'globalFundsCumulative',
+            'totalActiveMakePayments',
+            'totalActiveGetPayments',
+            'totalActiveInvestments',
+            'totalMergedMakePayments'
+            ));
     }
 }

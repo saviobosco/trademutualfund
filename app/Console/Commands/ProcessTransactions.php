@@ -59,6 +59,7 @@ class ProcessTransactions extends Command
                     $transaction->confirm();
                 } else {
                     //$transaction->cancel();
+                    // cancel the first transaction and get other ones where status = 1 and cancel also
                     // find all make payment and cancel them
                     $transactionsWithSameMakePayment = Transaction::query()->where('make_payment_id', $transaction['make_payment_id'])->get();
                     foreach($transactionsWithSameMakePayment as $transactionWithSameMakePayment) {

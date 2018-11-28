@@ -35,7 +35,7 @@ class GetPayment extends Model
 
     public function isMerged()
     {
-        return $this->status === static::STATUS_MERGED;
+        return (int) $this->status === static::STATUS_MERGED;
     }
 
     public function hasReceivedAll()
@@ -47,18 +47,28 @@ class GetPayment extends Model
     {
         $this->amount_paid += $data['amount_paid'];
         if($this->update()) {
-            if($this->isMerged() && $this->hasReceivedAll()) {
-                $this->confirm();
-                if ($investment = $this->investment()->first()) {
-                    $investment->complete();
-                }
-            }
+            $this->markRecordAsConfirmed();
             return true;
+        }
+    }
+
+    public function markRecordAsConfirmed()
+    {
+        if($this->isMerged() && $this->hasReceivedAll()) {
+            $this->confirm();
+            if ($investment = $this->investment()->first()) {
+                $investment->complete();
+            }
         }
     }
 
     public function cancel()
     {
         return $this->update(['status' => static::STATUS_CANCELLED]);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
     }
 }
